@@ -3,12 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable/gradient_view.xml" value="0.1953125" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable/ic_menu_payment.xml" value="0.1953125" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable/splash_image.xml" value="0.1953125" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/activity_on_boarding.xml" value="0.1" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_payment.xml" value="0.1" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_run.xml" value="0.1" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_useractivity.xml" value="0.1" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/onboarding_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />

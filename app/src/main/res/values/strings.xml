@@ -3,4 +3,9 @@
     <string name="title_run">Run</string>
     <string name="title_useractivity">Activity</string>
     <string name="title_payment">Payment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="collect_coins_get_exclusive_discounts">Collect coins, get exclusive discounts</string>
+    <string name="get_started">Get started</string>
+    <string name="mute_unmute_button">Mute/Unmute Button</string>
 </resources>
