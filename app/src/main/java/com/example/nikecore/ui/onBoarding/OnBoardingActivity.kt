@@ -14,6 +14,7 @@ import android.view.animation.Animation
 import android.widget.VideoView
 import com.example.nikecore.MainActivity
 import com.example.nikecore.R
+import com.example.nikecore.ui.askinfo.AskInfoActivity
 import kotlinx.android.synthetic.main.activity_on_boarding.*
 import kotlinx.coroutines.*
 
@@ -22,15 +23,15 @@ import kotlinx.coroutines.*
 
 class OnBoardingActivity : AppCompatActivity() {
     private val list =
-        listOf("Use map to discover places with more coins", "Maintain your pace and earn rewards")
+        listOf(R.string.OnBoarding_text_Use_map, R.string.OnBoarding_text_Maintain_your,R.string.OnBoarding_text_Collect_tickets)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val isFirstRun =
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", false)
+            getSharedPreferences("OnBoardingCheck", MODE_PRIVATE).getBoolean("isFirstRun", false)
         if (isFirstRun) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, AskInfoActivity::class.java))
             finish()
         }
         setContentView(R.layout.activity_on_boarding)
@@ -47,7 +48,7 @@ class OnBoardingActivity : AppCompatActivity() {
         }
         var audio = true
         val audioManager = this.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE,0)
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE,0)
         imgBtn.setImageResource(R.drawable.ic_baseline_volume_up_24)
 
         imgBtn.setOnClickListener {
@@ -58,15 +59,15 @@ class OnBoardingActivity : AppCompatActivity() {
 
             } else {
                 audio = true
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE,0)
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE,0)
                 imgBtn.setImageResource(R.drawable.ic_baseline_volume_up_24)
             }
         }
 
         getStartedBtn.setOnClickListener {
 
-            startActivity(Intent(this@OnBoardingActivity, MainActivity::class.java))
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isFirstRun", true).apply()
+            startActivity(Intent(this@OnBoardingActivity, AskInfoActivity::class.java))
+            getSharedPreferences("OnBoardingCheck", MODE_PRIVATE).edit().putBoolean("isFirstRun", true).apply()
 
             finish()
         }
@@ -77,15 +78,12 @@ class OnBoardingActivity : AppCompatActivity() {
                 delay(5000)
 
                 withContext(Dispatchers.Main) {
-                    // TODO("Update UI here!")
 
-                    showMsgTxt.text = list[i]
+                    showMsgTxt.text = getString(list[i]).toString()
                     val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
                     `in`.duration = 1000
                     showMsgTxt.startAnimation(`in`)
-                    Log.d("TMZK", list[i])
                 }
-                Log.d("TMZY", i.toString())
                 i++
                 if (i == 2) {
                     i = 0
@@ -114,10 +112,6 @@ class OnBoardingActivity : AppCompatActivity() {
         videoView.layoutParams = lp
     }
 
-    // This method gets the proportion of the video that you want to display.
-    // I already know this ratio since my video is hardcoded, you can get the
-    // height and width of your video and appropriately generate  the proportion
-    //    as :height/width
     private fun getVideoProportion(): Float {
         return 2f
     }
