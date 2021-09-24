@@ -3,13 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_useractivity.xml" value="0.11388888888888889" />
         <entry key="app/src/main/res/drawable/ic_nike_logo.xml" value="0.11388888888888889" />
         <entry key="app/src/main/res/drawable/ic_pause.xml" value="0.1037037037037037" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
-        <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.10435971740494071" />
+        <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.37117481372523653" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21421939223914077" />
         <entry key="app/src/main/res/layout/fragment_ask_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.14336372847011145" />

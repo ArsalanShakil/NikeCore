@@ -133,6 +133,7 @@
         android:clickable="true"
         android:contentDescription="@string/pause_run"
         android:focusable="true"
+        app:rippleColor="@color/grey"
         android:src="@drawable/ic_pause"
         app:backgroundTint="@color/black"
         app:fabCustomSize="100dp"
