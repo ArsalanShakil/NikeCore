@@ -23,6 +23,7 @@
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:id="@+id/startRunBtn"
         android:clickable="true"
         android:contentDescription="@string/start_run"
         android:focusable="true"

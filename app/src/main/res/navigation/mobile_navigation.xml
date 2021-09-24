@@ -9,7 +9,11 @@
         android:id="@+id/navigation_run"
         android:name="com.example.nikecore.ui.run.RunFragment"
         android:label="@string/title_run"
-        tools:layout="@layout/fragment_run" />
+        tools:layout="@layout/fragment_run" >
+        <action
+            android:id="@+id/action_navigation_run_to_runStartedFragment"
+            app:destination="@id/runStartedFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_useractivity"
@@ -22,4 +26,9 @@
         android:name="com.example.nikecore.ui.payment.PaymentFragment"
         android:label="@string/title_payment"
         tools:layout="@layout/fragment_payment" />
+    <fragment
+        android:id="@+id/runStartedFragment"
+        android:name="com.example.nikecore.ui.runstarted.RunStartedFragment"
+        android:label="run_started_fragment"
+        tools:layout="@layout/run_started_fragment" />
 </navigation>

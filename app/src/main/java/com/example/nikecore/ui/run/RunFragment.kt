@@ -8,7 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentRunBinding
+import kotlinx.android.synthetic.main.fragment_run.*
 
 class RunFragment : Fragment() {
 
@@ -35,6 +38,14 @@ class RunFragment : Fragment() {
             textView.text = it
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        startRunBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_run_to_runStartedFragment)
+        }
     }
 
     override fun onDestroyView() {

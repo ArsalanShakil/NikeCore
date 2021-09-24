@@ -13,4 +13,10 @@
     <string name="start_run">Start run</string>
     <string name="start">START</string>
     <string name="before_we_begin">Before we begin, provide us this information to help us imporove your experience</string>
+    <string name="zero_value">00:00</string>
+    <string name="bpm">BPM</string>
+    <string name="speed">Speed</string>
+    <string name="time">Time</string>
+    <string name="kilo_meters">Kilo Meters</string>
+    <string name="pause_run">Pause Run</string>
 </resources>

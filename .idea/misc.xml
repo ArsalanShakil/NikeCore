@@ -7,13 +7,17 @@
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_useractivity.xml" value="0.11388888888888889" />
         <entry key="app/src/main/res/drawable/ic_nike_logo.xml" value="0.11388888888888889" />
+        <entry key="app/src/main/res/drawable/ic_pause.xml" value="0.1037037037037037" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
-        <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.29393939393939394" />
-        <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.14336372847011145" />
+        <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.10435971740494071" />
+        <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21421939223914077" />
         <entry key="app/src/main/res/layout/fragment_ask_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/fragment_run.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_run_started.xml" value="0.38891939122174396" />
+        <entry key="app/src/main/res/layout/fragment_runstarted.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/fragment_useractivity.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/run_started_fragment.xml" value="0.14773255583752015" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.28703703703703703" />
       </map>
     </option>
