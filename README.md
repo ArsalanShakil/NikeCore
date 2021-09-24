@@ -28,4 +28,5 @@
 ## Figma Wireframes
 
 
+![Group 7](https://user-images.githubusercontent.com/40695548/134729543-c8b13d84-99dd-4cd1-84ca-1f45c31ef834.png)
 
