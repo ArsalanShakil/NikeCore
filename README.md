@@ -1,6 +1,7 @@
 # NikeCore
 ### An application connecting consumers to extended digital touch points based on their physical activity and shopping behaviour. NikeCore helps you maintian healthy wellness parctices by incentivising your daily physical activities that turn into benefits you can use online or on physical nike stores.
-##### It is a self intiated project and is an extended concept for Nike Health Apps.
+##### It is a self intiated project which was inspired by Nike.
+##### Note: Nike owns the rights to the brand indentity, brand assets such as logo, brand images, videos, and various other materials.
 
 <br/>
 
@@ -28,6 +29,5 @@
 
 ## Figma Wireframes
 
-
-![Group 7](https://user-images.githubusercontent.com/40695548/134729543-c8b13d84-99dd-4cd1-84ca-1f45c31ef834.png)
+![Figma](https://user-images.githubusercontent.com/40695548/134729543-c8b13d84-99dd-4cd1-84ca-1f45c31ef834.png)
 
