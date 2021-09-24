@@ -1,5 +1,8 @@
 # NikeCore
 ### An application connecting consumers to extended digital touch points based on their physical activity and shopping behaviour.
+#
+### NikeCore helps you maintian a healthy wellness parctices by incentivising your daily physical activities that turn into 
+benefits you can use online or physical nike stores.
 
 <br/>
 
