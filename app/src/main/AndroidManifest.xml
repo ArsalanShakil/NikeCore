@@ -29,6 +29,7 @@
             android:theme="@style/onBoardingTheme" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
     </application>
 

@@ -133,7 +133,6 @@
         android:clickable="true"
         android:contentDescription="@string/pause_run"
         android:focusable="true"
-        app:rippleColor="@color/grey"
         android:src="@drawable/ic_pause"
         app:backgroundTint="@color/black"
         app:fabCustomSize="100dp"
@@ -141,7 +140,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.825"
+        app:layout_constraintVertical_bias="0.84000003"
+        app:rippleColor="@color/grey"
         app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

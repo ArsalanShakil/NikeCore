@@ -21,9 +21,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/startRunBtn"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/startRunBtn"
         android:clickable="true"
         android:contentDescription="@string/start_run"
         android:focusable="true"
@@ -33,7 +33,6 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.846" />
