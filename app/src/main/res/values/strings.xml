@@ -19,4 +19,5 @@
     <string name="time">Time</string>
     <string name="kilo_meters">Kilo Meters</string>
     <string name="pause_run">Pause Run</string>
+    <string name="one_txt">1</string>
 </resources>

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentRunBinding
+import kotlinx.android.synthetic.main.counting_fragment.*
 import kotlinx.android.synthetic.main.fragment_run.*
 
 class RunFragment : Fragment() {
@@ -46,7 +49,7 @@ class RunFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         startRunBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_run_to_runStartedFragment)
+            findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
         }
     }
 

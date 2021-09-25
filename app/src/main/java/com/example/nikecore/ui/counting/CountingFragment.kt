@@ -1,0 +1,68 @@
+package com.example.nikecore.ui.counting
+
+import androidx.lifecycle.ViewModelProvider
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.nikecore.R
+import kotlinx.android.synthetic.main.counting_fragment.*
+import kotlinx.coroutines.*
+
+class CountingFragment : Fragment() {
+
+    companion object {
+        fun newInstance() = CountingFragment()
+    }
+
+    private lateinit var viewModel: CountingViewModel
+    private val countingList = listOf(2, 3, 4)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        return inflater.inflate(R.layout.counting_fragment, container, false)
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // With blank your fragment BackPressed will be disabled.
+        }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            var i = 0
+            while (i in countingList.indices) {
+                delay(1000)
+
+                withContext(Dispatchers.Main) {
+
+                    countingTxt.text = countingList[i].toString()
+                    val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
+                    `in`.duration = 500
+                    countingTxt.startAnimation(`in`)
+                }
+                i++
+            }
+            lifecycleScope.launch(Dispatchers.Main) {
+                findNavController().navigate(R.id.action_countingFragment_to_runStartedFragment)
+            }
+        }
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(CountingViewModel::class.java)
+        // TODO: Use the ViewModel
+    }
+
+}

@@ -4,4 +4,6 @@
     <fade android:fadingMode="fade_out" />
     <changeBounds />
     <fade android:fadingMode="fade_in" />
+    <fade android:fadingMode="fade_in_out" />
+
 </transitionSet>

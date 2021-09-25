@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import com.example.nikecore.R
 import androidx.appcompat.app.AppCompatActivity
-
-
-
+import androidx.navigation.fragment.findNavController
 
 
 class RunStartedFragment : Fragment() {
@@ -25,7 +24,6 @@ class RunStartedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         return inflater.inflate(R.layout.run_started_fragment, container, false)
 
 
@@ -33,6 +31,10 @@ class RunStartedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().popBackStack(R.id.navigation_run,false)
+
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
