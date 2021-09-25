@@ -1,7 +1,8 @@
-# NikeCore
-### An application connecting consumers to extended digital touch points based on their physical activity and shopping behaviour. NikeCore helps you maintian healthy wellness parctices by incentivising your daily physical activities that turn into benefits you can use online or on physical nike stores.
-##### It is a self intiated project which was inspired by Nike.
-##### Note: Nike owns the rights to the brand indentity, brand assets such as logo, brand images, videos, and various other materials.
+# NikeCore 
+### An application connecting consumers to extended digital touch points based on their physical activity and shopping behaviour. NikeCore helps you maintain healthy wellness practices by incentivising your daily physical activities that turn into benefits you can use online or on physical Nike stores.
+##### 
+##### Note: It is a self-initiated project that is currently in progress. Nike owns the rights to the brand identity, brand assets such as logo, brand images, videos, and various other materials.
+
 
 <br/>
 
