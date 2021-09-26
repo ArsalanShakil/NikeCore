@@ -12,15 +12,17 @@
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.17441356845745695" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21421939223914077" />
+        <entry key="app/src/main/res/layout/askinfo_fragment.xml" value="0.10916919959473151" />
         <entry key="app/src/main/res/layout/counting_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_ask_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_counting.xml" value="0.10212409598188622" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.14336372847011145" />
-        <entry key="app/src/main/res/layout/fragment_run.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_run.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_run_started.xml" value="0.38891939122174396" />
         <entry key="app/src/main/res/layout/fragment_runstarted.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/fragment_useractivity.xml" value="0.13451086956521738" />
-        <entry key="app/src/main/res/layout/run_started_fragment.xml" value="0.14773255583752015" />
+        <entry key="app/src/main/res/layout/onboarding_fragment.xml" value="0.10916919959473151" />
+        <entry key="app/src/main/res/layout/run_started_fragment.xml" value="0.14423944332225744" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.28703703703703703" />
       </map>
     </option>

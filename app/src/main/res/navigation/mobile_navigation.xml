@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_run">
+    app:startDestination="@id/onboardingFragment">
 
     <fragment
         android:id="@+id/navigation_run"
@@ -43,5 +43,27 @@
         <action
             android:id="@+id/action_countingFragment_to_runStartedFragment"
             app:destination="@id/runStartedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.example.nikecore.ui.onBoarding.OnboardingFragment"
+        android:label="onboarding_fragment"
+        tools:layout="@layout/onboarding_fragment" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_askinfoFragment"
+            app:destination="@id/askinfoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/askinfoFragment"
+        android:name="com.example.nikecore.ui.askinfo.AskinfoFragment"
+        android:label="askinfo_fragment"
+        tools:layout="@layout/askinfo_fragment" >
+        <action
+            android:id="@+id/action_askinfoFragment_to_navigation_run"
+            app:destination="@id/navigation_run" />
     </fragment>
 </navigation>
