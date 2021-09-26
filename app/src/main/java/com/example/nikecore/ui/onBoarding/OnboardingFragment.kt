@@ -12,15 +12,12 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.VideoView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.sharedpreferences.AppPreferences
-import com.example.nikecore.ui.run.RunViewModel
 import kotlinx.android.synthetic.main.onboarding_fragment.*
-import kotlinx.coroutines.*
 
 class OnboardingFragment : Fragment() {
 
@@ -43,7 +40,7 @@ class OnboardingFragment : Fragment() {
             listOf(R.string.OnBoarding_text_Use_map, R.string.OnBoarding_text_Maintain_your,R.string.OnBoarding_text_Collect_tickets)
 
         viewModel.i.observe(viewLifecycleOwner,{
-            showMsgTxt.text = getString(list[it]).toString()
+            showMsgTxt.text = getString(list[it])
             val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
             `in`.duration = 1000
             showMsgTxt.startAnimation(`in`)

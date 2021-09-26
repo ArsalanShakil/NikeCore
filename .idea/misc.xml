@@ -7,16 +7,19 @@
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_useractivity.xml" value="0.11388888888888889" />
+        <entry key="app/src/main/res/drawable/ic_money_icon.xml" value="0.17685185185185184" />
         <entry key="app/src/main/res/drawable/ic_nike_logo.xml" value="0.11388888888888889" />
         <entry key="app/src/main/res/drawable/ic_pause.xml" value="0.1037037037037037" />
+        <entry key="app/src/main/res/drawable/ic_ticket_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.17441356845745695" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17346014492753623" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21421939223914077" />
-        <entry key="app/src/main/res/layout/askinfo_fragment.xml" value="0.10916919959473151" />
+        <entry key="app/src/main/res/layout/askinfo_fragment.xml" value="0.2279472004245579" />
         <entry key="app/src/main/res/layout/counting_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_ask_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_counting.xml" value="0.10212409598188622" />
-        <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.14336372847011145" />
+        <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.3187853034915231" />
         <entry key="app/src/main/res/layout/fragment_run.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_run_started.xml" value="0.38891939122174396" />
         <entry key="app/src/main/res/layout/fragment_runstarted.xml" value="0.14336372847011145" />
@@ -32,5 +35,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.14064342096312626" />
+      </ProjectState>
+    </option>
   </component>
 </project>
