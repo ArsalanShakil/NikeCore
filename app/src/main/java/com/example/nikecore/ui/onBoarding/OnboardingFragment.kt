@@ -30,7 +30,6 @@ class OnboardingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         viewModel =
             ViewModelProvider(this).get(OnboardingViewModel::class.java)
         return inflater.inflate(R.layout.onboarding_fragment, container, false)

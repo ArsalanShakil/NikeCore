@@ -34,13 +34,22 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_run,R.id.navigation_useractivity,R.id.navigation_payment ->
-                    navView.visibility = View.VISIBLE
+                navView.visibility = View.VISIBLE
                 else -> navView.visibility = View.GONE
             }
         }
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_run,R.id.navigation_useractivity,R.id.navigation_payment ->
+                    supportActionBar?.show()
+                else -> supportActionBar?.hide()
 
+
+            }
+        }
     }
 
 
