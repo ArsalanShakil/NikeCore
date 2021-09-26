@@ -14,7 +14,8 @@
 
 <br/>
 
-## Tecnologies Used
+## Tech Used
+
 ##### - MVVM Clean Architecture
 ##### - Dagger Hilt
 ##### - Coroutines
