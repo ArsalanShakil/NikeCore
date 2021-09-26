@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
+import com.example.nikecore.sharedpreferences.AppPreferences
 import com.example.nikecore.ui.run.RunViewModel
 import kotlinx.android.synthetic.main.onboarding_fragment.*
 import kotlinx.coroutines.*
@@ -48,10 +49,11 @@ class OnboardingFragment : Fragment() {
             showMsgTxt.startAnimation(`in`)
         })
 
-        val isFirstRun =
+        /*val isFirstRun =
             this.activity?.getSharedPreferences("OnBoardingCheck", AppCompatActivity.MODE_PRIVATE)
-                ?.getBoolean("isFirstRun", false)
-        if (isFirstRun == true) {
+                ?.getBoolean("isFirstRun", false)*/
+
+        if (AppPreferences.getIsFirstStart(requireContext()) == true) {
             //startActivity(Intent(this, AskInfoActivity::class.java))
             findNavController().navigate(R.id.action_onboardingFragment_to_askinfoFragment)
         }
@@ -84,8 +86,7 @@ class OnboardingFragment : Fragment() {
         }
 
         getStartedBtn.setOnClickListener {
-
-            this.activity?.getSharedPreferences("OnBoardingCheck", AppCompatActivity.MODE_PRIVATE)?.edit()?.putBoolean("isFirstRun", true)?.apply()
+            AppPreferences.setIsFirstStart(requireContext(),true)
             findNavController().navigate(R.id.action_onboardingFragment_to_askinfoFragment)
 
         }
