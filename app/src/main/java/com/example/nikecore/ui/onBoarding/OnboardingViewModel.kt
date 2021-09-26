@@ -18,13 +18,8 @@ class OnboardingViewModel : ViewModel() {
             while(true) {
                 delay(5000)
                 i.value = (i.value!! + 1) % 3
-                Log.d("arsalan", i.value!!.toString())
             }
 
-                    //showMsgTxt.text = getString(list[i]).toString()
-                    //val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
-                    //`in`.duration = 1000
-                    //showMsgTxt.startAnimation(`in`)
 
 
         }

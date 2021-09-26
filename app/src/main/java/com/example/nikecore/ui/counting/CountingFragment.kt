@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import kotlinx.android.synthetic.main.counting_fragment.*
+import kotlinx.android.synthetic.main.onboarding_fragment.*
 import kotlinx.coroutines.*
 
 class CountingFragment : Fragment() {
@@ -23,7 +24,6 @@ class CountingFragment : Fragment() {
     }
 
     private lateinit var viewModel: CountingViewModel
-    private val countingList = listOf(2, 3, 4)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,34 +34,26 @@ class CountingFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(CountingViewModel::class.java)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // With blank your fragment BackPressed will be disabled.
         }
 
-        GlobalScope.launch(Dispatchers.IO) {
-            var i = 0
-            while (i in countingList.indices) {
-                delay(1000)
+        viewModel.number.observe(viewLifecycleOwner,{
+            countingTxt.text = it.toString()
+            val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
+            `in`.duration = 1000
+            countingTxt.startAnimation(`in`)
+        })
 
-                withContext(Dispatchers.Main) {
-
-                    countingTxt.text = countingList[i].toString()
-                    val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
-                    `in`.duration = 500
-                    countingTxt.startAnimation(`in`)
-                }
-                i++
-            }
-            lifecycleScope.launch(Dispatchers.Main) {
-                findNavController().navigate(R.id.action_countingFragment_to_runStartedFragment)
-            }
-        }
-
+        viewModel.navigateToAccountingFragment.observe(viewLifecycleOwner,  {
+            if (it)
+                 findNavController().navigate(R.id.action_countingFragment_to_runStartedFragment)
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CountingViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
