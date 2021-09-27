@@ -1,10 +1,17 @@
 package com.example.nikecore.ui.run
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.nikecore.repositories.MainRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RunViewModel : ViewModel() {
+@HiltViewModel
+class RunViewModel @Inject constructor(
+    val mainRepository: MainRepository
+): ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

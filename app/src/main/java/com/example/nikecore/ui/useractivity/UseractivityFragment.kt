@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.nikecore.databinding.FragmentUseractivityBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UseractivityFragment : Fragment() {
 
     private lateinit var useractivityViewModel: UseractivityViewModel
@@ -32,10 +34,6 @@ class UseractivityFragment : Fragment() {
         _binding = FragmentUseractivityBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        useractivityViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 

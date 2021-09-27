@@ -3,7 +3,7 @@ package com.example.nikecore
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
-import androidx.navigation.findNavController
+import com.example.nikecore.ui.MainActivity
 
 
 class SplashScreen : AppCompatActivity() {
