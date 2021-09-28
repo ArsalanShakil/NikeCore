@@ -1,6 +1,7 @@
 package com.example.nikecore.ui.run
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,8 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentRunBinding
+import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.nikecore.others.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.nikecore.others.TrackingUtilities
+import com.example.nikecore.services.TrackingServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -71,6 +74,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             map = it
         }
         startRunBtn.setOnClickListener {
+            sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
             findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
         }
     }
@@ -123,6 +127,12 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
+
+    private fun sendCommandToService(action: String) =
+        Intent(requireContext(), TrackingServices::class.java).also {
+            it.action = action
+            requireContext().startService(it)
+        }
 
     override fun onResume() {
         super.onResume()
