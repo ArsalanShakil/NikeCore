@@ -1,19 +1,23 @@
 package com.example.nikecore.ui
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.nikecore.R
 import com.example.nikecore.database.RunDAO
 import com.example.nikecore.databinding.ActivityMainBinding
+import com.example.nikecore.others.Constants.ACTION_SHOW_RUN_FRAGMENT
 import com.google.android.gms.maps.GoogleMap
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_NikeCore)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        navigateToTrackingFragmentIfNeeded(intent)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -56,6 +62,17 @@ class MainActivity : AppCompatActivity() {
 
 
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigateToTrackingFragmentIfNeeded(intent)
+    }
+
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+        if(intent?.action == ACTION_SHOW_RUN_FRAGMENT) {
+            nav_host_fragment_activity_main.findNavController().navigate(R.id.action_global_runStartedFragment)
         }
     }
 
