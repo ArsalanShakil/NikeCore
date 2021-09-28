@@ -9,7 +9,7 @@
     <string name="OnBoarding_text_Use_map">Use map to discover places with more tickets</string>
     <string name="OnBoarding_text_Maintain_your">Maintain your pace and earn rewards</string>
     <string name="get_started">Get started</string>
-    <string name="mute_unmute_button">Mute/Unmute Button</string>
+    <string name="mute_unmute_button">Mute/Unmute</string>
     <string name="start_run">Start run</string>
     <string name="start">START</string>
     <string name="before_we_begin">Before we begin, provide us this information to help us imporove your experience</string>
@@ -26,4 +26,7 @@
     <string name="balance">Balance</string>
     <string name="tickets_collected">Tickets Collected</string>
     <string name="start_payment">Start payment</string>
+    <string name="resume_run">resume run</string>
+    <string name="stop_run">stop_run</string>
+    <string name="map_of_your_location">map of your current location</string>
 </resources>

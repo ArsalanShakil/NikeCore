@@ -34,7 +34,11 @@
         android:id="@+id/runStartedFragment"
         android:name="com.example.nikecore.ui.runstarted.RunStartedFragment"
         android:label="run_started_fragment"
-        tools:layout="@layout/run_started_fragment" />
+        tools:layout="@layout/run_started_fragment" >
+        <action
+            android:id="@+id/action_runStartedFragment_to_runPausedFragment"
+            app:destination="@id/runPausedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/countingFragment"
         android:name="com.example.nikecore.ui.counting.CountingFragment"
@@ -64,6 +68,18 @@
         tools:layout="@layout/askinfo_fragment" >
         <action
             android:id="@+id/action_askinfoFragment_to_navigation_run"
+            app:destination="@id/navigation_run" />
+    </fragment>
+    <fragment
+        android:id="@+id/runPausedFragment"
+        android:name="com.example.nikecore.ui.runpaused.RunPausedFragment"
+        android:label="run_paused_fragment"
+        tools:layout="@layout/run_paused_fragment" >
+        <action
+            android:id="@+id/action_runPausedFragment_to_runStartedFragment"
+            app:destination="@id/runStartedFragment" />
+        <action
+            android:id="@+id/action_runPausedFragment_to_navigation_run"
             app:destination="@id/navigation_run" />
     </fragment>
 </navigation>

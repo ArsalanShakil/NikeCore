@@ -10,6 +10,7 @@ import androidx.activity.addCallback
 import com.example.nikecore.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.run_started_fragment.*
 
 
 class RunStartedFragment : Fragment() {
@@ -34,6 +35,9 @@ class RunStartedFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().popBackStack(R.id.navigation_run,false)
 
+        }
+        pauseRunBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
         }
     }
 
