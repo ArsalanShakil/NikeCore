@@ -1,5 +1,6 @@
 package com.example.nikecore.ui
 
+
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -11,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.nikecore.R
 import com.example.nikecore.database.RunDAO
 import com.example.nikecore.databinding.ActivityMainBinding
+import com.google.android.gms.maps.GoogleMap
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,6 +20,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_run.xml" value="0.12360688956433637" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_paused_fragment.xml" value="0.12360688956433637" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_started_fragment.xml" value="0.12360688956433637" />
         <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />
@@ -24,14 +27,13 @@
         <entry key="app/src/main/res/layout/fragment_run_started.xml" value="0.38891939122174396" />
         <entry key="app/src/main/res/layout/fragment_runstarted.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/fragment_useractivity.xml" value="0.13451086956521738" />
-        <entry key="app/src/main/res/layout/onboarding_fragment.xml" value="0.17423925729903852" />
-        <entry key="app/src/main/res/layout/run_paused_fragment.xml" value="0.27725841228655196" />
+        <entry key="app/src/main/res/layout/onboarding_fragment.xml" value="0.10916919959473151" />
         <entry key="app/src/main/res/layout/run_started_fragment.xml" value="0.14423944332225744" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.28703703703703703" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
