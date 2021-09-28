@@ -1,26 +1,36 @@
 package com.example.nikecore.ui.runpaused
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
+import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
+import com.example.nikecore.others.Constants.ACTION_STOP_SERVICE
+import com.example.nikecore.others.Constants.MAP_ZOOM
+import com.example.nikecore.others.Constants.POLYLINE_COLOR
+import com.example.nikecore.others.Constants.POLYLINE_WIDTH
+import com.example.nikecore.services.Polyline
+import com.example.nikecore.services.TrackingServices
+import com.example.nikecore.ui.MainActivity
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import kotlinx.android.synthetic.main.fragment_run.*
+import com.google.android.gms.maps.model.PolylineOptions
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.run_paused_fragment.*
+import timber.log.Timber
 
+@AndroidEntryPoint
 class RunPausedFragment : Fragment() {
 
-    private var map: GoogleMap? = null
+    private var isTracking = false
+    private var pathPoints = mutableListOf<Polyline>()
+    //private var map: GoogleMap? = null
 
-    companion object {
-        fun newInstance() = RunPausedFragment()
-    }
-
-    private lateinit var viewModel: RunPausedViewModel
+    private val viewModel: RunPausedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,20 +44,89 @@ class RunPausedFragment : Fragment() {
         mapViewRunPaused.onCreate(savedInstanceState)
 
         mapViewRunPaused.getMapAsync {
-            map = it
+            Timber.d("mapView $it")
+//            if(map != null) {
+//                map = it
+//            }
+            subscribeToObservers(it)
+
         }
         resumeRunBtn.setOnClickListener {
+            toggleRun()
             findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
+
         }
         stopRunBtn.setOnLongClickListener {
+            toggleRun()
             findNavController().navigate(R.id.action_runPausedFragment_to_navigation_run)
             true
         }
+
     }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RunPausedViewModel::class.java)
-        // TODO: Use the ViewModel
+
+    private fun subscribeToObservers(map: GoogleMap) {
+        TrackingServices.isTracking.observe(viewLifecycleOwner, {
+            updateTracking(it)
+            Timber.d("observe")
+        })
+
+        TrackingServices.pathPoints.observe(viewLifecycleOwner, {
+            pathPoints = it
+            Timber.d("observe pathpoint $pathPoints")
+            addAllPolylines(map)
+            moveCameraToUser(map)
+        })
+    }
+
+    private fun toggleRun() {
+        if(isTracking) {
+            (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
+        } else {
+            (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+        }
+    }
+
+    private fun updateTracking(isTracking: Boolean) {
+        this.isTracking = isTracking
+    }
+
+
+    private fun moveCameraToUser(map: GoogleMap) {
+        Timber.d("move camera $pathPoints")
+        if(pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
+            map.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    pathPoints.last().last(),
+                    MAP_ZOOM
+
+                )
+            )
+        }
+    }
+
+    private fun addAllPolylines(map: GoogleMap) {
+        Timber.d("add allpolyline $pathPoints $map")
+        for(polyline in pathPoints) {
+            val polylineOptions = PolylineOptions()
+                .color(POLYLINE_COLOR)
+                .width(POLYLINE_WIDTH)
+                .addAll(polyline)
+            map.addPolyline(polylineOptions)
+        }
+    }
+
+    private fun addLatestPolyline(map: GoogleMap) {
+        Timber.d("add polyline $pathPoints")
+        if(pathPoints.isNotEmpty() && pathPoints.last().size > 1) {
+            val preLastLatLng = pathPoints.last()[pathPoints.last().size - 2]
+            val lastLatLng = pathPoints.last().last()
+            val polylineOptions = PolylineOptions()
+                .color(POLYLINE_COLOR)
+                .width(POLYLINE_WIDTH)
+                .add(preLastLatLng)
+                .add(lastLatLng)
+            map.addPolyline(polylineOptions)
+        }
     }
 
     override fun onResume() {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +16,7 @@ import com.example.nikecore.R
 import com.example.nikecore.database.RunDAO
 import com.example.nikecore.databinding.ActivityMainBinding
 import com.example.nikecore.others.Constants.ACTION_SHOW_RUN_FRAGMENT
+import com.example.nikecore.services.TrackingServices
 import com.google.android.gms.maps.GoogleMap
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,6 +77,12 @@ class MainActivity : AppCompatActivity() {
             nav_host_fragment_activity_main.findNavController().navigate(R.id.action_global_runStartedFragment)
         }
     }
+
+   fun sendCommandToService(action: String) =
+        Intent(this, TrackingServices::class.java).also {
+            it.action = action
+            this.startService(it)
+        }
 
 
 }

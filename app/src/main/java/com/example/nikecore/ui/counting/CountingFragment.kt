@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
+import com.example.nikecore.others.Constants
+import com.example.nikecore.ui.MainActivity
 import kotlinx.android.synthetic.main.counting_fragment.*
 import kotlinx.android.synthetic.main.onboarding_fragment.*
 

@@ -10,6 +10,8 @@ import androidx.activity.addCallback
 import com.example.nikecore.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.example.nikecore.others.Constants
+import com.example.nikecore.ui.MainActivity
 import kotlinx.android.synthetic.main.run_started_fragment.*
 
 
@@ -37,6 +39,7 @@ class RunStartedFragment : Fragment() {
 
         }
         pauseRunBtn.setOnClickListener {
+            (activity as MainActivity).sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
         }
     }
