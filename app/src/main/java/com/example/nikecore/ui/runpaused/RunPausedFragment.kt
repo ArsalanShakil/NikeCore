@@ -20,13 +20,10 @@ import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.run_paused_fragment.*
-import kotlinx.android.synthetic.main.run_started_fragment.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -129,7 +126,7 @@ class RunPausedFragment : Fragment() {
             map.addMarker(
                 MarkerOptions().position(pathPoints.last().last())
                     .title("run"))?.setIcon(
-                (activity as MainActivity).getBitmapDescriptorFromVector(requireContext(), R.drawable.ic_menu_run)
+                (activity as MainActivity).getBitmapDescriptorFromVector(requireContext(), R.drawable.ic_current_loaction_marker_icon)
 
             )
 
