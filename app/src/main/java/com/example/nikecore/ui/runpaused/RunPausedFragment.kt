@@ -20,6 +20,7 @@ import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.run_paused_fragment.*
@@ -74,6 +75,7 @@ class RunPausedFragment : Fragment() {
             Timber.d("observe pathpoint $pathPoints")
 //            addLatestPolyline(map)
             addAllPolylines(map)
+            setStartingPositionMarker(map)
             moveCameraToUser(map)
         })
 
@@ -96,7 +98,14 @@ class RunPausedFragment : Fragment() {
         this.isTracking = isTracking
     }
 
-
+    private fun setStartingPositionMarker(map: GoogleMap) {
+        if(pathPoints.isNotEmpty() && pathPoints.first().isNotEmpty()) {
+            map.addMarker(
+                MarkerOptions()
+                    .position(pathPoints.first().first())
+            )
+        }
+    }
 
     private fun moveCameraToUser(map: GoogleMap) {
         Timber.d("move camera $pathPoints")
