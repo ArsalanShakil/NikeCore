@@ -39,6 +39,7 @@ class RunPausedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Timber.d("ONVIEWCREATED")
         return inflater.inflate(R.layout.run_paused_fragment, container, false)
     }
 
@@ -64,6 +65,7 @@ class RunPausedFragment : Fragment() {
     }
 
     private fun subscribeToObservers(map: GoogleMap) {
+
         TrackingServices.isTracking.observe(viewLifecycleOwner, {
             updateTracking(it)
             Timber.d("observe")
@@ -84,6 +86,7 @@ class RunPausedFragment : Fragment() {
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             distanceValuePausedTxt.text = formattedTime
         })
+
     }
 
     private fun toggleRun() {
@@ -96,6 +99,8 @@ class RunPausedFragment : Fragment() {
 
     private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
+        Timber.d("isTracking Paused: $isTracking")
+
     }
 
 
@@ -157,6 +162,7 @@ class RunPausedFragment : Fragment() {
             map.addPolyline(polylineOptions)
         }
     }
+
 
     override fun onResume() {
         super.onResume()

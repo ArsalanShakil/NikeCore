@@ -9,6 +9,9 @@
         app:destination="@id/runStartedFragment"
         app:launchSingleTop="true" />
 
+    <action android:id="@+id/action_global_runPausedFragment"
+        app:destination="@id/runPausedFragment"
+        app:launchSingleTop="true" />
     <fragment
         android:id="@+id/navigation_run"
         android:name="com.example.nikecore.ui.run.RunFragment"

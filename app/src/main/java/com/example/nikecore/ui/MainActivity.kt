@@ -20,6 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.nikecore.R
 import com.example.nikecore.database.RunDAO
 import com.example.nikecore.databinding.ActivityMainBinding
+import com.example.nikecore.others.Constants.ACTION_SHOW_PAUSE_FRAGMENT
 import com.example.nikecore.others.Constants.ACTION_SHOW_RUN_FRAGMENT
 import com.example.nikecore.services.TrackingServices
 import com.google.android.gms.maps.GoogleMap
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -80,8 +82,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+        Timber.d("action ${intent?.action}")
         if(intent?.action == ACTION_SHOW_RUN_FRAGMENT) {
+            Timber.d("action run main")
             nav_host_fragment_activity_main.findNavController().navigate(R.id.action_global_runStartedFragment)
+        } else if(intent?.action == ACTION_SHOW_PAUSE_FRAGMENT) {
+            Timber.d("action pause main")
+            nav_host_fragment_activity_main.findNavController().navigate(R.id.action_global_runPausedFragment)
         }
     }
 
@@ -101,6 +108,7 @@ class MainActivity : AppCompatActivity() {
 
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
+
 
 }
 

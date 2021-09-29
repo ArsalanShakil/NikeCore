@@ -1,38 +1,35 @@
 package com.example.nikecore.ui.runstarted
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import com.example.nikecore.R
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.nikecore.R
 import com.example.nikecore.others.Constants
 import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
-import kotlinx.android.synthetic.main.run_paused_fragment.*
 import kotlinx.android.synthetic.main.run_started_fragment.*
+import timber.log.Timber
 
 
 class RunStartedFragment : Fragment() {
 
     private var curTimeInMillis = 0L
-
-    companion object {
-        fun newInstance() = RunStartedFragment()
-    }
-
     private lateinit var viewModel: RunStartedViewModel
+    private var isTracking = true
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        TrackingServices.isTracking.postValue(true)
         return inflater.inflate(R.layout.run_started_fragment, container, false)
 
 
@@ -44,6 +41,7 @@ class RunStartedFragment : Fragment() {
             findNavController().popBackStack(R.id.navigation_run,false)
 
         }
+        TrackingServices.isTracking.postValue(true)
         pauseRunBtn.setOnClickListener {
             (activity as MainActivity).sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
@@ -53,6 +51,10 @@ class RunStartedFragment : Fragment() {
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             distanceValueTxt.text = formattedTime
         })
+        TrackingServices.isTracking.observe(viewLifecycleOwner, {
+            Timber.d("gotoscreen $it")
+        })
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,5 +62,12 @@ class RunStartedFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(RunStartedViewModel::class.java)
         // TODO: Use the ViewModel
     }
+
+    private fun checkTrackingAndNavigate(isTracking: Boolean) {
+        if(!isTracking) {
+            findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
+        }
+    }
+
 
 }
