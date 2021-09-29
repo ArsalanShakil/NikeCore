@@ -9,13 +9,19 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import com.example.nikecore.R
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.others.Constants
+import com.example.nikecore.others.TrackingUtilities
+import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
+import kotlinx.android.synthetic.main.run_paused_fragment.*
 import kotlinx.android.synthetic.main.run_started_fragment.*
 
 
 class RunStartedFragment : Fragment() {
+
+    private var curTimeInMillis = 0L
 
     companion object {
         fun newInstance() = RunStartedFragment()
@@ -42,6 +48,11 @@ class RunStartedFragment : Fragment() {
             (activity as MainActivity).sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
         }
+        TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
+            curTimeInMillis = it
+            val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
+            distanceValueTxt.text = formattedTime
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

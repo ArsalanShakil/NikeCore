@@ -4,8 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_run.xml" value="0.12360688956433637" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_paused_fragment.xml" value="0.12360688956433637" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_started_fragment.xml" value="0.12360688956433637" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_paused_fragment.xml" value="0.264" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_started_fragment.xml" value="0.264" />
         <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />

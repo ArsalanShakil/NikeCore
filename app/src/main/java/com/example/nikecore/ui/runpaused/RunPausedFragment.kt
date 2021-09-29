@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
@@ -13,6 +14,7 @@ import com.example.nikecore.others.Constants.ACTION_STOP_SERVICE
 import com.example.nikecore.others.Constants.MAP_ZOOM
 import com.example.nikecore.others.Constants.POLYLINE_COLOR
 import com.example.nikecore.others.Constants.POLYLINE_WIDTH
+import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.Polyline
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.PolylineOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.run_paused_fragment.*
+import kotlinx.android.synthetic.main.run_started_fragment.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -28,7 +31,7 @@ class RunPausedFragment : Fragment() {
 
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
-    //private var map: GoogleMap? = null
+    private var curTimeInMillis = 0L
 
     private val viewModel: RunPausedViewModel by viewModels()
 
@@ -45,11 +48,7 @@ class RunPausedFragment : Fragment() {
 
         mapViewRunPaused.getMapAsync {
             Timber.d("mapView $it")
-//            if(map != null) {
-//                map = it
-//            }
             subscribeToObservers(it)
-
         }
         resumeRunBtn.setOnClickListener {
             toggleRun()
@@ -73,8 +72,15 @@ class RunPausedFragment : Fragment() {
         TrackingServices.pathPoints.observe(viewLifecycleOwner, {
             pathPoints = it
             Timber.d("observe pathpoint $pathPoints")
+//            addLatestPolyline(map)
             addAllPolylines(map)
             moveCameraToUser(map)
+        })
+
+        TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
+            curTimeInMillis = it
+            val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
+            distanceValuePausedTxt.text = formattedTime
         })
     }
 
@@ -89,6 +95,7 @@ class RunPausedFragment : Fragment() {
     private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
     }
+
 
 
     private fun moveCameraToUser(map: GoogleMap) {
