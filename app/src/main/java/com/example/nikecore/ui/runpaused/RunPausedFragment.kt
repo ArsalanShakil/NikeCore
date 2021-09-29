@@ -20,6 +20,8 @@ import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,6 +77,7 @@ class RunPausedFragment : Fragment() {
             Timber.d("observe pathpoint $pathPoints")
 //            addLatestPolyline(map)
             addAllPolylines(map)
+            setCurrentLocationMarker(map)
             setStartingPositionMarker(map)
             moveCameraToUser(map)
         })
@@ -98,6 +101,7 @@ class RunPausedFragment : Fragment() {
         this.isTracking = isTracking
     }
 
+
     private fun setStartingPositionMarker(map: GoogleMap) {
         if(pathPoints.isNotEmpty() && pathPoints.first().isNotEmpty()) {
             map.addMarker(
@@ -117,6 +121,18 @@ class RunPausedFragment : Fragment() {
 
                 )
             )
+        }
+    }
+
+    private fun setCurrentLocationMarker(map:GoogleMap) {
+        if(pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
+            map.addMarker(
+                MarkerOptions().position(pathPoints.last().last())
+                    .title("run"))?.setIcon(
+                (activity as MainActivity).getBitmapDescriptorFromVector(requireContext(), R.drawable.ic_menu_run)
+
+            )
+
         }
     }
 
