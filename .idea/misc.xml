@@ -3,21 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/activity_main.xml" value="0.16802536231884058" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/askinfo_fragment.xml" value="0.25407608695652173" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_run.xml" value="0.1" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_useractivity.xml" value="0.1" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/onboarding_fragment.xml" value="0.25407608695652173" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_item.xml" value="0.25407608695652173" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_paused_fragment.xml" value="0.25407608695652173" />
-        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_started_fragment.xml" value="0.25407608695652173" />
         <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_current_loaction_marker_icon.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_useractivity.xml" value="0.11388888888888889" />
         <entry key="app/src/main/res/drawable/ic_money_icon.xml" value="0.17685185185185184" />
         <entry key="app/src/main/res/drawable/ic_nike_logo.xml" value="0.11388888888888889" />
+        <entry key="app/src/main/res/drawable/ic_nikecore_logo.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_pause.xml" value="0.1037037037037037" />
+        <entry key="app/src/main/res/drawable/ic_stoprun_icon.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_ticket_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.17441356845745695" />
