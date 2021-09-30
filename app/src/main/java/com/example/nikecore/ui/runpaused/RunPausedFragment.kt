@@ -31,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.run_paused_fragment.*
 import timber.log.Timber
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.round
 
 @AndroidEntryPoint
@@ -39,8 +40,13 @@ class RunPausedFragment : Fragment() {
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
     private var curTimeInMillis = 0L
-    private var weight = 80f
+
     private var map: GoogleMap? = null
+
+    @set:Inject
+    var weight = 80f
+
+
     private val viewModel: RunPausedViewModel by viewModels()
 
     override fun onCreateView(
