@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.061" />
 
     <TextView
-        android:id="@+id/timeValueTxt"
+        android:id="@+id/distanceValueTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero_value"
@@ -99,7 +99,7 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/distanceValueTxt"
+        android:id="@+id/timeValueTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero_value1"

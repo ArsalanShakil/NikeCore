@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.useractivity.UseractivityFragment"
+    >
 
     <Spinner
         android:id="@+id/spFilter"
@@ -19,7 +21,7 @@
         android:id="@+id/tvFilterBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sort by:"
+        android:text="@string/sort_by"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/spFilter"
         app:layout_constraintEnd_toStartOf="@+id/spFilter"
@@ -29,6 +31,7 @@
         android:id="@+id/rvRuns"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/light_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

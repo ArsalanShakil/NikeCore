@@ -49,7 +49,7 @@ class RunStartedFragment : Fragment() {
         TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
             curTimeInMillis = it
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
-            distanceValueTxt.text = formattedTime
+            timeValueTxt.text = formattedTime
         })
     }
 

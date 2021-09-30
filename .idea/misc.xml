@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/drawable/ic_nike_logo.xml" value="0.11388888888888889" />
         <entry key="app/src/main/res/drawable/ic_nikecore_logo.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_pause.xml" value="0.1037037037037037" />
+        <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_stoprun_icon.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_ticket_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
@@ -23,13 +24,15 @@
         <entry key="app/src/main/res/layout/fragment_ask_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_counting.xml" value="0.10212409598188622" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.3187853034915231" />
-        <entry key="app/src/main/res/layout/fragment_run.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_run.xml" value="0.12925764192139738" />
         <entry key="app/src/main/res/layout/fragment_run_started.xml" value="0.38891939122174396" />
         <entry key="app/src/main/res/layout/fragment_runstarted.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/fragment_useractivity.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/onboarding_fragment.xml" value="0.17423925729903852" />
-        <entry key="app/src/main/res/layout/run_paused_fragment.xml" value="1.0195447918455203" />
-        <entry key="app/src/main/res/layout/run_started_fragment.xml" value="0.14423944332225744" />
+        <entry key="app/src/main/res/layout/run_item.xml" value="0.3393593629361843" />
+        <entry key="app/src/main/res/layout/run_paused_fragment.xml" value="0.1002529172745252" />
+        <entry key="app/src/main/res/layout/run_started_fragment.xml" value="0.3148936170212766" />
+        <entry key="app/src/main/res/layout/settings_fragment.xml" value="0.2758152173913043" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.28703703703703703" />
       </map>
     </option>

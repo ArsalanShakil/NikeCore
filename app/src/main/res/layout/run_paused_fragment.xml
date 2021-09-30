@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="0.48000002" />
 
     <TextView
-        android:id="@+id/timeValuePausedTxt"
+        android:id="@+id/distanceValuePausedTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero_value"
@@ -95,7 +95,7 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/timeTxt"
+        android:id="@+id/distanceTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/kilo_meters"
@@ -112,7 +112,7 @@
 
 
     <TextView
-        android:id="@+id/distanceValuePausedTxt"
+        android:id="@+id/timeValuePausedTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero_value1"
@@ -126,7 +126,7 @@
         app:layout_constraintVertical_bias="0.625" />
 
     <TextView
-        android:id="@+id/distanceTxt"
+        android:id="@+id/timeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time"

@@ -19,7 +19,6 @@ import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.Polyline
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
-import com.example.nikecore.ui.run.RunViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
@@ -104,7 +103,7 @@ class RunPausedFragment : Fragment() {
         TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
             curTimeInMillis = it
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
-            distanceValuePausedTxt.text = formattedTime
+            timeValuePausedTxt.text = formattedTime
         })
 
     }

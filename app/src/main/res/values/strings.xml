@@ -26,7 +26,6 @@
     <string name="zero_value1">00:00:00:00</string>
     <string name="bpm">BPM</string>
     <string name="speed">Speed</string>
-    <string name="time">Time</string>
     <string name="kilo_meters">Kilo Meters</string>
     <string name="pause_run">Pause Run</string>
     <string name="one_txt">1</string>
@@ -41,4 +40,12 @@
     <string name="map_of_your_location">map of your current location</string>
     <string name="finish_run">Finish Run</string>
     <string name="your_map_location_and_coins">Your Map Location and coins</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="make_sure_the_data">Make sure the data you have entered is correct, since it may cause the calorie counter to be less accurate</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="distance">Distance</string>
+    <string name="avg_speed">Avg speed</string>
+    <string name="calories">Calories</string>
 </resources>

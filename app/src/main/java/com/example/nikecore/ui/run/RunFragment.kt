@@ -1,7 +1,6 @@
 package com.example.nikecore.ui.run
 
 import android.Manifest
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,17 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentRunBinding
-import com.example.nikecore.others.Constants
 import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.nikecore.others.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.nikecore.others.TrackingUtilities
-import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
 import kotlinx.android.synthetic.main.run_paused_fragment.*
@@ -81,6 +74,10 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
             (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
         }
+        settingsBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_run_to_settingsFragment)
+        }
+
     }
 
     private fun requestPermissions() {
