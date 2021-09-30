@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_navigation_run_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_navigation_run_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
 
     <fragment
@@ -101,4 +104,9 @@
             android:id="@+id/action_settingsFragment_to_navigation_run"
             app:destination="@id/navigation_run" />
     </fragment>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.nikecore.statistics.StatisticsFragment"
+        android:label="statistics_fragment"
+        tools:layout="@layout/statistics_fragment" />
 </navigation>

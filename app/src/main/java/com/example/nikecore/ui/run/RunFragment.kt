@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.nikecore.others.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.ui.MainActivity
+import com.example.nikecore.ui.runpaused.RunPausedViewModel
 import com.google.android.gms.maps.GoogleMap
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
@@ -29,7 +31,9 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-    private lateinit var runViewModel: RunViewModel
+
+    private val runViewModel: RunViewModel by viewModels()
+
     private var _binding: FragmentRunBinding? = null
     private var map: GoogleMap? = null
 
@@ -43,22 +47,9 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-        runViewModel =
-            ViewModelProvider(this).get(RunViewModel::class.java)
 
         _binding = FragmentRunBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
-        val textView: TextView = binding.textHome
-        runViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-
         return root
     }
 
@@ -76,6 +67,9 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
         settingsBtn.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_run_to_settingsFragment)
+        }
+        statsBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_run_to_statisticsFragment)
         }
 
     }

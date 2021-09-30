@@ -48,4 +48,5 @@
     <string name="distance">Distance</string>
     <string name="avg_speed">Avg speed</string>
     <string name="calories">Calories</string>
+    <string name="stats_of_all_runs">Stats of all runs</string>
 </resources>
