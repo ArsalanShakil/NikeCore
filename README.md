@@ -27,6 +27,7 @@
 ##### - Timber
 ##### - Easy Permissions
 ##### - Glide
+##### - Lottiefiles
 ##### - MPAndroidChart
 ##### - Popup Notifications
 ##### - Payment methods (Google pay or Klarna)
