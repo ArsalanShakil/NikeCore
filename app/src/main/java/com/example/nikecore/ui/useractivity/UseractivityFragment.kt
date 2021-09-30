@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nikecore.adapters.RunAdapter
 import com.example.nikecore.databinding.FragmentUseractivityBinding
+import com.example.nikecore.others.SortType
 import com.example.nikecore.ui.runpaused.RunPausedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_useractivity.*
@@ -45,7 +47,30 @@ class UseractivityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        useractivityViewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+
+        when(useractivityViewModel.sortType) {
+            SortType.DATE -> spFilter.setSelection(0)
+            SortType.RUNNING_TIME -> spFilter.setSelection(1)
+            SortType.DISTANCE -> spFilter.setSelection(2)
+            SortType.AVG_SPEED -> spFilter.setSelection(3)
+            SortType.CALORIES_BURNED -> spFilter.setSelection(4)
+        }
+
+        spFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                when(pos) {
+                    0 -> useractivityViewModel.sortRuns(SortType.DATE)
+                    1 -> useractivityViewModel.sortRuns(SortType.RUNNING_TIME)
+                    2 -> useractivityViewModel.sortRuns(SortType.DISTANCE)
+                    3 -> useractivityViewModel.sortRuns(SortType.AVG_SPEED)
+                    4 -> useractivityViewModel.sortRuns(SortType.CALORIES_BURNED)
+                }
+            }
+        }
+
+        useractivityViewModel.runs.observe(viewLifecycleOwner, Observer {
             runAdapter.submitList(it)
         })
     }
