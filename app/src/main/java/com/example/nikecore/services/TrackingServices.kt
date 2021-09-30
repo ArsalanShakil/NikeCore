@@ -50,6 +50,7 @@ typealias Polylines = MutableList<Polyline>
 class TrackingServices : LifecycleService() {
 
     var isFirstRun = true
+    var serviceKilled = false
 
     @Inject
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -105,6 +106,7 @@ class TrackingServices : LifecycleService() {
                 }
                 ACTION_STOP_SERVICE -> {
                     Timber.d("Stopped service")
+                    killService()
                 }
             }
         }
@@ -169,10 +171,12 @@ class TrackingServices : LifecycleService() {
             isAccessible = true
             set(curNotificationBuilder, ArrayList<NotificationCompat.Action>())
         }
-        curNotificationBuilder = baseNotificationBuilder
-            .addAction(R.drawable.ic_pause, notificationActionText, pendingIntent)
-            .setContentIntent(showIntent)
-        notificationManager.notify(NOTIFICATION_ID, curNotificationBuilder.build())
+        if(!serviceKilled) {
+            curNotificationBuilder = baseNotificationBuilder
+                .addAction(R.drawable.ic_pause, notificationActionText, pendingIntent)
+                .setContentIntent(showIntent)
+            notificationManager.notify(NOTIFICATION_ID, curNotificationBuilder.build())
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -239,10 +243,21 @@ class TrackingServices : LifecycleService() {
         startForeground(NOTIFICATION_ID, baseNotificationBuilder.build())
 
         timeRunInSeconds.observe(this, Observer {
-            val notification = curNotificationBuilder
-                .setContentText(TrackingUtilities.getFormattedStopWatchTime(it * 1000L))
-            notificationManager.notify(NOTIFICATION_ID, notification.build())
+            if(!serviceKilled) {
+                val notification = curNotificationBuilder
+                    .setContentText(TrackingUtilities.getFormattedStopWatchTime(it * 1000L))
+                notificationManager.notify(NOTIFICATION_ID, notification.build())
+            }
         })
+    }
+
+    private fun killService() {
+        serviceKilled = true
+        isFirstRun = true
+        pauseService()
+        postInitialValues()
+        stopForeground(true)
+        stopSelf()
     }
 
 

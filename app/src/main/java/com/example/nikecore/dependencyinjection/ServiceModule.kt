@@ -55,7 +55,7 @@ object ServiceModule {
         .setAutoCancel(false)
         .setOngoing(true)
         .setSmallIcon(R.drawable.ic_menu_run)
-        .setContentTitle("Running App")
+        .setContentTitle("Time")
         .setContentText("00:00:00")
         .setContentIntent(pendingIntent)
 }

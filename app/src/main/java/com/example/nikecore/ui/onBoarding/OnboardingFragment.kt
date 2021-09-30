@@ -82,7 +82,7 @@ class OnboardingFragment : Fragment() {
             }
         }
 
-        getStartedBtn.setOnClickListener {
+        finishRunBtn.setOnClickListener {
             AppPreferences.setIsFirstStart(requireContext(),true)
             findNavController().navigate(R.id.action_onboardingFragment_to_askinfoFragment)
 

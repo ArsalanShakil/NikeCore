@@ -51,10 +51,6 @@ class RunStartedFragment : Fragment() {
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             distanceValueTxt.text = formattedTime
         })
-        TrackingServices.isTracking.observe(viewLifecycleOwner, {
-            Timber.d("gotoscreen $it")
-        })
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

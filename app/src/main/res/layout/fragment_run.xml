@@ -38,6 +38,7 @@
         app:layout_constraintVertical_bias="0.846" />
 
     <com.google.android.gms.maps.MapView
+        android:contentDescription="@string/your_map_location_and_coins"
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

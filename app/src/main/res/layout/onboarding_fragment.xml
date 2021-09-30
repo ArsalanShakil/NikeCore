@@ -64,7 +64,7 @@
         app:layout_constraintVertical_bias="0.796" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/getStartedBtn"
+        android:id="@+id/finishRunBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/get_started"

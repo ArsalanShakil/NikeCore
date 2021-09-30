@@ -83,7 +83,7 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/timeTxt"
+        android:id="@+id/distanceTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/kilo_meters"
@@ -113,7 +113,7 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
-        android:id="@+id/distanceTxt"
+        android:id="@+id/timeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time"
