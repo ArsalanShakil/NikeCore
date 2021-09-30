@@ -4,6 +4,15 @@
     <string name="title_useractivity">Activity</string>
     <string name="title_payment">Payment</string>
     <!-- TODO: Remove or change this placeholder text -->
+
+    <string-array name="filter_options">
+        <item>Date</item>
+        <item>Running Time</item>
+        <item>Distance</item>
+        <item>Average Speed</item>
+        <item>Calories Burned</item>
+    </string-array>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="OnBoarding_text_Collect_tickets">Collect tickets, get exclusive discounts</string>
     <string name="OnBoarding_text_Use_map">Use map to discover places with more tickets</string>

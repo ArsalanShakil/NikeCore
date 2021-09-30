@@ -25,7 +25,6 @@ class PaymentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         paymentViewModel =
             ViewModelProvider(this).get(PaymentViewModel::class.java)
 
