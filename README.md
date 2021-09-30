@@ -19,11 +19,17 @@
 ##### - MVVM Clean Architecture
 ##### - Dagger Hilt
 ##### - Coroutines
-##### - Jetpack components(Navigation,LiveData)
+##### - Jetpack components(Navigation,LiveData,Room)
 ##### - Material Design
 ##### - Data Binding
 ##### - ARCore, Sceneform
 ##### - Google Maps Api
+##### - Timber
+##### - Easy Permissions
+##### - Glide
+##### - MPAndroidChart
+##### - Popup Notifications
+##### - Payment methods (Google pay or Klarna)
 ##### - Internal Sensors(Bluetooth, NFC)
 #
 > Bluetooth for heart rate monitoring
