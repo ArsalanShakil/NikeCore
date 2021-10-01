@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14270833333333333" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14270833333333333" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable/ic_nike_logo.xml" value="0.14270833333333333" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable/ic_nikecore_logo.xml" value="0.14270833333333333" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/activity_main.xml" value="0.16802536231884058" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/askinfo_fragment.xml" value="0.25407608695652173" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_payment.xml" value="0.16485507246376813" />
@@ -13,6 +17,8 @@
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_paused_fragment.xml" value="0.25407608695652173" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_started_fragment.xml" value="0.25407608695652173" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/statistics_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14270833333333333" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_menu_run.xml" value="0.12314814814814815" />

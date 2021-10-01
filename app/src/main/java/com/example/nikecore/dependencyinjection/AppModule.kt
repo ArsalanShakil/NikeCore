@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.nikecore.database.RunningDatabase
 import com.example.nikecore.others.Constants.KEY_FIRST_TIME_TOGGLE
-import com.example.nikecore.others.Constants.KEY_HEIGHT
 import com.example.nikecore.others.Constants.KEY_NAME
 import com.example.nikecore.others.Constants.KEY_WEIGHT
 import com.example.nikecore.others.Constants.RUNNING_DATABASE_NAME
@@ -37,7 +36,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideSharedPreferences(@ApplicationContext app: Context) =
+    fun provideSharedPreferences(@ApplicationContext app: Context): SharedPreferences =
         app.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     @Singleton

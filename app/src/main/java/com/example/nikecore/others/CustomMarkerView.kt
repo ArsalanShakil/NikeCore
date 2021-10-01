@@ -11,10 +11,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CustomMarkerView(
-    val runs: List<Run>,
-    c: Context,
+    private val runs: List<Run>,
+    context: Context,
     layoutId: Int
-) : MarkerView(c, layoutId) {
+) : MarkerView(context, layoutId) {
 
     override fun getOffset(): MPPointF {
         return MPPointF(-width / 2f, -height.toFloat())

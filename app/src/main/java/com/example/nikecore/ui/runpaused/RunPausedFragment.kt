@@ -1,5 +1,6 @@
 package com.example.nikecore.ui.runpaused
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -98,6 +99,7 @@ class RunPausedFragment : Fragment() {
             setCurrentLocationMarker(map)
             setStartingPositionMarker(map)
             moveCameraToUser(map)
+            distanceValuePausedTxt.text = distanceCovered()
         })
 
         TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
@@ -183,6 +185,19 @@ class RunPausedFragment : Fragment() {
             ).show()
             stopRun()
         }
+    }
+    private fun distanceCovered() : String{
+        val startPos = Location("startingPos")
+        val endPos = Location("endingPos")
+        if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty() && pathPoints.first().isNotEmpty()) {
+            startPos.longitude = pathPoints.first().first().longitude
+            startPos.latitude = pathPoints.first().first().latitude
+            endPos.longitude = pathPoints.last().last().longitude
+            endPos.latitude = pathPoints.last().last().latitude
+        }
+        Timber.d("distCov ${startPos.distanceTo(endPos)}")
+
+        return  startPos.distanceTo(endPos).toString().substring(0,4)
     }
 
 

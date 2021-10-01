@@ -1,20 +1,21 @@
 package com.example.nikecore.services
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.os.Looper
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.example.nikecore.R
 import com.example.nikecore.others.Constants
 import com.example.nikecore.others.Constants.ACTION_PAUSE_SERVICE
@@ -48,8 +49,8 @@ typealias Polylines = MutableList<Polyline>
 @AndroidEntryPoint
 class TrackingServices : LifecycleService() {
 
-    var isFirstRun = true
-    var serviceKilled = false
+    private var isFirstRun = true
+    private var serviceKilled = false
 
     @Inject
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -59,7 +60,7 @@ class TrackingServices : LifecycleService() {
     @Inject
     lateinit var baseNotificationBuilder: NotificationCompat.Builder
 
-    lateinit var curNotificationBuilder: NotificationCompat.Builder
+    private lateinit var curNotificationBuilder: NotificationCompat.Builder
 
     companion object {
         val timeRunInMillis = MutableLiveData<Long>()
@@ -81,7 +82,7 @@ class TrackingServices : LifecycleService() {
         postInitialValues()
         fusedLocationProviderClient = FusedLocationProviderClient(this)
 
-        isTracking.observe(this, Observer {
+        isTracking.observe(this, {
             updateLocationTracking(it)
             updateNotificationTrackingState(it)
         })
@@ -181,14 +182,24 @@ class TrackingServices : LifecycleService() {
         }
     }
 
-    @SuppressLint("MissingPermission")
+
     private fun updateLocationTracking(isTracking: Boolean) {
         if (isTracking) {
             if (TrackingUtilities.hasLocationPermissions(this)) {
-                val request = LocationRequest().apply {
+                val request = LocationRequest.create().apply {
                     interval = LOCATION_UPDATE_INTERVAL
                     fastestInterval = FASTEST_LOCATION_INTERVAL
                     priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                }
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
                 }
                 fusedLocationProviderClient.requestLocationUpdates(
                     request,
@@ -201,11 +212,11 @@ class TrackingServices : LifecycleService() {
         }
     }
 
-    val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult?) {
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             if (isTracking.value!!) {
-                result?.locations?.let { locations ->
+                result.locations.let { locations ->
                     for (location in locations) {
                         addPathPoint(location)
                         Timber.d("NEW LOCATION: ${location.latitude}, ${location.longitude}")
@@ -244,7 +255,7 @@ class TrackingServices : LifecycleService() {
 
         startForeground(NOTIFICATION_ID, baseNotificationBuilder.build())
 
-        timeRunInSeconds.observe(this, Observer {
+        timeRunInSeconds.observe(this, {
             if (!serviceKilled) {
                 val notification = curNotificationBuilder
                     .setContentText(TrackingUtilities.getFormattedStopWatchTime(it * 1000L))

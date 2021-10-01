@@ -2,6 +2,7 @@ package com.example.nikecore.ui.run
 
 import android.Manifest
 import android.content.Context
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +29,9 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by viewModels()
+    private var locationManager: LocationManager? = null
+    private var locationListener: LocationListener? = null
+    private var pathPoints = mutableListOf<com.example.nikecore.services.Polyline>()
 
     private var _binding: FragmentRunBinding? = null
     private var map: GoogleMap? = null
@@ -87,6 +91,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             Manifest.permission.ACCESS_FINE_LOCATION
         )
     }
+
 
 
     override fun onDestroyView() {
