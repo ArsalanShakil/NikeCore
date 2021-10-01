@@ -109,7 +109,7 @@ class RunPausedFragment : Fragment() {
     }
 
     private fun toggleRun() {
-        if(isTracking) {
+        if (isTracking) {
             (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
         } else {
             (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
@@ -124,7 +124,7 @@ class RunPausedFragment : Fragment() {
 
 
     private fun setStartingPositionMarker(map: GoogleMap) {
-        if(pathPoints.isNotEmpty() && pathPoints.first().isNotEmpty()) {
+        if (pathPoints.isNotEmpty() && pathPoints.first().isNotEmpty()) {
             map.addMarker(
                 MarkerOptions()
                     .position(pathPoints.first().first())
@@ -134,7 +134,7 @@ class RunPausedFragment : Fragment() {
 
     private fun moveCameraToUser(map: GoogleMap) {
         Timber.d("move camera $pathPoints")
-        if(pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
+        if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
             map.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                     pathPoints.last().last(),
@@ -144,10 +144,11 @@ class RunPausedFragment : Fragment() {
             )
         }
     }
+
     private fun zoomToSeeWholeTrack() {
         val bounds = LatLngBounds.Builder()
-        for(polyline in pathPoints) {
-            for(pos in polyline) {
+        for (polyline in pathPoints) {
+            for (pos in polyline) {
                 bounds.include(pos)
             }
         }
@@ -165,13 +166,15 @@ class RunPausedFragment : Fragment() {
     private fun endRunAndSaveToDb() {
         map?.snapshot { bmp ->
             var distanceInMeters = 0
-            for(polyline in pathPoints) {
+            for (polyline in pathPoints) {
                 distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline).toInt()
             }
-            val avgSpeed = round((distanceInMeters / 1000f) / (curTimeInMillis / 1000f / 60 / 60) * 10) / 10f
+            val avgSpeed =
+                round((distanceInMeters / 1000f) / (curTimeInMillis / 1000f / 60 / 60) * 10) / 10f
             val dateTimestamp = Calendar.getInstance().timeInMillis
             val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
-            val run = Run(bmp, dateTimestamp, avgSpeed, distanceInMeters, curTimeInMillis, caloriesBurned)
+            val run =
+                Run(bmp, dateTimestamp, avgSpeed, distanceInMeters, curTimeInMillis, caloriesBurned)
             viewModel.insertRun(run)
             Snackbar.make(
                 requireActivity().findViewById(R.id.container),
@@ -183,14 +186,16 @@ class RunPausedFragment : Fragment() {
     }
 
 
-
-
-    private fun setCurrentLocationMarker(map:GoogleMap) {
-        if(pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
+    private fun setCurrentLocationMarker(map: GoogleMap) {
+        if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty()) {
             map.addMarker(
                 MarkerOptions().position(pathPoints.last().last())
-                    .title("run"))?.setIcon(
-                (activity as MainActivity).getBitmapDescriptorFromVector(requireContext(), R.drawable.ic_current_loaction_marker_icon)
+                    .title("run")
+            )?.setIcon(
+                (activity as MainActivity).getBitmapDescriptorFromVector(
+                    requireContext(),
+                    R.drawable.ic_current_loaction_marker_icon
+                )
 
             )
 
@@ -199,7 +204,7 @@ class RunPausedFragment : Fragment() {
 
     private fun addAllPolylines(map: GoogleMap) {
         Timber.d("add allpolyline $pathPoints $map")
-        for(polyline in pathPoints) {
+        for (polyline in pathPoints) {
             val polylineOptions = PolylineOptions()
                 .color(POLYLINE_COLOR)
                 .width(POLYLINE_WIDTH)
@@ -210,7 +215,7 @@ class RunPausedFragment : Fragment() {
 
     private fun addLatestPolyline(map: GoogleMap) {
         Timber.d("add polyline $pathPoints")
-        if(pathPoints.isNotEmpty() && pathPoints.last().size > 1) {
+        if (pathPoints.isNotEmpty() && pathPoints.last().size > 1) {
             val preLastLatLng = pathPoints.last()[pathPoints.last().size - 2]
             val lastLatLng = pathPoints.last().last()
             val polylineOptions = PolylineOptions()

@@ -1,6 +1,5 @@
 package com.example.nikecore.ui.runpaused
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nikecore.database.Run
@@ -12,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RunPausedViewModel @Inject constructor(
     val mainRepository: MainRepository
-): ViewModel() {
+) : ViewModel() {
 
 
     fun insertRun(run: Run) = viewModelScope.launch {

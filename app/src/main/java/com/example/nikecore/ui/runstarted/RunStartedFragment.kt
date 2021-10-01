@@ -15,7 +15,6 @@ import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
 import kotlinx.android.synthetic.main.run_started_fragment.*
-import timber.log.Timber
 
 
 class RunStartedFragment : Fragment() {
@@ -38,7 +37,7 @@ class RunStartedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().popBackStack(R.id.navigation_run,false)
+            findNavController().popBackStack(R.id.navigation_run, false)
 
         }
         TrackingServices.isTracking.postValue(true)
@@ -60,7 +59,7 @@ class RunStartedFragment : Fragment() {
     }
 
     private fun checkTrackingAndNavigate(isTracking: Boolean) {
-        if(!isTracking) {
+        if (!isTracking) {
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
         }
     }

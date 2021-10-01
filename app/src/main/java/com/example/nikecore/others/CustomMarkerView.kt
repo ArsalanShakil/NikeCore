@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.marker_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CustomMarkerView (
+class CustomMarkerView(
     val runs: List<Run>,
     c: Context,
     layoutId: Int
@@ -22,7 +22,7 @@ class CustomMarkerView (
 
     override fun refreshContent(e: Entry?, highlight: Highlight?) {
         super.refreshContent(e, highlight)
-        if(e == null) {
+        if (e == null) {
             return
         }
         val curRunId = e.x.toInt()

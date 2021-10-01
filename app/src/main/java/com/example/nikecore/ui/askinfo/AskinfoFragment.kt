@@ -38,7 +38,7 @@ class AskinfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(!isFirstAppOpen) {
+        if (!isFirstAppOpen) {
 
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.askinfoFragment, true)
@@ -52,10 +52,11 @@ class AskinfoFragment : Fragment() {
 
         getStartedAskBtn.setOnClickListener {
             val success = writePersonalDataToSharedPref()
-            if(success) {
+            if (success) {
                 findNavController().navigate(R.id.action_askinfoFragment_to_navigation_run)
             } else {
-                Snackbar.make(requireView(), "Please enter all the fields", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), "Please enter all the fields", Snackbar.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -64,7 +65,7 @@ class AskinfoFragment : Fragment() {
         val name = editTextPersonName.text.toString()
         val weight = editTextWeight.text.toString()
         val height = editTextHeight.text.toString()
-        if(name.isEmpty() || weight.isEmpty() || height.isEmpty()) {
+        if (name.isEmpty() || weight.isEmpty() || height.isEmpty()) {
             return false
         }
         sharedPref.edit()

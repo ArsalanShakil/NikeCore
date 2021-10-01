@@ -7,7 +7,6 @@
     tools:context=".ui.run.RunFragment">
 
 
-
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/startRunBtn"
         android:layout_width="100dp"

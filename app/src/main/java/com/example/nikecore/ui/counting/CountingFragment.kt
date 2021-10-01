@@ -11,14 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
-import com.example.nikecore.others.Constants
-import com.example.nikecore.ui.MainActivity
 import kotlinx.android.synthetic.main.counting_fragment.*
-import kotlinx.android.synthetic.main.onboarding_fragment.*
 
 
 class CountingFragment : Fragment() {
-
 
 
     private lateinit var viewModel: CountingViewModel
@@ -29,6 +25,7 @@ class CountingFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.counting_fragment, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(CountingViewModel::class.java)
@@ -37,7 +34,7 @@ class CountingFragment : Fragment() {
             // With blank your fragment BackPressed will be disabled.
         }
 
-        viewModel.number.observe(viewLifecycleOwner,{
+        viewModel.number.observe(viewLifecycleOwner, {
             countingTxt.text = it.toString()
             val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
             `in`.duration = 1000
@@ -45,9 +42,9 @@ class CountingFragment : Fragment() {
         })
 
 
-        viewModel.navigateToAccountingFragment.observe(viewLifecycleOwner,  {
+        viewModel.navigateToAccountingFragment.observe(viewLifecycleOwner, {
             if (it)
-                 findNavController().navigate(R.id.action_countingFragment_to_runStartedFragment)
+                findNavController().navigate(R.id.action_countingFragment_to_runStartedFragment)
         })
     }
 }

@@ -5,17 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nikecore.adapters.RunAdapter
 import com.example.nikecore.databinding.FragmentUseractivityBinding
 import com.example.nikecore.others.SortType
-import com.example.nikecore.ui.runpaused.RunPausedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_useractivity.*
 
@@ -23,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_useractivity.*
 class UseractivityFragment : Fragment() {
 
     private var _binding: FragmentUseractivityBinding? = null
-    private val useractivityViewModel:  UseractivityViewModel by viewModels()
+    private val useractivityViewModel: UseractivityViewModel by viewModels()
 
 
     // This property is only valid between onCreateView and
@@ -48,7 +44,7 @@ class UseractivityFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-        when(useractivityViewModel.sortType) {
+        when (useractivityViewModel.sortType) {
             SortType.DATE -> spFilter.setSelection(0)
             SortType.RUNNING_TIME -> spFilter.setSelection(1)
             SortType.DISTANCE -> spFilter.setSelection(2)
@@ -59,8 +55,13 @@ class UseractivityFragment : Fragment() {
         spFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
 
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                when(pos) {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View?,
+                pos: Int,
+                id: Long
+            ) {
+                when (pos) {
                     0 -> useractivityViewModel.sortRuns(SortType.DATE)
                     1 -> useractivityViewModel.sortRuns(SortType.RUNNING_TIME)
                     2 -> useractivityViewModel.sortRuns(SortType.DISTANCE)

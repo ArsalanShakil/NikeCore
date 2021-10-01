@@ -1,9 +1,6 @@
 package com.example.nikecore.ui.useractivity
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nikecore.database.Run
 import com.example.nikecore.others.SortType
@@ -14,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UseractivityViewModel @Inject constructor(
     val mainRepository: MainRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val runsSortedByDate = mainRepository.getAllRunsSortedByDate()
     private val runsSortedByDistance = mainRepository.getAllRunsSortedByDistance()
@@ -28,33 +25,33 @@ class UseractivityViewModel @Inject constructor(
 
     init {
         runs.addSource(runsSortedByDate) { result ->
-            if(sortType == SortType.DATE) {
+            if (sortType == SortType.DATE) {
                 result?.let { runs.value = it }
             }
         }
         runs.addSource(runsSortedByAvgSpeed) { result ->
-            if(sortType == SortType.AVG_SPEED) {
+            if (sortType == SortType.AVG_SPEED) {
                 result?.let { runs.value = it }
             }
         }
         runs.addSource(runsSortedByCaloriesBurned) { result ->
-            if(sortType == SortType.CALORIES_BURNED) {
+            if (sortType == SortType.CALORIES_BURNED) {
                 result?.let { runs.value = it }
             }
         }
         runs.addSource(runsSortedByDistance) { result ->
-            if(sortType == SortType.DISTANCE) {
+            if (sortType == SortType.DISTANCE) {
                 result?.let { runs.value = it }
             }
         }
         runs.addSource(runsSortedByTimeInMillis) { result ->
-            if(sortType == SortType.RUNNING_TIME) {
+            if (sortType == SortType.RUNNING_TIME) {
                 result?.let { runs.value = it }
             }
         }
     }
 
-    fun sortRuns(sortType: SortType) = when(sortType) {
+    fun sortRuns(sortType: SortType) = when (sortType) {
         SortType.DATE -> runsSortedByDate.value?.let { runs.value = it }
         SortType.RUNNING_TIME -> runsSortedByTimeInMillis.value?.let { runs.value = it }
         SortType.AVG_SPEED -> runsSortedByAvgSpeed.value?.let { runs.value = it }

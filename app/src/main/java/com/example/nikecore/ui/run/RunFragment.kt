@@ -1,17 +1,14 @@
 package com.example.nikecore.ui.run
 
 import android.Manifest
-import android.os.Build
+import android.content.Context
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentRunBinding
@@ -19,19 +16,17 @@ import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.nikecore.others.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.ui.MainActivity
-import com.example.nikecore.ui.runpaused.RunPausedViewModel
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
-import kotlinx.android.synthetic.main.run_paused_fragment.*
-import kotlinx.android.synthetic.main.run_started_fragment.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 @AndroidEntryPoint
 class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-
+    private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by viewModels()
 
     private var _binding: FragmentRunBinding? = null
@@ -62,8 +57,14 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             map = it
         }
         startRunBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
-            (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+            locationEnabled()
+            if (gpsStatus) {
+                findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
+                (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+            } else {
+                Snackbar.make(it, "Location Services Is Disabled", Snackbar.LENGTH_LONG).show()
+            }
+
         }
         settingsBtn.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_run_to_settingsFragment)
@@ -75,27 +76,16 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun requestPermissions() {
-        if(TrackingUtilities.hasLocationPermissions(requireContext())) {
+        if (TrackingUtilities.hasLocationPermissions(requireContext())) {
             return
         }
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            EasyPermissions.requestPermissions(
-                this,
-                "You need to accept location permissions to use this app.",
-                REQUEST_CODE_LOCATION_PERMISSION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                "You need to accept location permissions to use this app.",
-                REQUEST_CODE_LOCATION_PERMISSION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            )
-        }
+        EasyPermissions.requestPermissions(
+            this,
+            "You need to accept location permissions to use this app.",
+            REQUEST_CODE_LOCATION_PERMISSION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
     }
 
 
@@ -105,7 +95,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         } else {
             requestPermissions()
@@ -122,7 +112,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
-
 
 
     override fun onResume() {
@@ -153,5 +142,11 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView?.onSaveInstanceState(outState)
+    }
+
+    private fun locationEnabled() {
+        val locationManager =
+            activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        gpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 }

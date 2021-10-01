@@ -36,10 +36,14 @@ class OnboardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         val list =
-            listOf(R.string.OnBoarding_text_Use_map, R.string.OnBoarding_text_Maintain_your,R.string.OnBoarding_text_Collect_tickets)
+        val list =
+            listOf(
+                R.string.OnBoarding_text_Use_map,
+                R.string.OnBoarding_text_Maintain_your,
+                R.string.OnBoarding_text_Collect_tickets
+            )
 
-        viewModel.i.observe(viewLifecycleOwner,{
+        viewModel.i.observe(viewLifecycleOwner, {
             showMsgTxt.text = getString(list[it])
             val `in`: Animation = AlphaAnimation(0.0f, 1.0f)
             `in`.duration = 1000
@@ -67,29 +71,38 @@ class OnboardingFragment : Fragment() {
         }
         var audio = true
         val audioManager = this.activity?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE,0)
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 0)
         imgBtn.setImageResource(R.drawable.ic_baseline_volume_up_24)
 
         imgBtn.setOnClickListener {
             audio = !audio
             if (audio) {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_TOGGLE_MUTE, 0)
+                audioManager.adjustStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.ADJUST_TOGGLE_MUTE,
+                    0
+                )
                 imgBtn.setImageResource(R.drawable.ic_baseline_volume_off_24)
 
             } else {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE,0)
+                audioManager.adjustStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.ADJUST_RAISE,
+                    0
+                )
                 imgBtn.setImageResource(R.drawable.ic_baseline_volume_up_24)
             }
         }
 
         finishRunBtn.setOnClickListener {
-            AppPreferences.setIsFirstStart(requireContext(),true)
+            AppPreferences.setIsFirstStart(requireContext(), true)
             findNavController().navigate(R.id.action_onboardingFragment_to_askinfoFragment)
 
         }
 
 
     }
+
     private fun setDimension() {
         // Adjust the size of the video
         // so it fits on the screen

@@ -1,12 +1,11 @@
 package com.example.nikecore.settings
 
 import android.content.SharedPreferences
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.others.Constants.KEY_NAME
@@ -35,7 +34,7 @@ class SettingsFragment : Fragment() {
         loadFieldsFromSharedPref()
         saveChangesBtn.setOnClickListener {
             val success = applyChangesToSharedPref()
-            if(success) {
+            if (success) {
                 Snackbar.make(view, "Saved changes", Snackbar.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_settingsFragment_to_navigation_run)
             } else {
@@ -56,7 +55,7 @@ class SettingsFragment : Fragment() {
         val weightText = editTextWeightSettings.text.toString()
         val heightText = editTextHeightSettings.text.toString()
 
-        if(nameText.isEmpty() || weightText.isEmpty() || heightText.isEmpty()) {
+        if (nameText.isEmpty() || weightText.isEmpty() || heightText.isEmpty()) {
             return false
         }
         sharedPreferences.edit()
