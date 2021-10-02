@@ -37,16 +37,16 @@ class SettingsFragment : Fragment() {
         saveChangesBtn.setOnClickListener {
             val success = applyChangesToSharedPref()
             if (success) {
-                MotionToast.createColorToast(requireActivity(),
+                MotionToast.darkToast(requireActivity(),
                     getString(R.string.info),
                     getString(R.string.saved_changes),
-                    MotionToast.TOAST_ERROR,
+                    MotionToast.TOAST_SUCCESS,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.SHORT_DURATION,
                     ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
                 findNavController().navigate(R.id.action_settingsFragment_to_navigation_run)
             } else {
-                MotionToast.createColorToast(requireActivity(),
+                MotionToast.darkToast(requireActivity(),
                     getString(R.string.info),
                     getString(R.string.please_enter_all),
                     MotionToast.TOAST_ERROR,
