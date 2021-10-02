@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -29,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.run_paused_fragment.*
 import timber.log.Timber
+import www.sanju.motiontoast.MotionToast
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.round
@@ -52,7 +55,6 @@ class RunPausedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Timber.d("ONVIEWCREATED")
         return inflater.inflate(R.layout.run_paused_fragment, container, false)
     }
 
@@ -60,25 +62,52 @@ class RunPausedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mapViewRunPaused.onCreate(savedInstanceState)
 
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // With blank your fragment BackPressed will be disabled.
+            showCancelTrackingDialog()
+        }
+
         mapViewRunPaused.getMapAsync {
             Timber.d("mapView $it")
             map = it
             subscribeToObservers(it)
         }
         resumeRunBtn.setOnClickListener {
-            toggleRun()
+            (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
             findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
 
         }
         stopRunBtn.setOnLongClickListener {
-            toggleRun()
+            (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
             showCancelTrackingDialog()
             true
         }
-        finishRunBtn.setOnClickListener {
+        stopRunBtn.setOnClickListener {
+
+            MotionToast.setInfoColor(R.color.yellow)
+            MotionToast.darkToast(requireActivity(),
+                getString(R.string.info),
+                getString(R.string.long_press_cancel),
+                MotionToast.TOAST_INFO,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+        }
+
+        finishRunBtn.setOnLongClickListener {
             zoomToSeeWholeTrack()
             endRunAndSaveToDb()
+            true
+        }
+        finishRunBtn.setOnClickListener {
 
+            MotionToast.darkToast(requireActivity(),
+                getString(R.string.info),
+                getString(R.string.long_press),
+                MotionToast.TOAST_INFO,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
         }
 
     }
@@ -109,13 +138,6 @@ class RunPausedFragment : Fragment() {
 
     }
 
-    private fun toggleRun() {
-        if (isTracking) {
-            (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
-        } else {
-            (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
-        }
-    }
 
     private fun updateTracking(isTracking: Boolean) {
         this.isTracking = isTracking
@@ -177,11 +199,15 @@ class RunPausedFragment : Fragment() {
             val run =
                 Run(bmp, dateTimestamp, avgSpeed, distanceInMeters, curTimeInMillis, caloriesBurned)
             viewModel.insertRun(run)
-            Snackbar.make(
-                requireActivity().findViewById(R.id.container),
-                "Run saved successfully",
-                Snackbar.LENGTH_LONG
-            ).show()
+
+            MotionToast.darkToast(requireActivity(),
+                getString(R.string.info),
+                getString(R.string.run_saved),
+                MotionToast.TOAST_SUCCESS,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+
             stopRun()
         }
     }
@@ -225,20 +251,6 @@ class RunPausedFragment : Fragment() {
             map.addPolyline(polylineOptions)
         }
     }
-
-/*    private fun addLatestPolyline(map: GoogleMap) {
-        Timber.d("add polyline $pathPoints")
-        if (pathPoints.isNotEmpty() && pathPoints.last().size > 1) {
-            val preLastLatLng = pathPoints.last()[pathPoints.last().size - 2]
-            val lastLatLng = pathPoints.last().last()
-            val polylineOptions = PolylineOptions()
-                .color(POLYLINE_COLOR)
-                .width(POLYLINE_WIDTH)
-                .add(preLastLatLng)
-                .add(lastLatLng)
-            map.addPolyline(polylineOptions)
-        }
-    }*/
 
     private fun showCancelTrackingDialog() {
         val dialog = MaterialAlertDialogBuilder(requireContext())

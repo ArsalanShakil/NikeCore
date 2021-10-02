@@ -47,6 +47,20 @@
     <string name="time">Time</string>
     <string name="distance">Distance</string>
     <string name="avg_speed">Avg speed</string>
-    <string name="calories">Calories</string>
+    <string name="calories">Cal(kcal)</string>
     <string name="stats_of_all_runs">Stats of all runs</string>
+    <string name="cancel_run">Cancel Run</string>
+    <string name="hand_touch">👆</string>
+    <string name="long_press">Long Press to finish your run</string>
+    <string name="long_press_cancel">Long Press to cancel your run</string>
+
+    <string name="please_enter_all">Please enter all fields</string>
+    <string name="info">Info</string>
+
+    <string name="location_services">Please enable location services</string>
+    <string name="saved_changes">Saved changes</string>
+    <string name="run_saved">Run saved successfully</string>
+
+
+
 </resources>

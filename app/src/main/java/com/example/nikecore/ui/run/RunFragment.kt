@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import www.sanju.motiontoast.MotionToast
 
 @AndroidEntryPoint
 class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
@@ -66,7 +68,14 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
                 (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
             } else {
-                Snackbar.make(it, "Location Services Is Disabled", Snackbar.LENGTH_LONG).show()
+                MotionToast.darkToast(requireActivity(),
+                    getString(R.string.info),
+                    getString(R.string.location_services),
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+
             }
 
         }

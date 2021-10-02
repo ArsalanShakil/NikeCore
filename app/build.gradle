@@ -119,4 +119,8 @@ dependencies {
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
+    // MotionToast animated toast
+    implementation 'com.github.Spikeysanju:MotionToast:1.3.3.4'
+
+
 }

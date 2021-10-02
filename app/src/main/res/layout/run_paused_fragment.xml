@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:text="@string/bpm"
         android:textColor="@color/grey"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="@string/speed"
         android:textColor="@color/grey"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,11 +101,11 @@
         android:layout_height="wrap_content"
         android:text="@string/kilo_meters"
         android:textColor="@color/grey"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.88"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.53"
@@ -160,7 +160,7 @@
         app:tint="@color/black" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/stopRunBtn"
+        android:id="@+id/finishRunBtn"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:clickable="true"
@@ -179,10 +179,10 @@
         app:tint="@color/white" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/finishRunBtn"
+        android:id="@+id/stopRunBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/finish_run"
+        android:text="@string/cancel_run"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:backgroundTint="@color/white"

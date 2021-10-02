@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -13,9 +14,9 @@ import com.example.nikecore.others.Constants.KEY_FIRST_TIME_TOGGLE
 import com.example.nikecore.others.Constants.KEY_HEIGHT
 import com.example.nikecore.others.Constants.KEY_NAME
 import com.example.nikecore.others.Constants.KEY_WEIGHT
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.askinfo_fragment.*
+import www.sanju.motiontoast.MotionToast
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -55,8 +56,14 @@ class AskinfoFragment : Fragment() {
             if (success) {
                 findNavController().navigate(R.id.action_askinfoFragment_to_navigation_run)
             } else {
-                Snackbar.make(requireView(), "Please enter all the fields", Snackbar.LENGTH_SHORT)
-                    .show()
+                MotionToast.darkToast(requireActivity(),
+                    getString(R.string.info),
+                    getString(R.string.please_enter_all),
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.SHORT_DURATION,
+                    ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+
             }
         }
     }
