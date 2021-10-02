@@ -55,12 +55,14 @@
     <string name="long_press_cancel">Long Press to cancel your run</string>
 
     <string name="please_enter_all">Please enter all fields</string>
-    <string name="info">Info</string>
 
     <string name="location_services">Please enable location services</string>
     <string name="saved_changes">Saved changes</string>
     <string name="run_saved">Run saved successfully</string>
-
+    <string name="change_info">Change Info</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="devices">Devices</string>
+    <string name="info">Info</string>
 
 
 </resources>

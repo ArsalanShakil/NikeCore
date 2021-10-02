@@ -105,10 +105,30 @@
         <action
             android:id="@+id/action_settingsFragment_to_navigation_run"
             app:destination="@id/navigation_run" />
+        <action
+            android:id="@+id/action_settingsFragment_to_editInfoFragment"
+            app:destination="@id/editInfoFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_heartRateFragment"
+            app:destination="@id/heartRateFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.example.nikecore.statistics.StatisticsFragment"
         android:label="statistics_fragment"
         tools:layout="@layout/statistics_fragment" />
+    <fragment
+        android:id="@+id/editInfoFragment"
+        android:name="com.example.nikecore.settings.editinfo.EditInfoFragment"
+        android:label="edit_info_fragment"
+        tools:layout="@layout/edit_info_fragment" >
+        <action
+            android:id="@+id/action_editInfoFragment_to_navigation_run"
+            app:destination="@id/navigation_run" />
+    </fragment>
+    <fragment
+        android:id="@+id/heartRateFragment"
+        android:name="com.example.nikecore.settings.bluetooth.HeartRateFragment"
+        android:label="fragment_heart_rate"
+        tools:layout="@layout/fragment_heart_rate" />
 </navigation>
