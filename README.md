@@ -29,7 +29,8 @@
 ##### - Glide
 ##### - Lottiefiles
 ##### - MPAndroidChart
-##### - Popup Notifications
+##### - Push Notifications
+##### - Motion Toast for custom animated toasts
 ##### - Payment methods (Google pay or Klarna)
 ##### - Internal Sensors(Bluetooth, NFC)
 #
