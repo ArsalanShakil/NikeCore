@@ -1,6 +1,5 @@
 package com.example.nikecore.ui.runpaused
 
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -99,7 +98,7 @@ class RunPausedFragment : Fragment() {
             setCurrentLocationMarker(map)
             setStartingPositionMarker(map)
             moveCameraToUser(map)
-            distanceValuePausedTxt.text = distanceCovered()
+            distanceValuePausedTxt.text = distanceCovered(pathPoints)
         })
 
         TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
@@ -186,18 +185,17 @@ class RunPausedFragment : Fragment() {
             stopRun()
         }
     }
-    private fun distanceCovered() : String{
-        val startPos = Location("startingPos")
-        val endPos = Location("endingPos")
-        if (pathPoints.isNotEmpty() && pathPoints.last().isNotEmpty() && pathPoints.first().isNotEmpty()) {
-            startPos.longitude = pathPoints.first().first().longitude
-            startPos.latitude = pathPoints.first().first().latitude
-            endPos.longitude = pathPoints.last().last().longitude
-            endPos.latitude = pathPoints.last().last().latitude
+    private fun distanceCovered(pathPoints: MutableList<Polyline>) : String{
+        var distanceInMeters = 0F
+        for (polyline in pathPoints) {
+            distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
         }
-        Timber.d("distCov ${startPos.distanceTo(endPos)}")
+        val distanceInKm = distanceInMeters /1000
 
-        return  startPos.distanceTo(endPos).toString().substring(0,4)
+        Timber.d("distanceInKm: $distanceInKm")
+
+        return if (distanceInKm > 0.01F) distanceInKm.toString().substring(0,5) else getString(R.string.zero_value)
+
     }
 
 
@@ -228,7 +226,7 @@ class RunPausedFragment : Fragment() {
         }
     }
 
-    private fun addLatestPolyline(map: GoogleMap) {
+/*    private fun addLatestPolyline(map: GoogleMap) {
         Timber.d("add polyline $pathPoints")
         if (pathPoints.isNotEmpty() && pathPoints.last().size > 1) {
             val preLastLatLng = pathPoints.last()[pathPoints.last().size - 2]
@@ -240,7 +238,7 @@ class RunPausedFragment : Fragment() {
                 .add(lastLatLng)
             map.addPolyline(polylineOptions)
         }
-    }
+    }*/
 
     private fun showCancelTrackingDialog() {
         val dialog = MaterialAlertDialogBuilder(requireContext())

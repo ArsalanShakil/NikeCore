@@ -12,9 +12,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.others.Constants
 import com.example.nikecore.others.TrackingUtilities
+import com.example.nikecore.services.Polyline
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
+import kotlinx.android.synthetic.main.run_paused_fragment.*
 import kotlinx.android.synthetic.main.run_started_fragment.*
+import timber.log.Timber
 
 
 class RunStartedFragment : Fragment() {
@@ -22,6 +25,8 @@ class RunStartedFragment : Fragment() {
     private var curTimeInMillis = 0L
     private lateinit var viewModel: RunStartedViewModel
     private var isTracking = true
+    private var pathPoints = mutableListOf<Polyline>()
+
 
 
     override fun onCreateView(
@@ -50,6 +55,11 @@ class RunStartedFragment : Fragment() {
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             timeValueTxt.text = formattedTime
         })
+        TrackingServices.pathPoints.observe(viewLifecycleOwner, {
+            pathPoints = it
+            Timber.d("observe pathpoint $pathPoints")
+            distanceValueTxt.text = distanceCovered(pathPoints)
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -62,6 +72,17 @@ class RunStartedFragment : Fragment() {
         if (!isTracking) {
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
         }
+    }
+
+    private fun distanceCovered(pathPoints: MutableList<Polyline>) : String{
+        var distanceInMeters = 0F
+        for (polyline in pathPoints) {
+            distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
+        }
+        val distanceInKm = distanceInMeters /1000
+
+        Timber.d("distanceInKm: $distanceInKm")
+        return if (distanceInKm > 0.01F) distanceInKm.toString().substring(0,5) else getString(R.string.zero_value)
     }
 
 
