@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,10 @@ import com.example.nikecore.databinding.ActivityMainBinding
 import com.example.nikecore.others.Constants.ACTION_SHOW_PAUSE_FRAGMENT
 import com.example.nikecore.others.Constants.ACTION_SHOW_RUN_FRAGMENT
 import com.example.nikecore.services.TrackingServices
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -70,6 +75,8 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
+
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -113,6 +120,8 @@ class MainActivity : AppCompatActivity() {
 
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
+
+
 
 
 }

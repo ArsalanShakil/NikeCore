@@ -122,7 +122,6 @@ class RunPausedFragment : Fragment() {
         TrackingServices.pathPoints.observe(viewLifecycleOwner, {
             pathPoints = it
             Timber.d("observe pathpoint $pathPoints")
-//            addLatestPolyline(map)
             addAllPolylines(map)
             setCurrentLocationMarker(map)
             setStartingPositionMarker(map)
@@ -134,6 +133,8 @@ class RunPausedFragment : Fragment() {
             curTimeInMillis = it
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             timeValuePausedTxt.text = formattedTime
+            speedValuePausedTxt.text = avgSpeed()
+
         })
 
     }
@@ -211,6 +212,8 @@ class RunPausedFragment : Fragment() {
             stopRun()
         }
     }
+
+
     private fun distanceCovered(pathPoints: MutableList<Polyline>) : String{
         var distanceInMeters = 0F
         for (polyline in pathPoints) {
@@ -222,6 +225,19 @@ class RunPausedFragment : Fragment() {
 
         return if (distanceInKm > 0.01F) distanceInKm.toString().substring(0,5) else getString(R.string.zero_value)
 
+    }
+
+    private fun avgSpeed() : String {
+        var distanceInMeters = 0F
+        for (polyline in pathPoints) {
+            distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
+        }
+        val distanceInKm = distanceInMeters /1000
+
+
+        val avgSpeed =
+            round((distanceInKm) / (curTimeInMillis / 1000f / 60 / 60) * 10) / 10f
+        return avgSpeed.toString()
     }
 
 

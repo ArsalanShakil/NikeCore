@@ -31,8 +31,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by viewModels()
-    private var locationManager: LocationManager? = null
-    private var locationListener: LocationListener? = null
     private var pathPoints = mutableListOf<com.example.nikecore.services.Polyline>()
 
     private var _binding: FragmentRunBinding? = null

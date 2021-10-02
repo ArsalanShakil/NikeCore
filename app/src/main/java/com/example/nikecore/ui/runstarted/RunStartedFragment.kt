@@ -14,8 +14,10 @@ import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.Polyline
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
+import kotlinx.android.synthetic.main.run_paused_fragment.*
 import kotlinx.android.synthetic.main.run_started_fragment.*
 import timber.log.Timber
+import kotlin.math.round
 
 
 class RunStartedFragment : Fragment() {
@@ -50,12 +52,15 @@ class RunStartedFragment : Fragment() {
             curTimeInMillis = it
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             timeValueTxt.text = formattedTime
+            speedValueTxt.text = avgSpeed()
+
         })
         TrackingServices.pathPoints.observe(viewLifecycleOwner, {
             pathPoints = it
             Timber.d("observe pathpoint $pathPoints")
             distanceValueTxt.text = distanceCovered(pathPoints)
         })
+
     }
 
 
@@ -74,6 +79,19 @@ class RunStartedFragment : Fragment() {
 
         Timber.d("distanceInKm: $distanceInKm")
         return if (distanceInKm > 0.01F) distanceInKm.toString().substring(0,5) else getString(R.string.zero_value)
+    }
+
+    private fun avgSpeed() : String {
+        var distanceInMeters = 0F
+        for (polyline in pathPoints) {
+            distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
+        }
+        val distanceInKm = distanceInMeters /1000
+
+
+        val avgSpeed =
+            round((distanceInKm) / (curTimeInMillis / 1000f / 60 / 60) * 10) / 10f
+        return avgSpeed.toString()
     }
 
 
