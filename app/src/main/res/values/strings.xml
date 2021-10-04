@@ -63,6 +63,7 @@
     <string name="heart_rate">Heart Rate</string>
     <string name="devices">Devices</string>
     <string name="info">Info</string>
+    <string name="hello">hello</string>
 
 
 </resources>

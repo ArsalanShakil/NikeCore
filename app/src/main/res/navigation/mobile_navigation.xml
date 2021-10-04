@@ -96,10 +96,13 @@
         <action
             android:id="@+id/action_runPausedFragment_to_navigation_run"
             app:destination="@id/navigation_run" />
+        <action
+            android:id="@+id/action_runPausedFragment_to_ARFragment"
+            app:destination="@id/ARFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.nikecore.settings.SettingsFragment"
+        android:name="com.example.nikecore.ui.settings.SettingsFragment"
         android:label="settings_fragment"
         tools:layout="@layout/settings_fragment">
         <action
@@ -114,12 +117,12 @@
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.nikecore.statistics.StatisticsFragment"
+        android:name="com.example.nikecore.ui.statistics.StatisticsFragment"
         android:label="statistics_fragment"
         tools:layout="@layout/statistics_fragment" />
     <fragment
         android:id="@+id/editInfoFragment"
-        android:name="com.example.nikecore.settings.editinfo.EditInfoFragment"
+        android:name="com.example.nikecore.ui.settings.editinfo.EditInfoFragment"
         android:label="edit_info_fragment"
         tools:layout="@layout/edit_info_fragment" >
         <action
@@ -131,4 +134,9 @@
         android:name="com.example.nikecore.settings.bluetooth.HeartRateFragment"
         android:label="fragment_heart_rate"
         tools:layout="@layout/fragment_heart_rate" />
+    <fragment
+        android:id="@+id/ARFragment"
+        android:name="com.example.nikecore.ui.ar.ARFragment"
+        android:label="a_r_fragment"
+        tools:layout="@layout/a_r_fragment" />
 </navigation>

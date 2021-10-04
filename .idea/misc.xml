@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/gradient_view.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_bar_chart_2.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_baseline_volume_off_24.xml" value="0.16574074074074074" />
+        <entry key="app/src/main/res/drawable/ic_camera.xml" value="0.15925925925925927" />
         <entry key="app/src/main/res/drawable/ic_current_loaction_marker_icon.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/ic_info.xml" value="0.16574074074074074" />
@@ -25,6 +26,7 @@
         <entry key="app/src/main/res/drawable/ic_stoprun_icon.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_ticket_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
+        <entry key="app/src/main/res/layout/a_r_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.17441356845745695" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17346014492753623" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21421939223914077" />
@@ -42,6 +44,7 @@
         <entry key="app/src/main/res/layout/fragment_useractivity.xml" value="0.13451086956521738" />
         <entry key="app/src/main/res/layout/marker_view.xml" value="0.15896739130434784" />
         <entry key="app/src/main/res/layout/onboarding_fragment.xml" value="0.17423925729903852" />
+        <entry key="app/src/main/res/layout/rend_text.xml" value="0.1" />
         <entry key="app/src/main/res/layout/run_item.xml" value="0.3393593629361843" />
         <entry key="app/src/main/res/layout/run_paused_fragment.xml" value="0.2948495376909221" />
         <entry key="app/src/main/res/layout/run_started_fragment.xml" value="0.3148936170212766" />

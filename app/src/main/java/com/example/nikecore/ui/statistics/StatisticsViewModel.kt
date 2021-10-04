@@ -1,4 +1,4 @@
-package com.example.nikecore.statistics
+package com.example.nikecore.ui.statistics
 
 import androidx.lifecycle.ViewModel
 import com.example.nikecore.repositories.MainRepository

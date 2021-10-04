@@ -1,4 +1,4 @@
-package com.example.nikecore.settings
+package com.example.nikecore.ui.settings
 
 import androidx.lifecycle.ViewModel
 

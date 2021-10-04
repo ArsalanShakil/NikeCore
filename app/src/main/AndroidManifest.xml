@@ -13,7 +13,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:glEsVersion="0x00030000"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.ar"
+        android:required="true" />
 
     <application
         android:name=".BaseApplication"
@@ -44,6 +49,9 @@
 
         <service android:name=".services.TrackingServices"
             android:foregroundServiceType="location" />
+
+        <meta-data android:name="com.google.ar.core"
+            android:value="required" />
 
         <meta-data
             android:name="com.google.android.gms.version"

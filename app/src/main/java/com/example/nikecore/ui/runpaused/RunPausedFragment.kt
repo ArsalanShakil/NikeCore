@@ -109,6 +109,9 @@ class RunPausedFragment : Fragment() {
                 MotionToast.SHORT_DURATION,
                 ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
         }
+        arCameraBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_runPausedFragment_to_ARFragment)
+        }
 
     }
 

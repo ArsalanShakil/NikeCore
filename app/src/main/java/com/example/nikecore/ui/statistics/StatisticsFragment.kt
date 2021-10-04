@@ -1,4 +1,4 @@
-package com.example.nikecore.statistics
+package com.example.nikecore.ui.statistics
 
 import android.graphics.Color
 import android.os.Bundle
