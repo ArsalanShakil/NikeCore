@@ -29,6 +29,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -36,6 +37,16 @@ import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToast
 import java.util.*
+import kotlin.collections.ArrayList
+
+
+
+
+
+
+
+
+
 
 
 @AndroidEntryPoint
@@ -44,6 +55,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by viewModels()
     private var pathPoints = mutableListOf<com.example.nikecore.services.Polyline>()
+
 
     private lateinit var currentLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -225,8 +237,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                         .radius(15.0)
                         .strokeColor(Color.RED)
                 )
-                setMarkerOnRandomLocations(map)
-
+                saveLocationIntoData(map)
             }
         }
 
@@ -255,7 +266,26 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun setMarkerOnRandomLocations(map: GoogleMap) {
+        val locationList = ArrayList<String>()
         for (i in 0..5) {
+
+            var randomLocation = getRandomLocation(
+                currentLocation.latitude,
+                currentLocation.longitude,
+                15
+            ).latitude.toString() + "," + getRandomLocation(
+                currentLocation.latitude,
+                currentLocation.longitude,
+                15
+            ).longitude.toString()//store this to sharedpreference
+
+            locationList.add(randomLocation)
+
+
+            //Set the values
+
+
+
             map.addMarker(
                 MarkerOptions().position(
                     getRandomLocation(
@@ -273,6 +303,43 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             )
         }
+        val sharedPref = requireContext().getSharedPreferences("locationdata", 0)
+        val gson = Gson()
+        val jsonText = gson.toJson(locationList)
+        Timber.d("jsonTim: $jsonText")
+
+        sharedPref.edit().putString("location", jsonText).apply()
+    }
+
+    private fun saveLocationIntoData(map: GoogleMap) {
+        val sharedPref = requireContext().getSharedPreferences("locationdata", 0)
+        if(sharedPref.contains("location")) {
+
+
+            val gson = Gson()
+            val jsonText: String? = sharedPref.getString("location", null)
+            val text = gson.fromJson(
+                jsonText,
+                Array<String>::class.java
+            )
+            //EDIT: gso to gson
+            for (item in text){
+                val latlong = item.split(",").toTypedArray()
+                val latitude = latlong[0].toDouble()
+                val longitude = latlong[1].toDouble()
+                map.addMarker(
+                    MarkerOptions().position(LatLng(latitude,longitude))
+                        .title("run")
+                )?.setIcon(
+                    (activity as MainActivity).getBitmapDescriptorFromVector(
+                        requireContext(),
+                        R.drawable.ic_current_loaction_marker_icon
+                    )
+
+                )
+
+            }
+        } else  setMarkerOnRandomLocations(map)
     }
 
 
