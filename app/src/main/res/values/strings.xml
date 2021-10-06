@@ -64,6 +64,12 @@
     <string name="devices">Devices</string>
     <string name="info">Info</string>
     <string name="hello">hello</string>
+    <string name="Congrats">Congratulations</string>
+    <string name="ticket_collected">Ticket Collected</string>
+    <string name="location_run_frag">Please enable location services and reload the app</string>
+    <string name="ten_euros">+ 10 €</string>
+    <string name="show_ticket">Show ticket</string>
+    <string name="go_back">Go Back</string>
 
 
 </resources>

@@ -81,6 +81,18 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         requestPermissions()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
+        locationEnabled()
+        if (!gpsStatus) {
+            MotionToast.darkToast(
+                requireActivity(),
+                getString(R.string.info),
+                getString(R.string.location_run_frag),
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.SHORT_DURATION,
+                ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+            )
+        }
         return root
     }
 
@@ -298,7 +310,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             )?.setIcon(
                 (activity as MainActivity).getBitmapDescriptorFromVector(
                     requireContext(),
-                    R.drawable.ic_current_loaction_marker_icon
+                    R.drawable.ic_ticket_location_icon
                 )
 
             )
@@ -333,7 +345,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 )?.setIcon(
                     (activity as MainActivity).getBitmapDescriptorFromVector(
                         requireContext(),
-                        R.drawable.ic_current_loaction_marker_icon
+                        R.drawable.ic_ticket_location_icon
                     )
 
                 )

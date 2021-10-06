@@ -138,5 +138,9 @@
         android:id="@+id/ARFragment"
         android:name="com.example.nikecore.ui.ar.ARFragment"
         android:label="a_r_fragment"
-        tools:layout="@layout/a_r_fragment" />
+        tools:layout="@layout/a_r_fragment" >
+        <action
+            android:id="@+id/action_ARFragment_to_runPausedFragment"
+            app:destination="@id/runPausedFragment" />
+    </fragment>
 </navigation>

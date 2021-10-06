@@ -60,6 +60,7 @@
                     android:gravity="center"
                     android:text="@string/tickets_collected"
                     android:textAlignment="center"
+                    android:textColor="@color/dark_grey"
                     android:textSize="14sp" />
 
 
@@ -102,6 +103,7 @@
                     android:gravity="center"
                     android:text="@string/balance"
                     android:textAlignment="center"
+                    android:textColor="@color/dark_grey"
                     android:textSize="14sp" />
 
 

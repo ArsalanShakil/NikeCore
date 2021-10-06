@@ -5,6 +5,8 @@ import android.graphics.Point
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +14,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
@@ -23,6 +28,8 @@ import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.a_r_fragment.*
 import kotlinx.android.synthetic.main.a_r_fragment.view.*
+import kotlinx.coroutines.delay
+import www.sanju.motiontoast.MotionToast
 
 class ARFragment : Fragment() {
 
@@ -44,8 +51,12 @@ class ARFragment : Fragment() {
             R.id.sceneform_fragment
         ) as ArFragment
 
-        view.findViewById<Button>(R.id.addBtn).setOnClickListener {
+        view.findViewById<Button>(R.id.showTicketBtn).setOnClickListener {
             add3dObject()
+        }
+
+        view.findViewById<Button>(R.id.goBackBtn).setOnClickListener {
+            findNavController().navigate(R.id.action_ARFragment_to_runPausedFragment)
         }
 
 
@@ -57,7 +68,7 @@ class ARFragment : Fragment() {
             .setSource(requireContext(), Uri.parse("file:///android_asset/ticket3.gltf"))
             .setIsFilamentGltf(true)
             .setAsyncLoadEnabled(true)
-            .setRegistryId("CesiumMan")
+            .setRegistryId("ticket")
             .build()
             .thenAccept { modelRenderable = it }
             .exceptionally {
@@ -103,7 +114,7 @@ class ARFragment : Fragment() {
     private fun add3dObject() {
         val frame = arFrag.arSceneView.arFrame
         if (frame != null && modelRenderable != null) {
-            view?.findViewById<Button>(R.id.addBtn)?.visibility = View.GONE
+        //    view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
             val pt = getScreenCenter()
             val hits = frame.hitTest(pt.x.toFloat(), pt.y.toFloat())
             for (hit in hits) {
@@ -115,10 +126,26 @@ class ARFragment : Fragment() {
                     val mNode =
                         TransformableNode(arFrag.transformationSystem)
                     mNode.setOnTapListener { hitTestResult, motionEvent ->
-                        view?.findViewById<Button>(R.id.addBtn)?.visibility = View.VISIBLE
+                        view?.findViewById<TextView>(R.id.moneyAddedTxt)?.visibility = View.VISIBLE
+                        view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
+                        view?.findViewById<Button>(R.id.goBackBtn)?.visibility = View.VISIBLE
+                        MotionToast.darkToast(requireActivity(),
+                            getString(R.string.Congrats),
+                            getString(R.string.ticket_collected),
+                            MotionToast.TOAST_SUCCESS,
+                            MotionToast.GRAVITY_BOTTOM,
+                            MotionToast.SHORT_DURATION,
+                            ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                        mNode.setParent(null)
+                        anchorNode.anchor?.detach()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            //Do something after 100ms
+                            view?.findViewById<TextView>(R.id.moneyAddedTxt)?.visibility = View.GONE
+                        }, 2000)
+
                     }
                     mNode.renderable = modelRenderable
-                    mNode.scaleController.minScale = 0.4f
+                    mNode.scaleController.minScale = 0.2f
                     mNode.scaleController.maxScale = 2.0f
                     mNode.localScale = Vector3(0.2f, 0.2f, 0.2f)
                     mNode.setParent(anchorNode)
@@ -128,5 +155,4 @@ class ARFragment : Fragment() {
             }
         }
     }
-
 }

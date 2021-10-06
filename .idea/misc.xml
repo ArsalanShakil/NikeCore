@@ -26,7 +26,7 @@
         <entry key="app/src/main/res/drawable/ic_stoprun_icon.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/ic_ticket_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.12314814814814815" />
-        <entry key="app/src/main/res/layout/a_r_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/a_r_fragment.xml" value="0.30261924314855887" />
         <entry key="app/src/main/res/layout/activity_ask_info.xml" value="0.17441356845745695" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17346014492753623" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21421939223914077" />
@@ -56,7 +56,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
