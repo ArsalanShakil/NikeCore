@@ -81,6 +81,20 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         requestPermissions()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
+        return root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Timber.d("RunFrag", "We exist!!!")
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync {
+            map = it
+            fetchLocation(it)
+
+        }
         locationEnabled()
         if (!gpsStatus) {
             MotionToast.darkToast(
@@ -92,19 +106,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
             )
-        }
-        return root
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Timber.d("RunFrag", "We exist!!!")
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync {
-            map = it
-            fetchLocation(it)
-
         }
         startRunBtn.setOnClickListener {
             locationEnabled()
