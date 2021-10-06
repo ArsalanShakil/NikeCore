@@ -89,7 +89,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 getString(R.string.location_run_frag),
                 MotionToast.TOAST_ERROR,
                 MotionToast.GRAVITY_BOTTOM,
-                MotionToast.SHORT_DURATION,
+                MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
             )
         }
