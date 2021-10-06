@@ -55,9 +55,8 @@
                     android:id="@+id/ticketCollectTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:text="@string/tickets_collected"
                     android:textAlignment="center"
                     android:textColor="@color/dark_grey"
@@ -98,9 +97,8 @@
                     android:id="@+id/balanceTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:text="@string/balance"
                     android:textAlignment="center"
                     android:textColor="@color/dark_grey"
@@ -111,6 +109,25 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <EditText
+        android:id="@+id/enterAmount"
+        android:layout_width="252dp"
+        android:layout_height="48dp"
+        android:autofillHints="@string/enter_amount"
+        android:background="@drawable/custom_edit_text_dark"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:hint="@string/enter_amount"
+        android:inputType="numberDecimal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/finishRunBtn"
@@ -126,7 +143,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.787"
+        app:layout_constraintVertical_bias="0.816"
         app:rippleColor="@color/white"
         app:strokeColor="@color/black"
         app:strokeWidth="1dp" />

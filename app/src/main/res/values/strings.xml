@@ -70,6 +70,7 @@
     <string name="ten_euros">+ 10 €</string>
     <string name="show_ticket">Show ticket</string>
     <string name="go_back">Go Back</string>
+    <string name="enter_amount">Enter amount</string>
 
 
 </resources>

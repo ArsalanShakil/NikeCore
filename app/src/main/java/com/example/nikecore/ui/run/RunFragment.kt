@@ -246,8 +246,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 map.addCircle(
                     CircleOptions()
                         .center(LatLng(currentLocation.latitude, currentLocation.longitude))
-                        .radius(15.0)
-                        .strokeColor(Color.RED)
+                        .radius(90.0)
                 )
                 saveLocationIntoData(map)
             }
@@ -284,11 +283,11 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             var randomLocation = getRandomLocation(
                 currentLocation.latitude,
                 currentLocation.longitude,
-                15
+                50
             ).latitude.toString() + "," + getRandomLocation(
                 currentLocation.latitude,
                 currentLocation.longitude,
-                15
+                50
             ).longitude.toString()//store this to sharedpreference
 
             locationList.add(randomLocation)
@@ -303,7 +302,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     getRandomLocation(
                         currentLocation.latitude,
                         currentLocation.longitude,
-                        15
+                        50
                     )
                 )
                     .title("run")
