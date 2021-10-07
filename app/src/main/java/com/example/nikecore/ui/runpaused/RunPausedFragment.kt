@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -21,13 +22,13 @@ import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.Polyline
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
+import com.example.nikecore.ui.run.RunViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.run_paused_fragment.*
 import timber.log.Timber
@@ -43,6 +44,7 @@ class RunPausedFragment : Fragment() {
     private var pathPoints = mutableListOf<Polyline>()
     private var curTimeInMillis = 0L
 
+
     private var map: GoogleMap? = null
 
     @set:Inject
@@ -50,18 +52,19 @@ class RunPausedFragment : Fragment() {
 
 
     private val viewModel: RunPausedViewModel by viewModels()
+    private val runViewModel: RunViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.run_paused_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapViewRunPaused.onCreate(savedInstanceState)
-
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // With blank your fragment BackPressed will be disabled.
             showCancelTrackingDialog()
@@ -72,6 +75,7 @@ class RunPausedFragment : Fragment() {
             map = it
             subscribeToObservers(it)
         }
+
         resumeRunBtn.setOnClickListener {
             (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
             findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
@@ -85,13 +89,15 @@ class RunPausedFragment : Fragment() {
         stopRunBtn.setOnClickListener {
 
             MotionToast.setInfoColor(R.color.yellow)
-            MotionToast.darkToast(requireActivity(),
+            MotionToast.darkToast(
+                requireActivity(),
                 getString(R.string.info),
                 getString(R.string.long_press_cancel),
                 MotionToast.TOAST_INFO,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+            )
         }
 
         finishRunBtn.setOnLongClickListener {
@@ -101,13 +107,15 @@ class RunPausedFragment : Fragment() {
         }
         finishRunBtn.setOnClickListener {
 
-            MotionToast.darkToast(requireActivity(),
+            MotionToast.darkToast(
+                requireActivity(),
                 getString(R.string.info),
                 getString(R.string.long_press),
                 MotionToast.TOAST_INFO,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+            )
         }
         arCameraBtn.setOnClickListener {
             findNavController().navigate(R.id.action_runPausedFragment_to_ARFragment)
@@ -138,6 +146,18 @@ class RunPausedFragment : Fragment() {
             timeValuePausedTxt.text = formattedTime
             speedValuePausedTxt.text = avgSpeed()
 
+        })
+
+        runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
+            map.addMarker(
+                MarkerOptions().position(it)
+                    .title("run")
+            )?.setIcon(
+                (activity as MainActivity).getBitmapDescriptorFromVector(
+                    requireContext(),
+                    R.drawable.ic_ticket_location_icon
+                )
+            )
         })
 
     }
@@ -204,38 +224,41 @@ class RunPausedFragment : Fragment() {
                 Run(bmp, dateTimestamp, avgSpeed, distanceInMeters, curTimeInMillis, caloriesBurned)
             viewModel.insertRun(run)
 
-            MotionToast.darkToast(requireActivity(),
+            MotionToast.darkToast(
+                requireActivity(),
                 getString(R.string.info),
                 getString(R.string.run_saved),
                 MotionToast.TOAST_SUCCESS,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.SHORT_DURATION,
-                ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+            )
 
             stopRun()
         }
     }
 
 
-    private fun distanceCovered(pathPoints: MutableList<Polyline>) : String{
+    private fun distanceCovered(pathPoints: MutableList<Polyline>): String {
         var distanceInMeters = 0F
         for (polyline in pathPoints) {
             distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
         }
-        val distanceInKm = distanceInMeters /1000
+        val distanceInKm = distanceInMeters / 1000
 
         Timber.d("distanceInKm: $distanceInKm")
 
-        return if (distanceInKm > 0.01F) distanceInKm.toString().substring(0,5) else getString(R.string.zero_value)
+        return if (distanceInKm > 0.01F) distanceInKm.toString()
+            .substring(0, 5) else getString(R.string.zero_value)
 
     }
 
-    private fun avgSpeed() : String {
+    private fun avgSpeed(): String {
         var distanceInMeters = 0F
         for (polyline in pathPoints) {
             distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
         }
-        val distanceInKm = distanceInMeters /1000
+        val distanceInKm = distanceInMeters / 1000
 
 
         val avgSpeed =

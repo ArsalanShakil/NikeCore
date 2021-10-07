@@ -3,7 +3,6 @@ package com.example.nikecore.ui.run
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -13,7 +12,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentRunBinding
@@ -39,21 +38,11 @@ import www.sanju.motiontoast.MotionToast
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-
-
-
-
-
-
-
-
-
 @AndroidEntryPoint
-class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
+class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     private var gpsStatus: Boolean = false
-    private val runViewModel: RunViewModel by viewModels()
+    private val runViewModel: RunViewModel by activityViewModels()
     private var pathPoints = mutableListOf<com.example.nikecore.services.Polyline>()
 
 
@@ -90,9 +79,14 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         Timber.d("RunFrag", "We exist!!!")
         mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync {
+        mapView.getMapAsync { it ->
             map = it
             fetchLocation(it)
+            it.setOnMarkerClickListener {
+                Timber.d("markerClicked ${it.position}")
+                runViewModel.postselectedCoordinates(it.position)
+                 true
+            }
 
         }
         locationEnabled()
@@ -107,6 +101,10 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
             )
         }
+        runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
+            Timber.d("selectedCoordx:${it}")
+        })
+
         startRunBtn.setOnClickListener {
             locationEnabled()
             if (gpsStatus) {
@@ -353,6 +351,4 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             }
         } else  setMarkerOnRandomLocations(map)
     }
-
-
 }
