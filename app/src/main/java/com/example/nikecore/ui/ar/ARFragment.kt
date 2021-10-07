@@ -1,23 +1,22 @@
 package com.example.nikecore.ui.ar
 
-import android.content.ContentValues
 import android.graphics.Point
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
+import com.example.nikecore.ui.run.RunViewModel
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
@@ -28,7 +27,7 @@ import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.a_r_fragment.*
 import kotlinx.android.synthetic.main.a_r_fragment.view.*
-import kotlinx.coroutines.delay
+import timber.log.Timber
 import www.sanju.motiontoast.MotionToast
 
 class ARFragment : Fragment() {
@@ -36,9 +35,9 @@ class ARFragment : Fragment() {
     private lateinit var arFrag: ArFragment
     private var viewRenderable: ViewRenderable? = null
     private var modelRenderable: ModelRenderable? = null
-
-
-
+    private val arViewModel: ARViewModel by activityViewModels()
+    private val runViewModel: RunViewModel by activityViewModels()
+    private val collectedList = ArrayList<String>()
 
 
     override fun onCreateView(
@@ -72,7 +71,7 @@ class ARFragment : Fragment() {
             .build()
             .thenAccept { modelRenderable = it }
             .exceptionally {
-                Log.e(ContentValues.TAG, "something went wrong ${it.localizedMessage}")
+                Timber.e("something went wrong " + it.localizedMessage)
                 null
             }
 
@@ -101,7 +100,15 @@ class ARFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
+            collectedList.add(it.toString())
+        })
+        for (i in collectedList){
+            Timber.d("collectedList $i")
+        }
+        arViewModel.userBalance.observe(viewLifecycleOwner,{
+            userMoneyTxt.text = it.toString()
+        })
     }
 
     private fun getScreenCenter(): Point {
@@ -129,6 +136,8 @@ class ARFragment : Fragment() {
                         view?.findViewById<TextView>(R.id.moneyAddedTxt)?.visibility = View.VISIBLE
                         view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
                         view?.findViewById<Button>(R.id.goBackBtn)?.visibility = View.VISIBLE
+                        arViewModel.userBalance.postValue(10)
+                        arViewModel.isCollected.postValue(true)
                         MotionToast.darkToast(requireActivity(),
                             getString(R.string.Congrats),
                             getString(R.string.ticket_collected),
@@ -145,6 +154,7 @@ class ARFragment : Fragment() {
 
                     }
                     mNode.renderable = modelRenderable
+                    mNode.setRenderable(this.modelRenderable).animate(true).start()
                     mNode.scaleController.minScale = 0.2f
                     mNode.scaleController.maxScale = 2.0f
                     mNode.localScale = Vector3(0.2f, 0.2f, 0.2f)

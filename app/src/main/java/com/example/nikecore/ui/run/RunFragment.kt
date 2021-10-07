@@ -17,10 +17,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentRunBinding
 import com.example.nikecore.others.Constants
-import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.nikecore.others.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.ui.MainActivity
+import com.example.nikecore.ui.ar.ARViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
+import kotlinx.android.synthetic.main.run_paused_fragment.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -43,7 +44,9 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by activityViewModels()
+    private val arViewModel: ARViewModel by activityViewModels()
     private var pathPoints = mutableListOf<com.example.nikecore.services.Polyline>()
+    private var isBtnClickable = false
 
 
     private lateinit var currentLocation: Location
@@ -82,11 +85,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         mapView.getMapAsync { it ->
             map = it
             fetchLocation(it)
-            it.setOnMarkerClickListener {
-                Timber.d("markerClicked ${it.position}")
-                runViewModel.postselectedCoordinates(it.position)
-                 true
-            }
 
         }
         locationEnabled()
@@ -103,25 +101,44 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         }
         runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
             Timber.d("selectedCoordx:${it}")
+            isBtnClickable = it != null
+            when(isBtnClickable) {
+                true -> startRunBtn.setBackgroundColor(resources.getColor(R.color.yellow))
+                false -> startRunBtn.setBackgroundColor(resources.getColor(R.color.light_grey))
+
+            }
         })
 
         startRunBtn.setOnClickListener {
-            locationEnabled()
-            if (gpsStatus) {
-                findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
-                (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+            if (isBtnClickable) {
+                locationEnabled()
+                if (gpsStatus) {
+                    findNavController().navigate(R.id.action_navigation_run_to_countingFragment)
+                    (activity as MainActivity).sendCommandToService(Constants.ACTION_START_OR_RESUME_SERVICE)
+                } else {
+                    MotionToast.darkToast(
+                        requireActivity(),
+                        getString(R.string.info),
+                        getString(R.string.location_services),
+                        MotionToast.TOAST_ERROR,
+                        MotionToast.GRAVITY_BOTTOM,
+                        MotionToast.SHORT_DURATION,
+                        ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+                    )
+
+                }
             } else {
                 MotionToast.darkToast(
                     requireActivity(),
                     getString(R.string.info),
-                    getString(R.string.location_services),
+                    "Please select a ticket first",
                     MotionToast.TOAST_ERROR,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.SHORT_DURATION,
                     ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
                 )
-
             }
+
 
         }
         settingsBtn.setOnClickListener {
@@ -247,6 +264,24 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
                         .center(LatLng(currentLocation.latitude, currentLocation.longitude))
                         .radius(90.0)
                 )
+                map.setOnMarkerClickListener {
+
+                    Timber.d("markerClicked ${it.position}")
+                    if (LatLng(currentLocation.latitude, currentLocation.longitude) != it.position) {
+                        runViewModel.postSelectedCoordinates(it.position)
+                    } else {
+                        MotionToast.darkToast(
+                            requireActivity(),
+                            getString(R.string.info),
+                            "Please select a ticket",
+                            MotionToast.TOAST_ERROR,
+                            MotionToast.GRAVITY_BOTTOM,
+                            MotionToast.SHORT_DURATION,
+                            ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+                        )
+                    }
+                    true
+                }
                 saveLocationIntoData(map)
             }
         }
@@ -312,6 +347,20 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
                 )
 
             )
+//            arViewModel.isCollected.observe(viewLifecycleOwner,{
+//                if (runViewModel.selectedCoordinates.value != null && arViewModel.isCollected.value == true) {
+//                    map.addMarker(
+//                        MarkerOptions().position(runViewModel.selectedCoordinates.value)
+//                            .title("run")
+//                    )?.setIcon(
+//                        (activity as MainActivity).getBitmapDescriptorFromVector(
+//                            requireContext(),
+//                            R.drawable.ic_ticket_collected_icon
+//                        )
+//                    )
+//                }
+//            })
+
         }
         val sharedPref = requireContext().getSharedPreferences("locationdata", 0)
         val gson = Gson()

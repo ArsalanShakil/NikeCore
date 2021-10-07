@@ -1,5 +1,6 @@
 package com.example.nikecore.ui.runpaused
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.Polyline
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
+import com.example.nikecore.ui.ar.ARViewModel
 import com.example.nikecore.ui.run.RunViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -36,6 +38,9 @@ import www.sanju.motiontoast.MotionToast
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.round
+
+
+
 
 @AndroidEntryPoint
 class RunPausedFragment : Fragment() {
@@ -53,6 +58,7 @@ class RunPausedFragment : Fragment() {
 
     private val viewModel: RunPausedViewModel by viewModels()
     private val runViewModel: RunViewModel by activityViewModels()
+    private val arViewModel: ARViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +74,9 @@ class RunPausedFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // With blank your fragment BackPressed will be disabled.
             showCancelTrackingDialog()
+            runViewModel.selectedCoordinates.postValue(null)
+            arViewModel.isCollected.postValue(false)
+
         }
 
         mapViewRunPaused.getMapAsync {
@@ -84,6 +93,8 @@ class RunPausedFragment : Fragment() {
         stopRunBtn.setOnLongClickListener {
             (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
             showCancelTrackingDialog()
+            runViewModel.selectedCoordinates.postValue(null)
+            arViewModel.isCollected.postValue(false)
             true
         }
         stopRunBtn.setOnClickListener {
@@ -103,6 +114,8 @@ class RunPausedFragment : Fragment() {
         finishRunBtn.setOnLongClickListener {
             zoomToSeeWholeTrack()
             endRunAndSaveToDb()
+            runViewModel.selectedCoordinates.postValue(null)
+            arViewModel.isCollected.postValue(false)
             true
         }
         finishRunBtn.setOnClickListener {
@@ -148,16 +161,52 @@ class RunPausedFragment : Fragment() {
 
         })
 
+        arViewModel.isCollected.observe(viewLifecycleOwner,{
+            when(it) {
+                true -> arCameraBtn.visibility = View.GONE
+                false -> arCameraBtn.visibility = View.VISIBLE
+
+            }
+        })
+
         runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
-            map.addMarker(
-                MarkerOptions().position(it)
-                    .title("run")
-            )?.setIcon(
-                (activity as MainActivity).getBitmapDescriptorFromVector(
-                    requireContext(),
-                    R.drawable.ic_ticket_location_icon
+            if (it != null && arViewModel.isCollected.value == false) {
+                map.addMarker(
+                    MarkerOptions().position(it)
+                        .title("run")
+                )?.setIcon(
+                    (activity as MainActivity).getBitmapDescriptorFromVector(
+                        requireContext(),
+                        R.drawable.ic_ticket_location_icon
+                    )
                 )
-            )
+
+
+                val currentLocation = Location("currentLocation")
+                currentLocation.latitude = pathPoints.last().last().latitude
+                currentLocation.longitude = pathPoints.last().last().longitude
+                val ticketLocation = Location("ticketLocation")
+                ticketLocation.latitude = it.latitude
+                ticketLocation.longitude = it.longitude
+                if (currentLocation.distanceTo(ticketLocation) <= 15 ) {
+                    arCameraBtn.visibility = View.VISIBLE
+                } else if (arViewModel.isCollected.value == true) {
+                    arCameraBtn.visibility = View.GONE
+                }
+
+
+            } else if (it != null && arViewModel.isCollected.value == true) {
+                map.addMarker(
+                    MarkerOptions().position(it)
+                        .title("run")
+                )?.setIcon(
+                    (activity as MainActivity).getBitmapDescriptorFromVector(
+                        requireContext(),
+                        R.drawable.ic_ticket_collected_icon
+                    )
+                )
+            }
+
         })
 
     }
