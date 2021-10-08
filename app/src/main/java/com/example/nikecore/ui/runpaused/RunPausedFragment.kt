@@ -44,7 +44,6 @@ import kotlin.math.round
 
 @AndroidEntryPoint
 class RunPausedFragment : Fragment() {
-
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
     private var curTimeInMillis = 0L
@@ -70,6 +69,8 @@ class RunPausedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.d("isCollected: ${arViewModel.isCollected.value}")
+
         mapViewRunPaused.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // With blank your fragment BackPressed will be disabled.
@@ -130,6 +131,7 @@ class RunPausedFragment : Fragment() {
                 ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
             )
         }
+
         arCameraBtn.setOnClickListener {
             findNavController().navigate(R.id.action_runPausedFragment_to_ARFragment)
         }
@@ -161,14 +163,6 @@ class RunPausedFragment : Fragment() {
 
         })
 
-        arViewModel.isCollected.observe(viewLifecycleOwner,{
-            when(it) {
-                true -> arCameraBtn.visibility = View.GONE
-                false -> arCameraBtn.visibility = View.VISIBLE
-
-            }
-        })
-
         runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
             if (it != null && arViewModel.isCollected.value == false) {
                 map.addMarker(
@@ -188,11 +182,16 @@ class RunPausedFragment : Fragment() {
                 val ticketLocation = Location("ticketLocation")
                 ticketLocation.latitude = it.latitude
                 ticketLocation.longitude = it.longitude
-                if (currentLocation.distanceTo(ticketLocation) <= 15 ) {
-                    arCameraBtn.visibility = View.VISIBLE
-                } else if (arViewModel.isCollected.value == true) {
-                    arCameraBtn.visibility = View.GONE
-                }
+
+
+
+                arViewModel.isCollected.observe(viewLifecycleOwner,{
+                    if(arViewModel.isCollected.value == false && currentLocation.distanceTo(ticketLocation) < 30) {
+                        arCameraBtn.visibility = View.VISIBLE
+                    } else if (arViewModel.isCollected.value == true) {
+                        arCameraBtn.visibility = View.GONE
+                    }
+                })
 
 
             } else if (it != null && arViewModel.isCollected.value == true) {
