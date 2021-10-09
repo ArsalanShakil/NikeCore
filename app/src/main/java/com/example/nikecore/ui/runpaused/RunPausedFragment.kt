@@ -359,7 +359,7 @@ class RunPausedFragment : Fragment() {
 
     private fun stopRun() {
         (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
-        findNavController().navigate(R.id.action_runPausedFragment_to_navigation_run)
+        findNavController().popBackStack(R.id.navigation_run,false)
     }
 
 

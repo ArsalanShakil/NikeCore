@@ -71,6 +71,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         _binding = FragmentRunBinding.inflate(inflater, container, false)
         val root: View = binding.root
         requestPermissions()
+        requireActivity().actionBar?.show()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
         return root
