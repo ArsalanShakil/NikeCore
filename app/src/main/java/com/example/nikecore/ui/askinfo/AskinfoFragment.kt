@@ -14,6 +14,7 @@ import com.example.nikecore.others.Constants.KEY_FIRST_TIME_TOGGLE
 import com.example.nikecore.others.Constants.KEY_HEIGHT
 import com.example.nikecore.others.Constants.KEY_NAME
 import com.example.nikecore.others.Constants.KEY_WEIGHT
+import com.example.nikecore.sharedpreferences.AppPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.askinfo_fragment.*
 import www.sanju.motiontoast.MotionToast
@@ -24,9 +25,6 @@ class AskinfoFragment : Fragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
-
-    @set:Inject
-    var isFirstAppOpen = true
 
     private lateinit var viewModel: AskinfoViewModel
 
@@ -39,15 +37,13 @@ class AskinfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val isFirstAppOpen  = AppPreferences.getBoolean(requireContext(), KEY_FIRST_TIME_TOGGLE, true)
         if (!isFirstAppOpen) {
 
-            val navOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.askinfoFragment, true)
-                .build()
             findNavController().navigate(
                 R.id.action_askinfoFragment_to_navigation_run,
-                savedInstanceState,
-                navOptions
+                savedInstanceState
+              //  navOptions
             )
         }
 
@@ -79,9 +75,8 @@ class AskinfoFragment : Fragment() {
             .putString(KEY_NAME, name)
             .putFloat(KEY_WEIGHT, weight.toFloat())
             .putFloat(KEY_HEIGHT, height.toFloat())
-            .putBoolean(KEY_FIRST_TIME_TOGGLE, false)
             .apply()
-
+        AppPreferences.setBoolean(requireContext(), KEY_FIRST_TIME_TOGGLE, false)
         return true
     }
 

@@ -10,7 +10,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.database.Run
@@ -38,8 +37,6 @@ import www.sanju.motiontoast.MotionToast
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.round
-
-
 
 
 @AndroidEntryPoint
@@ -85,11 +82,8 @@ class RunPausedFragment : Fragment() {
             map = it
             subscribeToObservers(it)
         }
-
         resumeRunBtn.setOnClickListener {
             (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
-            findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
-
         }
         stopRunBtn.setOnLongClickListener {
             (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
@@ -141,8 +135,9 @@ class RunPausedFragment : Fragment() {
     private fun subscribeToObservers(map: GoogleMap) {
 
         TrackingServices.isTracking.observe(viewLifecycleOwner, {
-            updateTracking(it)
-            Timber.d("observe")
+            if (it) {
+                findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
+            }
         })
 
         TrackingServices.pathPoints.observe(viewLifecycleOwner, {
@@ -155,7 +150,7 @@ class RunPausedFragment : Fragment() {
             distanceValuePausedTxt.text = distanceCovered(pathPoints)
         })
 
-        TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
+        TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, {
             curTimeInMillis = it
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             timeValuePausedTxt.text = formattedTime
@@ -185,8 +180,11 @@ class RunPausedFragment : Fragment() {
 
 
 
-                arViewModel.isCollected.observe(viewLifecycleOwner,{
-                    if(arViewModel.isCollected.value == false && currentLocation.distanceTo(ticketLocation) < 30) {
+                arViewModel.isCollected.observe(viewLifecycleOwner, {
+                    if (arViewModel.isCollected.value == false && currentLocation.distanceTo(
+                            ticketLocation
+                        ) < 30
+                    ) {
                         arCameraBtn.visibility = View.VISIBLE
                     } else if (arViewModel.isCollected.value == true) {
                         arCameraBtn.visibility = View.GONE
@@ -216,7 +214,6 @@ class RunPausedFragment : Fragment() {
         Timber.d("isTracking Paused: $isTracking")
 
     }
-
 
     private fun setStartingPositionMarker(map: GoogleMap) {
         if (pathPoints.isNotEmpty() && pathPoints.first().isNotEmpty()) {
@@ -359,7 +356,7 @@ class RunPausedFragment : Fragment() {
 
     private fun stopRun() {
         (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
-        findNavController().popBackStack(R.id.navigation_run,false)
+        findNavController().popBackStack(R.id.navigation_run, false)
     }
 
 

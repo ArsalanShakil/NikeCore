@@ -23,7 +23,6 @@ import kotlin.math.round
 class RunStartedFragment : Fragment() {
 
     private var curTimeInMillis = 0L
-    private var isTracking = true
     private var pathPoints = mutableListOf<Polyline>()
 
 
@@ -43,7 +42,7 @@ class RunStartedFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // With blank your fragment BackPressed will be disabled.
         }
-        TrackingServices.isTracking.postValue(true)
+        //TrackingServices.isTracking.postValue(true)
         pauseRunBtn.setOnClickListener {
             (activity as MainActivity).sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
@@ -61,14 +60,19 @@ class RunStartedFragment : Fragment() {
             distanceValueTxt.text = distanceCovered(pathPoints)
         })
 
+        TrackingServices.isTracking.observe(viewLifecycleOwner, {
+            checkTrackingAndNavigate(it)
+        })
+
     }
 
 
-/*    private fun checkTrackingAndNavigate(isTracking: Boolean) {
+    private fun checkTrackingAndNavigate(isTracking: Boolean) {
         if (!isTracking) {
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
         }
-    }*/
+    }
+
 
     private fun distanceCovered(pathPoints: MutableList<Polyline>) : String{
         var distanceInMeters = 0F

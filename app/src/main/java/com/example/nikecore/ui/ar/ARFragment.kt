@@ -59,7 +59,7 @@ class ARFragment : Fragment() {
 //        val editorOpenClose = shareOpenClose.edit()
 //        val counter = intArrayOf(0)
         val settings: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
-        userMoney = settings.getInt("SNOW_DENSITY", 0) //0 is the default value
+        userMoney = settings.getInt("", 0) //0 is the default value
         Timber.d("SNOW_DENSITY1 $userMoney")
 
         arFrag = childFragmentManager.findFragmentById(

@@ -1,16 +1,24 @@
 package com.example.nikecore.ui
 
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.nfc.NfcAdapter
+import android.nfc.NfcAdapter.ReaderCallback
+import android.nfc.Tag
+import android.nfc.tech.NfcA
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -21,20 +29,17 @@ import com.example.nikecore.databinding.ActivityMainBinding
 import com.example.nikecore.others.Constants.ACTION_SHOW_PAUSE_FRAGMENT
 import com.example.nikecore.others.Constants.ACTION_SHOW_RUN_FRAGMENT
 import com.example.nikecore.services.TrackingServices
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.ar.core.dependencies.e
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+import www.sanju.motiontoast.MotionToast
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
 
@@ -43,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_NikeCore)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         navigateToTrackingFragmentIfNeeded(intent)
 
         val navView: BottomNavigationView = binding.navView
@@ -82,6 +86,7 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         navigateToTrackingFragmentIfNeeded(intent)
+
     }
 
     private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
@@ -125,4 +130,8 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+
+
+
 

@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999">
+        app:layout_constraintVertical_bias="0.16000003">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/tickets_collected"
                     android:textAlignment="center"
-                    android:textColor="@color/dark_grey"
+                    android:textColor="#757575"
                     android:textSize="14sp" />
 
 
@@ -101,7 +101,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/balance"
                     android:textAlignment="center"
-                    android:textColor="@color/dark_grey"
+                    android:textColor="#757575"
                     android:textSize="14sp" />
 
 
@@ -125,12 +125,13 @@
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.53999996" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/finishRunBtn"
+        android:id="@+id/startPaymentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_payment"

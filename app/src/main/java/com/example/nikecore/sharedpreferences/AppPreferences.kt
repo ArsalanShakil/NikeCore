@@ -19,4 +19,17 @@ object AppPreferences {
             getPrefs(context).edit().putBoolean(ONBOARING_PREF, value).apply()
         }
     }
+
+    fun getInt(context: Context, key: String, defaultValue: Int) = getPrefs(context).getInt(key, defaultValue)
+
+    fun setInt(context: Context, key: String, value: Int) {
+        getPrefs(context).edit().putInt(key, value).apply()
+    }
+
+    fun getBoolean(context: Context, key: String, defaultValue: Boolean) = getPrefs(context).getBoolean(key, defaultValue)
+
+    fun setBoolean(context: Context, key: String, value: Boolean) {
+        getPrefs(context).edit().putBoolean(key, value).apply()
+    }
+
 }
