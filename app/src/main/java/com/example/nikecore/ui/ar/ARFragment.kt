@@ -1,5 +1,6 @@
 package com.example.nikecore.ui.ar
 
+import android.content.SharedPreferences
 import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
@@ -30,6 +31,13 @@ import kotlinx.android.synthetic.main.a_r_fragment.view.*
 import timber.log.Timber
 import www.sanju.motiontoast.MotionToast
 
+
+
+
+
+
+
+
 class ARFragment : Fragment() {
 
     private lateinit var arFrag: ArFragment
@@ -37,7 +45,7 @@ class ARFragment : Fragment() {
     private var modelRenderable: ModelRenderable? = null
     private val arViewModel: ARViewModel by activityViewModels()
     private val runViewModel: RunViewModel by activityViewModels()
-    private val collectedList = ArrayList<String>()
+    private var userMoney = 0
 
 
     override fun onCreateView(
@@ -46,11 +54,36 @@ class ARFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.a_r_fragment, container, false)
 
+//        val shareOpenClose: SharedPreferences =
+//            requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
+//        val editorOpenClose = shareOpenClose.edit()
+//        val counter = intArrayOf(0)
+        val settings: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
+        userMoney = settings.getInt("SNOW_DENSITY", 0) //0 is the default value
+        Timber.d("SNOW_DENSITY1 $userMoney")
+
         arFrag = childFragmentManager.findFragmentById(
             R.id.sceneform_fragment
         ) as ArFragment
 
         view.findViewById<Button>(R.id.showTicketBtn).setOnClickListener {
+
+
+//
+//            counter[0]++
+//
+//            editorOpenClose.putInt("count", counter[0])
+//            editorOpenClose.apply()
+//
+//            val getCount: SharedPreferences = requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
+//            val getCountAmount = getCount.getInt("count", 0)
+//            Timber.d("getCountAmount2 $getCountAmount")
+//            userMoney++
+//            val sharedPrefs = requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
+//            val editorOpenClose = sharedPrefs.edit()
+//            editorOpenClose.putString("user_balance_added", userMoney.toString())
+//            editorOpenClose.apply()
+//            Timber.d("userMoney2 $userMoney")
             add3dObject()
         }
 
@@ -90,9 +123,7 @@ class ARFragment : Fragment() {
             viewNode.setParent(anchorNode)
             // Sets this as the selected node in the TransformationSystem
             viewNode.select()
-
         }
-
         return view
     }
 
@@ -100,12 +131,10 @@ class ARFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
-            collectedList.add(it.toString())
-        })
-        for (i in collectedList){
-            Timber.d("collectedList $i")
-        }
+//        val sharedPref = requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
+//        userMoney = sharedPref.getString("userbalance", "0")?.toInt() ?: 0
+//        Timber.d("userMoney1 ${sharedPref.getString("userbalance", "0")?.toInt() ?: 0}")
+
         arViewModel.userBalance.observe(viewLifecycleOwner,{
             userMoneyTxt.text = it.toString()
         })
@@ -136,8 +165,15 @@ class ARFragment : Fragment() {
                         view?.findViewById<TextView>(R.id.moneyAddedTxt)?.visibility = View.VISIBLE
                         view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
                         view?.findViewById<Button>(R.id.goBackBtn)?.visibility = View.VISIBLE
-                        arViewModel.userBalance.postValue(10)
+                        userMoney += 10
+                        val settings: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
+                        val editor = settings.edit()
+                        editor.putInt("SNOW_DENSITY", userMoney)
+                        editor.apply()
+
+                        arViewModel.userBalance.postValue(userMoney)
                         arViewModel.isCollected.postValue(true)
+
                         MotionToast.darkToast(requireActivity(),
                             getString(R.string.Congrats),
                             getString(R.string.ticket_collected),
@@ -148,9 +184,8 @@ class ARFragment : Fragment() {
                         mNode.setParent(null)
                         anchorNode.anchor?.detach()
                         Handler(Looper.getMainLooper()).postDelayed({
-                            //Do something after 100ms
                             view?.findViewById<TextView>(R.id.moneyAddedTxt)?.visibility = View.GONE
-                        }, 2000)
+                        }, 1200)
 
                     }
                     mNode.renderable = modelRenderable

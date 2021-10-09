@@ -5,6 +5,10 @@
       <map>
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/drawable/ic_ticket_collected_icon.xml" value="0.2703125" />
         <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/a_r_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_payment.xml" value="0.14221014492753623" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/fragment_run.xml" value="0.1" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/layout/run_item.xml" value="0.1" />
+        <entry key="..\:/3rd Year/1st Period/NikeCore/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16574074074074074" />
         <entry key="app/src/main/res/drawable/custom_edit_text.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/gradient_view.xml" value="0.16574074074074074" />
