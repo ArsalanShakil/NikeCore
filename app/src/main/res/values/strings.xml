@@ -73,6 +73,8 @@
     <string name="enter_amount">Enter amount</string>
     <string name="string_euro">%s€</string>
     <string name="_10">10</string>
+    <string name="payment_msg">Please enter amount greater than 0 and do not use decimal numbers</string>
+
 
 
 </resources>

@@ -44,8 +44,8 @@ class ARFragment : Fragment() {
     private var viewRenderable: ViewRenderable? = null
     private var modelRenderable: ModelRenderable? = null
     private val arViewModel: ARViewModel by activityViewModels()
-    private val runViewModel: RunViewModel by activityViewModels()
     private var userMoney = 0
+    private var userTicket = 0
 
 
     override fun onCreateView(
@@ -54,13 +54,13 @@ class ARFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.a_r_fragment, container, false)
 
-//        val shareOpenClose: SharedPreferences =
-//            requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
-//        val editorOpenClose = shareOpenClose.edit()
-//        val counter = intArrayOf(0)
-        val settings: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
-        userMoney = settings.getInt("", 0) //0 is the default value
-        Timber.d("SNOW_DENSITY1 $userMoney")
+
+        val sharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
+        userMoney = sharedPrefs.getInt("USER_MONEY", 0) //0 is the default value
+
+
+        val ticketSharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Ticket", 0)
+        userTicket = ticketSharedPrefs.getInt("USER_TICKET", 0) //0 is the default value
 
         arFrag = childFragmentManager.findFragmentById(
             R.id.sceneform_fragment
@@ -69,21 +69,6 @@ class ARFragment : Fragment() {
         view.findViewById<Button>(R.id.showTicketBtn).setOnClickListener {
 
 
-//
-//            counter[0]++
-//
-//            editorOpenClose.putInt("count", counter[0])
-//            editorOpenClose.apply()
-//
-//            val getCount: SharedPreferences = requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
-//            val getCountAmount = getCount.getInt("count", 0)
-//            Timber.d("getCountAmount2 $getCountAmount")
-//            userMoney++
-//            val sharedPrefs = requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
-//            val editorOpenClose = sharedPrefs.edit()
-//            editorOpenClose.putString("user_balance_added", userMoney.toString())
-//            editorOpenClose.apply()
-//            Timber.d("userMoney2 $userMoney")
             add3dObject()
         }
 
@@ -131,9 +116,6 @@ class ARFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val sharedPref = requireContext().getSharedPreferences("user_Balance", Context.MODE_PRIVATE)
-//        userMoney = sharedPref.getString("userbalance", "0")?.toInt() ?: 0
-//        Timber.d("userMoney1 ${sharedPref.getString("userbalance", "0")?.toInt() ?: 0}")
 
         arViewModel.userBalance.observe(viewLifecycleOwner,{
             userMoneyTxt.text = it.toString()
@@ -165,12 +147,20 @@ class ARFragment : Fragment() {
                         view?.findViewById<TextView>(R.id.moneyAddedTxt)?.visibility = View.VISIBLE
                         view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
                         view?.findViewById<Button>(R.id.goBackBtn)?.visibility = View.VISIBLE
+
                         userMoney += 10
-                        val settings: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
-                        val editor = settings.edit()
-                        editor.putInt("SNOW_DENSITY", userMoney)
+                        val sharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
+                        val editor = sharedPrefs.edit()
+                        editor.putInt("USER_MONEY", userMoney)
                         editor.apply()
 
+                        userTicket += 1
+                        val ticketSharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Ticket", 0)
+                        val editorTicket = ticketSharedPrefs.edit()
+                        editorTicket.putInt("USER_TICKET", userTicket)
+                        editorTicket.apply()
+
+                        arViewModel.userTicket.postValue(userTicket)
                         arViewModel.userBalance.postValue(userMoney)
                         arViewModel.isCollected.postValue(true)
 

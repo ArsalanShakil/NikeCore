@@ -12,4 +12,6 @@ class ARViewModel @Inject constructor(
 ) : ViewModel() {
     val isCollected : MutableLiveData<Boolean> = MutableLiveData(false)
     val userBalance : MutableLiveData<Int> = MutableLiveData(0)
+    val userTicket : MutableLiveData<Int> = MutableLiveData(0)
+
 }

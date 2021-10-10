@@ -44,8 +44,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by activityViewModels()
-    private val arViewModel: ARViewModel by activityViewModels()
-    private var pathPoints = mutableListOf<com.example.nikecore.services.Polyline>()
     private var isBtnClickable = false
 
 
@@ -348,20 +346,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
                 )
 
             )
-//            arViewModel.isCollected.observe(viewLifecycleOwner,{
-//                if (runViewModel.selectedCoordinates.value != null && arViewModel.isCollected.value == true) {
-//                    map.addMarker(
-//                        MarkerOptions().position(runViewModel.selectedCoordinates.value)
-//                            .title("run")
-//                    )?.setIcon(
-//                        (activity as MainActivity).getBitmapDescriptorFromVector(
-//                            requireContext(),
-//                            R.drawable.ic_ticket_collected_icon
-//                        )
-//                    )
-//                }
-//            })
-
         }
         val sharedPref = requireContext().getSharedPreferences("locationdata", 0)
         val gson = Gson()

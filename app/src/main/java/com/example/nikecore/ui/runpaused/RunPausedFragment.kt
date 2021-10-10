@@ -41,7 +41,6 @@ import kotlin.math.round
 
 @AndroidEntryPoint
 class RunPausedFragment : Fragment() {
-    private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
     private var curTimeInMillis = 0L
 
@@ -67,6 +66,7 @@ class RunPausedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("isCollected: ${arViewModel.isCollected.value}")
+
 
         mapViewRunPaused.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -134,11 +134,14 @@ class RunPausedFragment : Fragment() {
 
     private fun subscribeToObservers(map: GoogleMap) {
 
-        TrackingServices.isTracking.observe(viewLifecycleOwner, {
+        if (view != null){
+               TrackingServices.isTracking.observe( viewLifecycleOwner,{
             if (it) {
                 findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
             }
         })
+
+
 
         TrackingServices.pathPoints.observe(viewLifecycleOwner, {
             pathPoints = it
@@ -206,14 +209,10 @@ class RunPausedFragment : Fragment() {
 
         })
 
-    }
-
-
-    private fun updateTracking(isTracking: Boolean) {
-        this.isTracking = isTracking
-        Timber.d("isTracking Paused: $isTracking")
+        }
 
     }
+
 
     private fun setStartingPositionMarker(map: GoogleMap) {
         if (pathPoints.isNotEmpty() && pathPoints.first().isNotEmpty()) {
