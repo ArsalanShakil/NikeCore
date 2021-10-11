@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.example.nikecore.R
 import com.example.nikecore.database.Run
 import com.example.nikecore.others.Constants.ACTION_START_OR_RESUME_SERVICE
@@ -125,7 +127,10 @@ class RunPausedFragment : Fragment() {
                 ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
             )
         }
-
+        YoYo.with(Techniques.Bounce)
+            .duration(950)
+            .repeat(10)
+            .playOn(arCameraBtn)
         arCameraBtn.setOnClickListener {
             findNavController().navigate(R.id.action_runPausedFragment_to_ARFragment)
         }
