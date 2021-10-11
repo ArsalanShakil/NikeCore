@@ -38,12 +38,16 @@ import timber.log.Timber
 import www.sanju.motiontoast.MotionToast
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 @AndroidEntryPoint
 class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by activityViewModels()
+    private val arViewModel: ARViewModel by activityViewModels()
     private var isBtnClickable = false
 
 
@@ -196,6 +200,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
+
     }
 
     override fun onStop() {
@@ -295,13 +300,13 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         val radiusInDegrees = (radius / 111000f).toDouble()
         val u = random.nextDouble()
         val v = random.nextDouble()
-        val w = radiusInDegrees * Math.sqrt(u)
+        val w = radiusInDegrees * sqrt(u)
         val t = 2 * Math.PI * v
-        val x = w * Math.cos(t)
-        val y = w * Math.sin(t)
+        val x = w * cos(t)
+        val y = w * sin(t)
 
         // Adjust the x-coordinate for the shrinking of the east-west distances
-        val new_x = x / Math.cos(Math.toRadians(y0))
+        val new_x = x / cos(Math.toRadians(y0))
         val foundLongitude = new_x + x0
         val foundLatitude = y + y0
         Timber.d("Longitude: $foundLongitude  Latitude: $foundLatitude")
@@ -313,7 +318,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         val locationList = ArrayList<String>()
         for (i in 0..5) {
 
-            var randomLocation = getRandomLocation(
+            val randomLocation = getRandomLocation(
                 currentLocation.latitude,
                 currentLocation.longitude,
                 50
@@ -366,11 +371,46 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
                 jsonText,
                 Array<String>::class.java
             )
+
+            arViewModel.collectedCoordinates.observe(viewLifecycleOwner,{
+                if(text.isNotEmpty()){
+                    //val s = text.indexOf()
+                    Timber.d("s value1: ${text[0]}")
+                    Timber.d("s value2: ${text.size}")
+
+                    if (it != null){
+                        val setList = text.toMutableList()
+                        val x = it.toString().replace("lat/lng: (","")
+                        val y = x.replace(")","")
+                        val z = y.replace(" ","")
+                        Timber.d("replace: ${z}")
+
+                        Timber.d("indexOf: ${setList.indexOf(z)}")
+
+                        setList.removeAt(setList.indexOf(z))
+
+
+                        Timber.d("s value3: ${setList.size}")
+
+                            val jsonSetText = gson.toJson(setList)
+                            sharedPref.edit().putString("location", jsonSetText).apply()
+                        arViewModel.collectedCoordinates.postValue(null)
+                    }
+                }
+            })
+            val newText = gson.fromJson(
+                jsonText,
+                Array<String>::class.java
+            )
+            Timber.d("newText: ${newText.size}")
+
+
             //EDIT: gso to gson
-            for (item in text){
+            for (item in newText){
                 val latlong = item.split(",").toTypedArray()
                 val latitude = latlong[0].toDouble()
                 val longitude = latlong[1].toDouble()
+
                 map.addMarker(
                     MarkerOptions().position(LatLng(latitude,longitude))
                         .title("run")
@@ -385,4 +425,5 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
             }
         } else  setMarkerOnRandomLocations(map)
     }
+
 }

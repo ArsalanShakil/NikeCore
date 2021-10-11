@@ -44,6 +44,8 @@ class ARFragment : Fragment() {
     private var viewRenderable: ViewRenderable? = null
     private var modelRenderable: ModelRenderable? = null
     private val arViewModel: ARViewModel by activityViewModels()
+    private val runViewModel: RunViewModel by activityViewModels()
+
     private var userMoney = 0
     private var userTicket = 0
 
@@ -159,7 +161,10 @@ class ARFragment : Fragment() {
                         val editorTicket = ticketSharedPrefs.edit()
                         editorTicket.putInt("USER_TICKET", userTicket)
                         editorTicket.apply()
-
+                        runViewModel.selectedCoordinates.observe(viewLifecycleOwner,{
+                            arViewModel.collectedCoordinates.postValue(it)
+                            Timber.d("it: $it")
+                        })
                         arViewModel.userTicket.postValue(userTicket)
                         arViewModel.userBalance.postValue(userMoney)
                         arViewModel.isCollected.postValue(true)
