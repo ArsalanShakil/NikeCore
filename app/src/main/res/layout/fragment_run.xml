@@ -79,7 +79,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:clickable="true"
-        android:contentDescription="@string/stop_run"
+        android:contentDescription="@string/reload_ticket_location"
         android:focusable="true"
         android:src="@drawable/ic_reload_location"
         app:backgroundTint="@color/white"
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
         app:rippleColor="@color/grey"
-        app:tint="@color/black" />
+        app:tint="@null" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
