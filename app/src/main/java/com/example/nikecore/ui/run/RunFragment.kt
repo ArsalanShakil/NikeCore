@@ -82,7 +82,8 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Timber.d("onViewCreated")
+        map?.clear()
         Timber.d("RunFrag", "We exist!!!")
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync { it ->
@@ -150,6 +151,11 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         statsBtn.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_run_to_statisticsFragment)
         }
+        reloadLocationBtn.setOnClickListener {
+            val sharedPref = requireContext().getSharedPreferences("locationdata", 0)
+            sharedPref.edit().remove("location").apply()
+            map?.let { it1 -> saveLocationIntoData(it1) }
+        }
 
     }
 
@@ -195,32 +201,43 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
+        Timber.d("onResume")
     }
 
     override fun onStart() {
         super.onStart()
         mapView?.onStart()
+        Timber.d("onStart")
+
 
     }
 
     override fun onStop() {
         super.onStop()
         mapView?.onStop()
+        Timber.d("onStop")
+
     }
 
     override fun onPause() {
         super.onPause()
         mapView?.onPause()
+        Timber.d("onPause")
+
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
         mapView?.onLowMemory()
+        Timber.d("onLowMemory")
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView?.onSaveInstanceState(outState)
+        Timber.d("onSaveInstanceState")
+
     }
 
     private fun locationEnabled() {
