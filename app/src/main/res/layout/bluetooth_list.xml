@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/scanNameTxt"
             android:layout_width="0dp"
-            android:text="item"
+            android:text="@string/item"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/scanAddressTxt"
             android:layout_width="0dp"
-            android:text="item"
+            android:text="@string/item"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
@@ -36,7 +36,7 @@
             android:id="@+id/scanSignalTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="item"
+            android:text="@string/item"
             android:layout_margin="5dp"
             android:maxLines="1"
             android:textAlignment="center"
@@ -55,13 +55,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:text="Connect" />
+            android:text="@string/connect" />
 
         <TextView
             android:id="@+id/getDataTxt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="item"
+            android:text="@string/item"
             android:layout_weight="1"
             android:textAlignment="center"
             android:textSize="24sp"

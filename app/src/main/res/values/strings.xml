@@ -75,6 +75,12 @@
     <string name="_10">10</string>
     <string name="payment_msg">Please enter amount greater than 0 and do not use decimal numbers</string>
     <string name="reload_ticket_location">reload ticket location</string>
+    <string name="your_run_overview">Your run overview</string>
+    <string name="settings">settings</string>
+    <string name="your_run_statistics">Your run statistics</string>
+    <string name="scan">Scan</string>
+    <string name="item">item</string>
+    <string name="connect">Connect</string>
 
 
 </resources>

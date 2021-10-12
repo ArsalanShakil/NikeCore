@@ -57,18 +57,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/your_run_overview"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -96,7 +94,7 @@
                             android:layout_gravity="center"
                             android:text="@string/time"
                             android:textAlignment="center"
-                            android:textColor="@color/dark_grey"
+                            android:textColor="#737373"
                             app:layout_constraintEnd_toStartOf="@+id/tvDistance"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tvDate"
@@ -131,7 +129,7 @@
                             android:layout_gravity="center"
                             android:text="@string/kilo_meters"
                             android:textAlignment="center"
-                            android:textColor="@color/dark_grey"
+                            android:textColor="#737373"
                             app:layout_constraintEnd_toStartOf="@+id/tvAvgSpeed"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tvTime"
@@ -165,7 +163,7 @@
                             android:layout_gravity="center"
                             android:text="@string/avg_speed"
                             android:textAlignment="center"
-                            android:textColor="@color/dark_grey"
+                            android:textColor="#737373"
                             app:layout_constraintEnd_toStartOf="@+id/tvCalories"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tvDistance"
@@ -201,7 +199,7 @@
                             android:layout_gravity="center"
                             android:text="@string/calories"
                             android:textAlignment="center"
-                            android:textColor="@color/dark_grey"
+                            android:textColor="#737373"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tvAvgSpeed"
@@ -212,7 +210,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

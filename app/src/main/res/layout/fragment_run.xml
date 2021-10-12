@@ -16,13 +16,15 @@
         android:focusable="true"
         android:text="@string/start"
         android:textAlignment="viewEnd"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
+        app:layout_constraintVertical_bias="0.846"
+        tools:ignore="TextContrastCheck" />
 
     <com.google.android.gms.maps.MapView
         android:contentDescription="@string/your_map_location_and_coins"
@@ -38,9 +40,9 @@
         android:id="@+id/settingsBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginEnd="50dp"
         android:clickable="true"
-        android:contentDescription="@string/stop_run"
+        android:contentDescription="@string/settings"
         android:focusable="true"
         android:src="@drawable/ic_settings"
         app:backgroundTint="@color/white"
@@ -58,9 +60,9 @@
         android:id="@+id/statsBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:clickable="true"
-        android:contentDescription="@string/stop_run"
+        android:contentDescription="@string/your_run_statistics"
         android:focusable="true"
         android:src="@drawable/ic_bar_chart_2"
         app:backgroundTint="@color/white"
@@ -72,7 +74,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.83"
         app:rippleColor="@color/grey"
-        app:tint="@color/black" />
+        app:tint="@color/black"
+        tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/reloadLocationBtn"
