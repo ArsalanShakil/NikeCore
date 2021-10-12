@@ -197,7 +197,9 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {}
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        fetchLocation(map!!)
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
