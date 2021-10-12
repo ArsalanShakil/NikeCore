@@ -43,7 +43,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 @AndroidEntryPoint
-class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
+class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private var gpsStatus: Boolean = false
     private val runViewModel: RunViewModel by activityViewModels()
@@ -106,7 +106,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
             Timber.d("selectedCoordx:${it}")
             isBtnClickable = it != null
-            when(isBtnClickable) {
+            when (isBtnClickable) {
                 true -> startRunBtn.setBackgroundColor(resources.getColor(R.color.yellow))
                 false -> startRunBtn.setBackgroundColor(resources.getColor(R.color.light_grey))
 
@@ -202,6 +202,10 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
         super.onResume()
         mapView?.onResume()
         Timber.d("onResume")
+        if (map != null) { //prevent crashing if the map doesn't exist yet (eg. on starting activity)
+            map?.clear();
+            fetchLocation(map!!)
+        }
     }
 
     override fun onStart() {
@@ -288,7 +292,11 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
                 map.setOnMarkerClickListener {
 
                     Timber.d("markerClicked ${it.position}")
-                    if (LatLng(currentLocation.latitude, currentLocation.longitude) != it.position) {
+                    if (LatLng(
+                            currentLocation.latitude,
+                            currentLocation.longitude
+                        ) != it.position
+                    ) {
                         runViewModel.postSelectedCoordinates(it.position)
                     } else {
                         MotionToast.darkToast(
@@ -351,7 +359,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
             //Set the values
 
 
-
             map.addMarker(
                 MarkerOptions().position(
                     getRandomLocation(
@@ -379,7 +386,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
     private fun saveLocationIntoData(map: GoogleMap) {
         val sharedPref = requireContext().getSharedPreferences("locationdata", 0)
-        if(sharedPref.contains("location")) {
+        if (sharedPref.contains("location")) {
 
 
             val gson = Gson()
@@ -389,29 +396,32 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
                 Array<String>::class.java
             )
 
-            arViewModel.collectedCoordinates.observe(viewLifecycleOwner,{
-                if(text.isNotEmpty()){
+            arViewModel.collectedCoordinates.observe(viewLifecycleOwner, {
+                if (text.isNotEmpty()) {
                     //val s = text.indexOf()
                     Timber.d("s value1: ${text[0]}")
                     Timber.d("s value2: ${text.size}")
 
-                    if (it != null){
+                    if (it != null) {
                         val setList = text.toMutableList()
-                        val x = it.toString().replace("lat/lng: (","")
-                        val y = x.replace(")","")
-                        val z = y.replace(" ","")
-                        Timber.d("replace: ${z}")
+                        if (setList.isNotEmpty()) {
+                            val x = it.toString().replace("lat/lng: (", "")
+                            val y = x.replace(")", "")
+                            val z = y.replace(" ", "")
+                            Timber.d("replace: ${z}")
 
-                        Timber.d("indexOf: ${setList.indexOf(z)}")
+                            Timber.d("indexOf: ${setList.indexOf(z)}")
 
-                        setList.removeAt(setList.indexOf(z))
+                            setList.removeAt(setList.indexOf(z))
 
 
-                        Timber.d("s value3: ${setList.size}")
+                            Timber.d("s value3: ${setList.size}")
 
                             val jsonSetText = gson.toJson(setList)
                             sharedPref.edit().putString("location", jsonSetText).apply()
-                        arViewModel.collectedCoordinates.postValue(null)
+                            arViewModel.collectedCoordinates.postValue(null)
+                        }
+
                     }
                 }
             })
@@ -423,13 +433,13 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
 
 
             //EDIT: gso to gson
-            for (item in newText){
+            for (item in newText) {
                 val latlong = item.split(",").toTypedArray()
                 val latitude = latlong[0].toDouble()
                 val longitude = latlong[1].toDouble()
 
                 map.addMarker(
-                    MarkerOptions().position(LatLng(latitude,longitude))
+                    MarkerOptions().position(LatLng(latitude, longitude))
                         .title("run")
                 )?.setIcon(
                     (activity as MainActivity).getBitmapDescriptorFromVector(
@@ -440,7 +450,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks{
                 )
 
             }
-        } else  setMarkerOnRandomLocations(map)
+        } else setMarkerOnRandomLocations(map)
     }
 
 }
