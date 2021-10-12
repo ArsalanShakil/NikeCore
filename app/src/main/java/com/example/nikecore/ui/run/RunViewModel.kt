@@ -17,8 +17,8 @@ class RunViewModel @Inject constructor(
         value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
-    val selectedCoordinates : MutableLiveData<LatLng?> = MutableLiveData(null)
-    fun postSelectedCoordinates(latLng: LatLng?){
+    val selectedCoordinates: MutableLiveData<LatLng?> = MutableLiveData(null)
+    fun postSelectedCoordinates(latLng: LatLng?) {
         selectedCoordinates.postValue(latLng)
     }
 }

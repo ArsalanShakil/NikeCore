@@ -1,11 +1,9 @@
 package com.example.nikecore.ui.onBoarding
 
-import android.content.ContentValues
 import android.content.Context
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.sharedpreferences.AppPreferences
 import kotlinx.android.synthetic.main.onboarding_fragment.*
+import timber.log.Timber
 
 class OnboardingFragment : Fragment() {
 
@@ -50,11 +49,7 @@ class OnboardingFragment : Fragment() {
             showMsgTxt.startAnimation(`in`)
         })
 
-        /*val isFirstRun =
-            this.activity?.getSharedPreferences("OnBoardingCheck", AppCompatActivity.MODE_PRIVATE)
-                ?.getBoolean("isFirstRun", false)*/
-
-        if (AppPreferences.getIsFirstStart(requireContext()) == true) {
+        if (AppPreferences.getIsFirstStart(requireContext())) {
             //startActivity(Intent(this, AskInfoActivity::class.java))
             findNavController().navigate(R.id.action_onboardingFragment_to_askinfoFragment)
         }
@@ -67,7 +62,7 @@ class OnboardingFragment : Fragment() {
             videoView.start()
             //Loop Video
             mp!!.isLooping = true
-            Log.i(ContentValues.TAG, "Video Started")
+            Timber.d("Video Started")
         }
         var audio = true
         val audioManager = this.activity?.getSystemService(Context.AUDIO_SERVICE) as AudioManager

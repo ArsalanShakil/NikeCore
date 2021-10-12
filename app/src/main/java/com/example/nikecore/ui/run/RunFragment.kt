@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -86,7 +87,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         map?.clear()
         Timber.d("RunFrag", "We exist!!!")
         mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { it ->
+        mapView.getMapAsync {
             map = it
             fetchLocation(it)
 
@@ -107,8 +108,18 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             Timber.d("selectedCoordx:${it}")
             isBtnClickable = it != null
             when (isBtnClickable) {
-                true -> startRunBtn.setBackgroundColor(resources.getColor(R.color.yellow))
-                false -> startRunBtn.setBackgroundColor(resources.getColor(R.color.light_grey))
+                true -> startRunBtn.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.yellow
+                    )
+                )
+                false -> startRunBtn.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
 
             }
         })
@@ -203,7 +214,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         mapView?.onResume()
         Timber.d("onResume")
         if (map != null) { //prevent crashing if the map doesn't exist yet (eg. on starting activity)
-            map?.clear();
+            map?.clear()
             fetchLocation(map!!)
         }
     }
@@ -408,7 +419,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                             val x = it.toString().replace("lat/lng: (", "")
                             val y = x.replace(")", "")
                             val z = y.replace(" ", "")
-                            Timber.d("replace: ${z}")
+                            Timber.d("replace: $z")
 
                             Timber.d("indexOf: ${setList.indexOf(z)}")
 

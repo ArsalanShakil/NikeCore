@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
@@ -154,17 +155,17 @@ class TrackingServices : LifecycleService() {
                 if (isTracking) ACTION_SHOW_RUN_FRAGMENT else Constants.ACTION_SHOW_PAUSE_FRAGMENT
         }
         val showIntent =
-            PendingIntent.getActivity(this, 1, clickIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(this, 1, clickIntent, FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT)
         val pendingIntent = if (isTracking) {
             val pauseIntent = Intent(this, TrackingServices::class.java).apply {
                 action = ACTION_PAUSE_SERVICE
             }
-            PendingIntent.getService(this, 1, pauseIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getService(this, 1, pauseIntent, FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT)
         } else {
             val resumeIntent = Intent(this, TrackingServices::class.java).apply {
                 action = ACTION_START_OR_RESUME_SERVICE
             }
-            PendingIntent.getService(this, 2, resumeIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getService(this, 2, resumeIntent, FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT)
         }
 
         val notificationManager =

@@ -7,8 +7,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CountingViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
     var number: MutableLiveData<Int> = MutableLiveData(1)
+
     val navigateToAccountingFragment = MutableLiveData(false)
 
     init {

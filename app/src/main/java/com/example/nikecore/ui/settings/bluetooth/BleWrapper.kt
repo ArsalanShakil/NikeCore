@@ -34,14 +34,14 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
     private val myBleCallback = MyBleCallback()
 
     private val listeners = HashSet<BleCallback>()
-    private val writeQueue: Queue<CharacteristicData> = ArrayDeque<CharacteristicData>();
+    private val writeQueue: Queue<CharacteristicData> = ArrayDeque<CharacteristicData>()
     private var writing: Boolean = false
 
     interface BleCallback {
         /**
          * Signals that the BLE device is ready for communication.
          */
-        fun onDeviceReady(gatt: BluetoothGatt, bleWrapper : BleWrapper)
+        fun onDeviceReady(gatt: BluetoothGatt, bleWrapper: BleWrapper)
 
         /**
          * Signals that a connection to the device was lost.
@@ -87,17 +87,27 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
         bleHandler.obtainMessage(MSG_DISCONNECT, gatt).sendToTarget()
     }
 
-    fun getNotifications(gatt: BluetoothGatt, service: UUID, characteristic: UUID ) {
-        bleHandler.obtainMessage(MSG_GET_NOTIFICATIONS, ServiceCharacteristic(gatt, service, characteristic)).sendToTarget()
+    fun getNotifications(gatt: BluetoothGatt, service: UUID, characteristic: UUID) {
+        bleHandler.obtainMessage(
+            MSG_GET_NOTIFICATIONS,
+            ServiceCharacteristic(gatt, service, characteristic)
+        ).sendToTarget()
     }
 
-    fun writeCharacteristic(gatt: BluetoothGatt, service: UUID, characteristic: UUID, data: ByteArray) {
+    fun writeCharacteristic(
+        gatt: BluetoothGatt,
+        service: UUID,
+        characteristic: UUID,
+        data: ByteArray
+    ) {
         bleHandler.obtainMessage(
             MSG_WRITE_CHARACTERISTIC, CharacteristicData(
                 ServiceCharacteristic(gatt, service, characteristic),
-                data)
+                data
+            )
         ).sendToTarget()
     }
+
     /**************************************/
 
     override fun handleMessage(message: Message): Boolean {
@@ -106,7 +116,8 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
             MSG_CONNECT -> doConnect(message.obj as Boolean)
             MSG_CONNECTED -> (message.obj as BluetoothGatt).discoverServices()
             MSG_DISCONNECT -> (message.obj as BluetoothGatt).disconnect()
-            MSG_DISCONNECTED -> {(message.obj as BluetoothGatt).close()
+            MSG_DISCONNECTED -> {
+                (message.obj as BluetoothGatt).close()
                 mainHandler.obtainMessage(MSG_CLOSED).sendToTarget()
             }
             MSG_WRITE_CHARACTERISTIC -> doRequestWriteCharacteristic(message.obj as CharacteristicData)
@@ -120,7 +131,7 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
 
     private fun doNotifyReady(gatt: BluetoothGatt) {
         for (listener in listeners) {
-            listener.onDeviceReady(gatt,this)
+            listener.onDeviceReady(gatt, this)
         }
     }
 
@@ -164,7 +175,7 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
         //Log.d("DBG", "writeCharacteristic")
         val characteristic = chrdata.characteristic.gatt.getService(chrdata.characteristic.service)
             .getCharacteristic(chrdata.characteristic.characteristic)
-        characteristic.setValue(chrdata.data)
+        characteristic.value = chrdata.data
         return chrdata.characteristic.gatt.writeCharacteristic(characteristic)
     }
 
@@ -175,8 +186,12 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
             // http://allmydroids.blogspot.com/2015/06/android-ble-error-status-codes-explained.html
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 when (newState) {
-                    BluetoothGatt.STATE_CONNECTED -> bleHandler.obtainMessage(MSG_CONNECTED, gatt).sendToTarget()
-                    BluetoothGatt.STATE_DISCONNECTED -> bleHandler.obtainMessage(MSG_DISCONNECTED, gatt).sendToTarget()
+                    BluetoothGatt.STATE_CONNECTED -> bleHandler.obtainMessage(MSG_CONNECTED, gatt)
+                        .sendToTarget()
+                    BluetoothGatt.STATE_DISCONNECTED -> bleHandler.obtainMessage(
+                        MSG_DISCONNECTED,
+                        gatt
+                    ).sendToTarget()
                 }
             } else
             // we report to the upper layer if we lost the connection
@@ -190,7 +205,11 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
             }
         }
 
-        override fun onDescriptorWrite(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor, status: Int) {
+        override fun onDescriptorWrite(
+            gatt: BluetoothGatt,
+            descriptor: BluetoothGattDescriptor,
+            status: Int
+        ) {
             super.onDescriptorWrite(gatt, descriptor, status)
             //Log.d("DBG", "onDescriptorWrite")
 
@@ -200,7 +219,11 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
                 writing = false
         }
 
-        override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?, status: Int) {
+        override fun onCharacteristicWrite(
+            gatt: BluetoothGatt?,
+            characteristic: BluetoothGattCharacteristic?,
+            status: Int
+        ) {
             super.onCharacteristicWrite(gatt, characteristic, status)
             //Log.d("DBG", "onCharacteristicWrite")
 
@@ -210,7 +233,10 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
                 writing = false
         }
 
-        override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+        override fun onCharacteristicChanged(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic
+        ) {
             super.onCharacteristicChanged(gatt, characteristic)
             //Log.d("DBG", "Characteristic data received")
 
@@ -219,8 +245,12 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
     }
 
 
+    data class ServiceCharacteristic(
+        val gatt: BluetoothGatt,
+        val service: UUID,
+        val characteristic: UUID
+    )
 
-    data class ServiceCharacteristic(val gatt: BluetoothGatt, val service: UUID, val characteristic: UUID)
     data class CharacteristicData(val characteristic: ServiceCharacteristic, val data: ByteArray)
 
     companion object {
@@ -232,9 +262,9 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
         }
 
         // Heart rate constants
-        val HEART_RATE_SERVICE_UUID             = convertFromInteger(0x180D)
-        val HEART_RATE_MEASUREMENT_CHAR_UUID    = convertFromInteger(0x2A37)
-        val CLIENT_CHARACTERISTIC_CONFIG_UUID   = convertFromInteger(0x2902)
+        val HEART_RATE_SERVICE_UUID = convertFromInteger(0x180D)
+        val HEART_RATE_MEASUREMENT_CHAR_UUID = convertFromInteger(0x2A37)
+        val CLIENT_CHARACTERISTIC_CONFIG_UUID = convertFromInteger(0x2902)
 
         /* Generates 128-bit UUID from the Protocol Indentifier (16-bit number)
      * and the BASE_UUID for TI (F0000000-0451-4000-B000-000000000000)
@@ -247,8 +277,8 @@ class BleWrapper(private val context: Context, deviceAddress: String) : Handler.
             return UUID(MSB or (value shl 32), LSB)
         }
 
-        val BAROMETRIC_PRESSURE_SERVICE_UUID                   = convertFromIntegerTI(0xaa40)
-        val BAROMETRIC_PRESSURE_MEASUREMENT_CHAR_UUID          = convertFromIntegerTI(0xaa41)
+        val BAROMETRIC_PRESSURE_SERVICE_UUID = convertFromIntegerTI(0xaa40)
+        val BAROMETRIC_PRESSURE_MEASUREMENT_CHAR_UUID = convertFromIntegerTI(0xaa41)
         val BAROMETRIC_PRESSURE_MEASUREMENT_CONFIGURATION_UUID = convertFromIntegerTI(0xaa42)
 
         // Ble thread

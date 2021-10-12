@@ -10,7 +10,6 @@
         android:layout_height="match_parent">
 
 
-
         <TextView
             android:id="@+id/scanNameTxt"
             android:layout_width="0dp"

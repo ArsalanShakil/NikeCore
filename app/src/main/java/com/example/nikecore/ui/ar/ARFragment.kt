@@ -32,12 +32,6 @@ import timber.log.Timber
 import www.sanju.motiontoast.MotionToast
 
 
-
-
-
-
-
-
 class ARFragment : Fragment() {
 
     private lateinit var arFrag: ArFragment
@@ -57,11 +51,13 @@ class ARFragment : Fragment() {
         val view = inflater.inflate(R.layout.a_r_fragment, container, false)
 
 
-        val sharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
+        val sharedPrefs: SharedPreferences =
+            requireContext().getSharedPreferences("user_Balance", 0)
         userMoney = sharedPrefs.getInt("USER_MONEY", 0) //0 is the default value
 
 
-        val ticketSharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Ticket", 0)
+        val ticketSharedPrefs: SharedPreferences =
+            requireContext().getSharedPreferences("user_Ticket", 0)
         userTicket = ticketSharedPrefs.getInt("USER_TICKET", 0) //0 is the default value
 
         arFrag = childFragmentManager.findFragmentById(
@@ -81,7 +77,8 @@ class ARFragment : Fragment() {
 
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
-                .permitAll().build())
+                .permitAll().build()
+        )
         // (CC BY 4.0) Donated by Cesium for glTF testing.
         ModelRenderable.builder()
             .setSource(requireContext(), Uri.parse("file:///android_asset/ticket3.gltf"))
@@ -119,7 +116,7 @@ class ARFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        arViewModel.userBalance.observe(viewLifecycleOwner,{
+        arViewModel.userBalance.observe(viewLifecycleOwner, {
             userMoneyTxt.text = it.toString()
         })
     }
@@ -134,7 +131,7 @@ class ARFragment : Fragment() {
     private fun add3dObject() {
         val frame = arFrag.arSceneView.arFrame
         if (frame != null && modelRenderable != null) {
-        //    view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
+            //    view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
             val pt = getScreenCenter()
             val hits = frame.hitTest(pt.x.toFloat(), pt.y.toFloat())
             for (hit in hits) {
@@ -145,23 +142,25 @@ class ARFragment : Fragment() {
                     anchorNode.setParent(arFrag.arSceneView.scene)
                     val mNode =
                         TransformableNode(arFrag.transformationSystem)
-                    mNode.setOnTapListener { hitTestResult, motionEvent ->
+                    mNode.setOnTapListener { _, _ ->
                         view?.findViewById<TextView>(R.id.moneyAddedTxt)?.visibility = View.VISIBLE
                         view?.findViewById<Button>(R.id.showTicketBtn)?.visibility = View.GONE
                         view?.findViewById<Button>(R.id.goBackBtn)?.visibility = View.VISIBLE
 
                         userMoney += 10
-                        val sharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
+                        val sharedPrefs: SharedPreferences =
+                            requireContext().getSharedPreferences("user_Balance", 0)
                         val editor = sharedPrefs.edit()
                         editor.putInt("USER_MONEY", userMoney)
                         editor.apply()
 
                         userTicket += 1
-                        val ticketSharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Ticket", 0)
+                        val ticketSharedPrefs: SharedPreferences =
+                            requireContext().getSharedPreferences("user_Ticket", 0)
                         val editorTicket = ticketSharedPrefs.edit()
                         editorTicket.putInt("USER_TICKET", userTicket)
                         editorTicket.apply()
-                        runViewModel.selectedCoordinates.observe(viewLifecycleOwner,{
+                        runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
                             arViewModel.collectedCoordinates.postValue(it)
                             Timber.d("it: $it")
                         })
@@ -169,13 +168,15 @@ class ARFragment : Fragment() {
                         arViewModel.userBalance.postValue(userMoney)
                         arViewModel.isCollected.postValue(true)
 
-                        MotionToast.darkToast(requireActivity(),
+                        MotionToast.darkToast(
+                            requireActivity(),
                             getString(R.string.Congrats),
                             getString(R.string.ticket_collected),
                             MotionToast.TOAST_SUCCESS,
                             MotionToast.GRAVITY_BOTTOM,
                             MotionToast.SHORT_DURATION,
-                            ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                            ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+                        )
                         mNode.setParent(null)
                         anchorNode.anchor?.detach()
                         Handler(Looper.getMainLooper()).postDelayed({

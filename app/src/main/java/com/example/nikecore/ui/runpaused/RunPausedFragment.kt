@@ -88,7 +88,6 @@ class RunPausedFragment : Fragment() {
             (activity as MainActivity).sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
         }
         stopRunBtn.setOnLongClickListener {
-            (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
             showCancelTrackingDialog()
             runViewModel.selectedCoordinates.postValue(null)
             arViewModel.isCollected.postValue(false)
@@ -139,80 +138,81 @@ class RunPausedFragment : Fragment() {
 
     private fun subscribeToObservers(map: GoogleMap) {
 
-        if (view != null){
-               TrackingServices.isTracking.observe( viewLifecycleOwner,{
-            if (it) {
-                findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
-            }
-        })
+        if (view != null) {
+            TrackingServices.isTracking.observe(viewLifecycleOwner, {
+                if (it) {
+                    findNavController().navigate(R.id.action_runPausedFragment_to_runStartedFragment)
+                }
+            })
 
 
 
-        TrackingServices.pathPoints.observe(viewLifecycleOwner, {
-            pathPoints = it
-            Timber.d("observe pathpoint $pathPoints")
-            addAllPolylines(map)
-            setCurrentLocationMarker(map)
-            setStartingPositionMarker(map)
-            moveCameraToUser(map)
-            distanceValuePausedTxt.text = distanceCovered(pathPoints)
-        })
+            TrackingServices.pathPoints.observe(viewLifecycleOwner, {
+                pathPoints = it
+                Timber.d("observe pathpoint $pathPoints")
+                addAllPolylines(map)
+                setCurrentLocationMarker(map)
+                setStartingPositionMarker(map)
+                moveCameraToUser(map)
+                distanceValuePausedTxt.text = distanceCovered(pathPoints)
+            })
 
-        TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, {
-            curTimeInMillis = it
-            val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
-            timeValuePausedTxt.text = formattedTime
-            speedValuePausedTxt.text = avgSpeed()
+            TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, {
+                curTimeInMillis = it
+                val formattedTime =
+                    TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
+                timeValuePausedTxt.text = formattedTime
+                speedValuePausedTxt.text = avgSpeed()
 
-        })
+            })
 
-        runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
-            if (it != null && arViewModel.isCollected.value == false) {
-                map.addMarker(
-                    MarkerOptions().position(it)
-                        .title("run")
-                )?.setIcon(
-                    (activity as MainActivity).getBitmapDescriptorFromVector(
-                        requireContext(),
-                        R.drawable.ic_ticket_location_icon
+            runViewModel.selectedCoordinates.observe(viewLifecycleOwner, {
+                if (it != null && arViewModel.isCollected.value == false) {
+                    map.addMarker(
+                        MarkerOptions().position(it)
+                            .title("run")
+                    )?.setIcon(
+                        (activity as MainActivity).getBitmapDescriptorFromVector(
+                            requireContext(),
+                            R.drawable.ic_ticket_location_icon
+                        )
                     )
-                )
 
 
-                val currentLocation = Location("currentLocation")
-                currentLocation.latitude = pathPoints.last().last().latitude
-                currentLocation.longitude = pathPoints.last().last().longitude
-                val ticketLocation = Location("ticketLocation")
-                ticketLocation.latitude = it.latitude
-                ticketLocation.longitude = it.longitude
+                    val currentLocation = Location("currentLocation")
+                    currentLocation.latitude = pathPoints.last().last().latitude
+                    currentLocation.longitude = pathPoints.last().last().longitude
+                    val ticketLocation = Location("ticketLocation")
+                    ticketLocation.latitude = it.latitude
+                    ticketLocation.longitude = it.longitude
 
 
 
-                arViewModel.isCollected.observe(viewLifecycleOwner, {
-                    if (arViewModel.isCollected.value == false && currentLocation.distanceTo(
-                            ticketLocation
-                        ) < 30
-                    ) {
-                        arCameraBtn.visibility = View.VISIBLE
-                    } else if (arViewModel.isCollected.value == true) {
-                        arCameraBtn.visibility = View.GONE
-                    }
-                })
+                    arViewModel.isCollected.observe(viewLifecycleOwner, {
+                        if (arViewModel.isCollected.value == false && currentLocation.distanceTo(
+                                ticketLocation
+                            ) < 30
+                        ) {
+                            arCameraBtn.visibility = View.VISIBLE
+                        } else if (arViewModel.isCollected.value == true) {
+                            arCameraBtn.visibility = View.GONE
+                        }
+                    })
 
 
-            } else if (it != null && arViewModel.isCollected.value == true) {
-                map.addMarker(
-                    MarkerOptions().position(it)
-                        .title("run")
-                )?.setIcon(
-                    (activity as MainActivity).getBitmapDescriptorFromVector(
-                        requireContext(),
-                        R.drawable.ic_ticket_collected_icon
+                } else if (it != null && arViewModel.isCollected.value == true) {
+                    map.addMarker(
+                        MarkerOptions().position(it)
+                            .title("run")
+                    )?.setIcon(
+                        (activity as MainActivity).getBitmapDescriptorFromVector(
+                            requireContext(),
+                            R.drawable.ic_ticket_collected_icon
+                        )
                     )
-                )
-            }
+                }
 
-        })
+            })
 
         }
 
@@ -349,6 +349,7 @@ class RunPausedFragment : Fragment() {
             .setMessage("Are you sure to cancel the current run and delete all its data?")
             .setIcon(R.drawable.ic_menu_run)
             .setPositiveButton("Yes") { _, _ ->
+                (activity as MainActivity).sendCommandToService(ACTION_STOP_SERVICE)
                 stopRun()
             }
             .setNegativeButton("No") { dialogInterface, _ ->

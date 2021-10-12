@@ -11,10 +11,10 @@ import javax.inject.Inject
 class ARViewModel @Inject constructor(
     val mainRepository: MainRepository
 ) : ViewModel() {
-    val isCollected : MutableLiveData<Boolean> = MutableLiveData(false)
-    val userBalance : MutableLiveData<Int> = MutableLiveData(0)
-    val userTicket : MutableLiveData<Int> = MutableLiveData(0)
-    val collectedCoordinates : MutableLiveData<LatLng?> = MutableLiveData(null)
+    val isCollected: MutableLiveData<Boolean> = MutableLiveData(false)
+    val userBalance: MutableLiveData<Int> = MutableLiveData(0)
+    val userTicket: MutableLiveData<Int> = MutableLiveData(0)
+    val collectedCoordinates: MutableLiveData<LatLng?> = MutableLiveData(null)
 
 
 }

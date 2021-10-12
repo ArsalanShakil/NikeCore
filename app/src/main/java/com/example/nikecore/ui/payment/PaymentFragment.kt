@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
@@ -15,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.databinding.FragmentPaymentBinding
 import com.example.nikecore.ui.nfc.NfcViewModel
-import com.example.nikecore.ui.run.RunViewModel
 import kotlinx.android.synthetic.main.fragment_payment.*
 import www.sanju.motiontoast.MotionToast
 
@@ -41,9 +39,8 @@ class PaymentFragment : Fragment() {
             ViewModelProvider(this).get(PaymentViewModel::class.java)
 
         _binding = FragmentPaymentBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,30 +49,36 @@ class PaymentFragment : Fragment() {
         val settings: SharedPreferences = requireContext().getSharedPreferences("user_Balance", 0)
         userMoney = settings.getInt("USER_MONEY", 0) //0 is the default value
 
-        val ticketSharedPrefs: SharedPreferences = requireContext().getSharedPreferences("user_Ticket", 0)
+        val ticketSharedPrefs: SharedPreferences =
+            requireContext().getSharedPreferences("user_Ticket", 0)
         userTicket = ticketSharedPrefs.getInt("USER_TICKET", 0) //0 is the default value
 
-        balanceValueTxt.text = resources.getString(R.string.string_euro,userMoney.toString())
+        balanceValueTxt.text = resources.getString(R.string.string_euro, userMoney.toString())
         ticketValueTxt.text = userTicket.toString()
 
         startPaymentBtn.setOnClickListener {
             if (enterAmount.text.isBlank()) {
 
-                MotionToast.darkToast(requireActivity(),
+                MotionToast.darkToast(
+                    requireActivity(),
                     getString(R.string.info),
                     getString(R.string.payment_msg),
                     MotionToast.TOAST_INFO,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.SHORT_DURATION,
-                    ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                    ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+                )
 
-            } else if (enterAmount.text.isDigitsOnly() && enterAmount.text.toString().toInt() > 0 && userMoney >= enterAmount.text.toString().toInt()) {
+            } else if (enterAmount.text.isDigitsOnly() && enterAmount.text.toString()
+                    .toInt() > 0 && userMoney >= enterAmount.text.toString().toInt()
+            ) {
                 nfcViewModel.enterAmount.postValue(enterAmount.text.toString().toInt())
                 findNavController().navigate(R.id.action_navigation_payment_to_nfcFragment)
             }
         }
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

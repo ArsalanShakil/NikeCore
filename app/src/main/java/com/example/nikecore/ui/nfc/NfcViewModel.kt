@@ -10,5 +10,5 @@ import javax.inject.Inject
 class NfcViewModel @Inject constructor(
     val mainRepository: MainRepository
 ) : ViewModel() {
-    val enterAmount : MutableLiveData<Int> = MutableLiveData(0)
+    val enterAmount: MutableLiveData<Int> = MutableLiveData(0)
 }

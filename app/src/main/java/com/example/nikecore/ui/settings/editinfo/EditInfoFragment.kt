@@ -2,11 +2,11 @@ package com.example.nikecore.ui.settings.editinfo
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.others.Constants
@@ -34,22 +34,26 @@ class EditInfoFragment : Fragment() {
         saveChangesBtn.setOnClickListener {
             val success = applyChangesToSharedPref()
             if (success) {
-                MotionToast.darkToast(requireActivity(),
+                MotionToast.darkToast(
+                    requireActivity(),
                     getString(R.string.info),
                     getString(R.string.saved_changes),
                     MotionToast.TOAST_SUCCESS,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.SHORT_DURATION,
-                    ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                    ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+                )
                 findNavController().navigate(R.id.action_editInfoFragment_to_navigation_run)
             } else {
-                MotionToast.darkToast(requireActivity(),
+                MotionToast.darkToast(
+                    requireActivity(),
                     getString(R.string.info),
                     getString(R.string.please_enter_all),
                     MotionToast.TOAST_ERROR,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.SHORT_DURATION,
-                    ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                    ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+                )
             }
         }
     }

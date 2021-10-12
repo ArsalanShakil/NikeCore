@@ -7,7 +7,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
 
     var i: MutableLiveData<Int> = MutableLiveData(0)
 

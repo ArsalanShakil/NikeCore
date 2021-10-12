@@ -44,7 +44,7 @@
         android:id="@+id/navigation_payment"
         android:name="com.example.nikecore.ui.payment.PaymentFragment"
         android:label="@string/title_payment"
-        tools:layout="@layout/fragment_payment" >
+        tools:layout="@layout/fragment_payment">
         <action
             android:id="@+id/action_navigation_payment_to_nfcFragment"
             app:destination="@id/nfcFragment" />
@@ -130,7 +130,7 @@
         android:id="@+id/editInfoFragment"
         android:name="com.example.nikecore.ui.settings.editinfo.EditInfoFragment"
         android:label="edit_info_fragment"
-        tools:layout="@layout/edit_info_fragment" >
+        tools:layout="@layout/edit_info_fragment">
         <action
             android:id="@+id/action_editInfoFragment_to_navigation_run"
             app:destination="@id/navigation_run" />
@@ -144,7 +144,7 @@
         android:id="@+id/ARFragment"
         android:name="com.example.nikecore.ui.ar.ARFragment"
         android:label="a_r_fragment"
-        tools:layout="@layout/a_r_fragment" >
+        tools:layout="@layout/a_r_fragment">
         <action
             android:id="@+id/action_ARFragment_to_runPausedFragment"
             app:destination="@id/runPausedFragment" />

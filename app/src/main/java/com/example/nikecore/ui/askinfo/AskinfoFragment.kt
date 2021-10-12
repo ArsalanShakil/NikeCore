@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.others.Constants.KEY_FIRST_TIME_TOGGLE
@@ -37,13 +36,13 @@ class AskinfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val isFirstAppOpen  = AppPreferences.getBoolean(requireContext(), KEY_FIRST_TIME_TOGGLE, true)
+        val isFirstAppOpen =
+            AppPreferences.getBoolean(requireContext(), KEY_FIRST_TIME_TOGGLE, true)
         if (!isFirstAppOpen) {
 
             findNavController().navigate(
                 R.id.action_askinfoFragment_to_navigation_run,
                 savedInstanceState
-              //  navOptions
             )
         }
 
@@ -52,13 +51,15 @@ class AskinfoFragment : Fragment() {
             if (success) {
                 findNavController().navigate(R.id.action_askinfoFragment_to_navigation_run)
             } else {
-                MotionToast.darkToast(requireActivity(),
+                MotionToast.darkToast(
+                    requireActivity(),
                     getString(R.string.info),
                     getString(R.string.please_enter_all),
                     MotionToast.TOAST_ERROR,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.SHORT_DURATION,
-                    ResourcesCompat.getFont(requireContext(),R.font.helvetica_regular))
+                    ResourcesCompat.getFont(requireContext(), R.font.helvetica_regular)
+                )
 
             }
         }

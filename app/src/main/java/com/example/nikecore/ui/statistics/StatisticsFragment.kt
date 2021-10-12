@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.nikecore.R
 import com.example.nikecore.others.CustomMarkerView
 import com.example.nikecore.others.TrackingUtilities
@@ -18,7 +17,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.statistics_fragment.*
-import java.lang.Math.round
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class StatisticsFragment : Fragment() {
@@ -39,34 +38,34 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun subscribeToObservers() {
-        statisticsViewModel.totalTimeRun.observe(viewLifecycleOwner, Observer {
+        statisticsViewModel.totalTimeRun.observe(viewLifecycleOwner, {
             it?.let {
                 val totalTimeRun = TrackingUtilities.getFormattedStopWatchTime(it)
                 timeValueStatsTxt.text = totalTimeRun
             }
         })
-        statisticsViewModel.totalDistance.observe(viewLifecycleOwner, Observer {
+        statisticsViewModel.totalDistance.observe(viewLifecycleOwner, {
             it?.let {
                 val km = it / 1000f
-                val totalDistance = round(km * 10f) / 10f
-                val totalDistanceString = "${totalDistance}"
+                val totalDistance = (km * 10f).roundToInt() / 10f
+                val totalDistanceString = "$totalDistance"
                 distanceValueStatsTxt.text = totalDistanceString
             }
         })
-        statisticsViewModel.totalAvgSpeed.observe(viewLifecycleOwner, Observer {
+        statisticsViewModel.totalAvgSpeed.observe(viewLifecycleOwner, {
             it?.let {
-                val avgSpeed = round(it * 10f) / 10f
-                val avgSpeedString = "${avgSpeed}"
+                val avgSpeed = (it * 10f).roundToInt() / 10f
+                val avgSpeedString = "$avgSpeed"
                 avgSpeedValueStatsTxt.text = avgSpeedString
             }
         })
-        statisticsViewModel.totalCaloriesBurned.observe(viewLifecycleOwner, Observer {
+        statisticsViewModel.totalCaloriesBurned.observe(viewLifecycleOwner, {
             it?.let {
-                val totalCalories = "${it}"
+                val totalCalories = "$it"
                 caloriesValueStatsTxt.text = totalCalories
             }
         })
-        statisticsViewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+        statisticsViewModel.runsSortedByDate.observe(viewLifecycleOwner, {
             it?.let {
                 val allAvgSpeeds =
                     it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.nikecore.R
 import com.example.nikecore.others.Constants
@@ -14,7 +13,6 @@ import com.example.nikecore.others.TrackingUtilities
 import com.example.nikecore.services.Polyline
 import com.example.nikecore.services.TrackingServices
 import com.example.nikecore.ui.MainActivity
-import kotlinx.android.synthetic.main.run_paused_fragment.*
 import kotlinx.android.synthetic.main.run_started_fragment.*
 import timber.log.Timber
 import kotlin.math.round
@@ -24,7 +22,6 @@ class RunStartedFragment : Fragment() {
 
     private var curTimeInMillis = 0L
     private var pathPoints = mutableListOf<Polyline>()
-
 
 
     override fun onCreateView(
@@ -47,7 +44,7 @@ class RunStartedFragment : Fragment() {
             (activity as MainActivity).sendCommandToService(Constants.ACTION_PAUSE_SERVICE)
             findNavController().navigate(R.id.action_runStartedFragment_to_runPausedFragment)
         }
-        TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, Observer {
+        TrackingServices.timeRunInMillis.observe(viewLifecycleOwner, {
             curTimeInMillis = it
             val formattedTime = TrackingUtilities.getFormattedStopWatchTime(curTimeInMillis, true)
             timeValueTxt.text = formattedTime
@@ -74,23 +71,24 @@ class RunStartedFragment : Fragment() {
     }
 
 
-    private fun distanceCovered(pathPoints: MutableList<Polyline>) : String{
+    private fun distanceCovered(pathPoints: MutableList<Polyline>): String {
         var distanceInMeters = 0F
         for (polyline in pathPoints) {
             distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
         }
-        val distanceInKm = distanceInMeters /1000
+        val distanceInKm = distanceInMeters / 1000
 
         Timber.d("distanceInKm: $distanceInKm")
-        return if (distanceInKm > 0.01F) distanceInKm.toString().substring(0,5) else getString(R.string.zero_value)
+        return if (distanceInKm > 0.01F) distanceInKm.toString()
+            .substring(0, 5) else getString(R.string.zero_value)
     }
 
-    private fun avgSpeed() : String {
+    private fun avgSpeed(): String {
         var distanceInMeters = 0F
         for (polyline in pathPoints) {
             distanceInMeters += TrackingUtilities.calculatePolylineLength(polyline)
         }
-        val distanceInKm = distanceInMeters /1000
+        val distanceInKm = distanceInMeters / 1000
 
 
         val avgSpeed =
