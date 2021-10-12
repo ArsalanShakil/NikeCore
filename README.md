@@ -29,13 +29,24 @@
 ##### - Glide
 ##### - Lottiefiles
 ##### - MPAndroidChart
-##### - Push Notifications
+##### - Pop Notifications
 ##### - Motion Toast for custom animated toasts
 ##### - Payment methods (Google pay or Klarna)
 ##### - Internal Sensors(Bluetooth, NFC)
 #
 > Bluetooth for heart rate monitoring
 > tested using POLAR H10(HEART RATE SENSOR)
+
+## Overview of the app
+![onboarding](https://user-images.githubusercontent.com/40695548/136947315-c1170816-e436-4b01-bf60-5e9885ee249a.gif)
+![run](https://user-images.githubusercontent.com/40695548/136947347-069dd020-4804-44cb-aedd-8b686dacfe88.gif)
+![ticket_collect](https://user-images.githubusercontent.com/40695548/136947376-ed52a1a7-26ba-44d7-8ca8-e70c922efa08.gif) <br/> <br/>
+![user_activity](https://user-images.githubusercontent.com/40695548/136947394-ee838c39-c236-4841-863b-e59460a0718c.gif)
+![payment](https://user-images.githubusercontent.com/40695548/136947416-f7e9d9eb-7139-4ee5-9964-851c21107773.gif)
+![notifications](https://user-images.githubusercontent.com/40695548/136947439-c18cc04a-09ae-45d8-8681-018396fd1de1.gif)
+
+
+
 
 ## Figma Wireframes
 
